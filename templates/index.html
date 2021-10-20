@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <script src="https://kit.fontawesome.com/6df0448e36.js" crossorigin="anonymous"></script>
+        <title>AnimeRec</title>
+        
+        <body>
+
+            <div class="bigHome">
+                <nav class='navDesk'>
+                    
+                    <ul class='navDeskUL'> 
+                        <li class='navDeskLI'><a href="http://127.0.0.1:5000/home/" class='deskAnchor'>Home</a></li>
+                        <li class='navDeskLI'><a href="http://127.0.0.1:5000/rec" class='deskAnchor'>Recommendation Bot</a></li>
+                    </ul>
+                    
+                    <h1 class='MainTitle'>Anime Recommender</h1>
+                </nav>
+            </div>
+            {% block content %}
+            {% endblock %}
+                                      
+                    
+        </body>
+        
+    </head>
+
+</html>
