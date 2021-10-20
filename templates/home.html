@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+
+<main>
+    <section class ='glass'>
+        <div class="dahsboard">
+                <div class="links">
+                    <div class="info">
+                        <i class="fas fa-home" style='opacity:0.8'></i>
+                        <h3>Home</h3>
+                    </div>
+                    <div class="info">
+                        <i class="far fa-address-card" style='opacity:0.8'></i>
+                        <h3>About Us</h3>
+                    </div>
+                    <div class="info">
+                        <i class="far fa-lightbulb" style='opacity:0.8'></i>
+                        <h3>Personal Favorites</h2>
+                    </div>
+                    <div class="info">
+                        <i class="fas fa-link" style='opacity:0.8'></i>
+                        <h3>Links</h3>
+                    </div>
+            </div>
+        </div>
+        <div class="otherSide">
+            <div class='glassTitles'>
+                <h2>Home</h2>
+                <p>Welcome to the Anime Recommender - please head to the <span class='mainAnchor'><a href='http://127.0.0.1:5000/rec/'>Anime Recommendation Bot</a></span> to get your best match.</p>
+            </div>
+            <div class='glassTitles'>
+                <h2>About Us</h2>
+                <p>We are just a group students who love anime and can relate with the struggle of not being able to find <span style='font-weight:bold'>that</span> anime, so we have done our best to develop an algorithm to match you with the best possible recommendation according to one of your favorites.</p>
+            </div>
+            <div class='glassTitles'>
+                <h2>Personal Favorites</h2>
+                <div class='perRecs' style='display:flex; padding-top:1%;'>
+                    <div class='ivanRec' style='display:flex;align-items:center; padding-right:5%  '>
+                        <img src='https://m.media-amazon.com/images/M/MV5BODJhZDU1MDYtMDQ0NS00N2JmLWI2ZDAtMGNmN2RmNWJhNzQ5L2ltYWdlXkEyXkFqcGdeQXVyNjY1OTY4MTk@._V1_.jpg' style='height:15vh;width:auto;border-radius: 1rem;'>
+                        <h4 style='padding-left:5%; font-size:1vw'><a href='https://myanimelist.net/anime/1689/Byousoku_5_Centimeter' target="_blank">5 Centimeters per Second</a></h3>
+                    </div>
+                    <div class='ernieRec' style='display:flex; padding-top: 2%; align-items:center; '>
+                        <img src='https://upload.wikimedia.org/wikipedia/en/d/dc/DARLING_in_the_FRANXX%2C_second_key_visual.jpg' style='height:15vh;width:auto;border-radius: 1rem;'>
+                        <h4 style='padding-left:5%; font-size:1vw'><a href='https://myanimelist.net/anime/35849/Darling_in_the_FranXX?q=darling%20in%20the&cat=anime' target="_blank">Darling in the FranXX</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class='glassTitles'>
+                <h2>Links</h2>
+                <div class="linksOtherSide">
+                    <div class='logoText'>
+                        <img src='https://i.pinimg.com/originals/24/cc/5a/24cc5ab23793d66d57d8e77152bff3d0.png' style='height:4vh; border-radius:1.5rem'>
+                        <p><a href='https://4anime.to/' style='text-decoration:none; padding-left:5px' class='logoLink1' target="_blank">4Anime</a></p>
+                    </div>
+                    <div class='logoText'>
+                        <img src='https://upload.wikimedia.org/wikipedia/commons/7/7a/MyAnimeList_Logo.png' style='height:4vh; border-radius:1.5rem'>
+                        <p><a href='https://myanimelist.net/'style='text-decoration:none; padding-left:5px' class='logoLink2' target="_blank">MyAnimeList</a></p>
+                    </div>
+                    <div class='logoText'>
+                        <img src='https://redmod.co/wp-content/uploads/2020/10/Mangakakalota.jpg' style='height:4vh; border-radius:1.5rem'>
+                        <p><a href='https://mangakakalot.com/'style='text-decoration:none; padding-left:5px' class='logoLink3' target="_blank">MangaKakalot</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+   
+
+
+</main>
+
+{% endblock %}
