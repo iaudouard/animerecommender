@@ -1,205 +1,224 @@
-{% extends "index.html" %}
-
-{% block title %}Recommendation Page{% endblock %}
-
-{% block content %}
-
+{% extends "index.html" %} {% block title %}Recommendation Page{% endblock %} {%
+block content %}
 
 <style>
+  .autocomplete {
+    position: relative;
+    outline: none;
+    border: none;
+  }
 
+  .autocomplete-items {
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: -20px;
+  }
 
-.autocomplete {
-  position: relative;
-  outline:none;
-  border:none;
+  .autocomplete-items div {
+    margin-left: 200px;
+    width: 300px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: white;
+    border-bottom: 1px solid #d4d4d4;
+    border-radius: 2rem;
+    opacity: 0.8;
+  }
 
-}
+  /*when hovering an item:*/
+  .autocomplete-items div:hover {
+    background-color: gray;
+  }
 
-.autocomplete-items {
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-  margin-top:-20px;
-
-}
-
-.autocomplete-items div {
-  margin-left:200px;
-  width: 300px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: white; 
-  border-bottom: 1px solid #d4d4d4; 
-  border-radius:2rem;
-  opacity:0.8;
-
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: gray; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
+  /*when navigating through the items using the arrow keys:*/
+  .autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+  }
 </style>
 
 <body>
   <div class="recPage">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <form action='#' method='post' id = 'createReport' class='recForm' autocomplete="off">
-        <br>
-        <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <form
+      action="#"
+      method="post"
+      id="createReport"
+      class="recForm"
+      autocomplete="off"
+    >
+      <br />
+      <br />
 
-        <div class = "autocomplete">
-        <p class='recP'>What have you watched?</p>
-            <p><input id = "myInput" class='BigBox' type='text' name ='animeChoice' placeholder='Type here...' /></p>
-            <p class="howManyTxt"> How many animes do you want recommended?</p>
-            <div class='Form'>
-                <p><input class='numBox' type='number' name = 'howMany' placeholder='0'></p>
-                <p><input class='subBox' type='submit' value='Submit'/></p>
-            </div>
-
+      <div class="autocomplete">
+        <p class="recP">What have you watched?</p>
+        <p>
+          <input
+            id="myInput"
+            class="BigBox"
+            type="text"
+            name="animeChoice"
+            placeholder="Type here..."
+          />
+        </p>
+        <p class="howManyTxt">How many animes do you want recommended?</p>
+        <div class="Form">
+          <p>
+            <input
+              class="numBox"
+              type="number"
+              name="howMany"
+              placeholder="0"
+            />
+          </p>
+          <p><input class="subBox" type="submit" value="Submit" /></p>
         </div>
+      </div>
     </form>
-
-
 
     <script type="text/javascript">
 
-    window.onload=function(){
+          window.onload=function(){
 
-    function autocomplete(inp, arr) {
-      var currentFocus;
+          function autocomplete(inp, arr) {
+            var currentFocus;
 
-      
-      inp.addEventListener("input", function(e) {
-          var a, b, i, val = this.value;
-          closeAllLists();
-          if (!val) { return false;}
-          currentFocus = -1;
 
-          a = document.createElement("DIV");
-          a.setAttribute("id", this.id + "autocomplete-list");
-          a.setAttribute("class", "autocomplete-items");
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
 
-          this.parentNode.appendChild(a);
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
 
-          for (i = 0; i < arr.length; i++) {
+                this.parentNode.appendChild(a);
 
-            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                for (i = 0; i < arr.length; i++) {
 
-              b = document.createElement("DIV");
+                  if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
 
-              b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-              b.innerHTML += arr[i].substr(val.length);
+                    b = document.createElement("DIV");
 
-              b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
 
-                  b.addEventListener("click", function(e) {
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
 
-                  inp.value = this.getElementsByTagName("input")[0].value;
+                        b.addEventListener("click", function(e) {
 
-                  closeAllLists();
-              });
-              a.appendChild(b);
-            }
+                        inp.value = this.getElementsByTagName("input")[0].value;
+
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                  }
+                }
+            });
+
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+
+                  currentFocus++;
+
+                  addActive(x);
+                } else if (e.keyCode == 38) {
+                  currentFocus--;
+
+                  addActive(x);
+                } else if (e.keyCode == 13) {
+
+                  e.preventDefault();
+                  if (currentFocus > -1) {
+
+                    if (x) x[currentFocus].click();
+                  }
+                }
+            });
+        function addActive(x) {
+
+          if (!x) return false;
+
+          removeActive(x);
+          if (currentFocus >= x.length) currentFocus = 0;
+          if (currentFocus < 0) currentFocus = (x.length - 1);
+
+          x[currentFocus].classList.add("autocomplete-active");
+        }
+        function removeActive(x) {
+
+          for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
           }
-      });
+        }
+        function closeAllLists(elmnt) {
 
-      inp.addEventListener("keydown", function(e) {
-          var x = document.getElementById(this.id + "autocomplete-list");
-          if (x) x = x.getElementsByTagName("div");
-          if (e.keyCode == 40) {
-
-            currentFocus++;
-
-            addActive(x);
-          } else if (e.keyCode == 38) { 
-            currentFocus--;
-
-            addActive(x);
-          } else if (e.keyCode == 13) {
-
-            e.preventDefault();
-            if (currentFocus > -1) {
-
-              if (x) x[currentFocus].click();
-            }
+          var x = document.getElementsByClassName("autocomplete-items");
+          for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+            x[i].parentNode.removeChild(x[i]);
           }
+        }
+      }
+
+      document.addEventListener("click", function (e) {
+          closeAllLists(e.target);
       });
-  function addActive(x) {
+      }
 
-    if (!x) return false;
+          var animes = {{ tits|safe }};
 
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-  function removeActive(x) {
-
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-  function closeAllLists(elmnt) {
-
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-      x[i].parentNode.removeChild(x[i]);
-    }
-  }
-}
-
-document.addEventListener("click", function (e) {
-    closeAllLists(e.target);
-});
-}
-    
-    var animes = {{ tits|safe }};
-
-    autocomplete(document.getElementById("myInput"), animes)
-}
-
-
-    
-
-
-
+          autocomplete(document.getElementById("myInput"), animes)
+      }
     </script>
 
+    <p style="text-align: center">
+      <img
+        src="https://i.gifer.com/4zDj.gif"
+        class="loadimg"
+        style="display: none; height: 700px; text-align: center; margin-top: 8%"
+      />
+    </p>
 
-    
-    <p style = " text-align: center;"><img src = "https://i.gifer.com/4zDj.gif" class="loadimg" style="display: none; height: 700px; text-align: center; margin-top: 8%"></p>
-
-    <p id = 'loading' style=" display: none; text-align: center; margin-top: 3%; font-size: 20px"> Loading... </p>
+    <p
+      id="loading"
+      style="display: none; text-align: center; margin-top: 3%; font-size: 20px"
+    >
+      Loading...
+    </p>
 
     <script>
-    	var pos = ['https://i.gifer.com/3BBF.gif', 'https://i.gifer.com/47tv.gif', 'https://i.gifer.com/4zDj.gif', 'https://i.gifer.com/Mv.gif', 'https://i.gifer.com/zIz.gif', 'https://i.gifer.com/7VE.gif', 'https://i.gifer.com/ZLBj.gif', 'https://i.gifer.com/84kO.gif', 'https://i.gifer.com/QGup.gif', 'https://i.gifer.com/9yme.gif']
+      var pos = [
+        "https://i.gifer.com/3BBF.gif",
+        "https://i.gifer.com/47tv.gif",
+        "https://i.gifer.com/4zDj.gif",
+        "https://i.gifer.com/Mv.gif",
+        "https://i.gifer.com/zIz.gif",
+        "https://i.gifer.com/7VE.gif",
+        "https://i.gifer.com/ZLBj.gif",
+        "https://i.gifer.com/84kO.gif",
+        "https://i.gifer.com/QGup.gif",
+        "https://i.gifer.com/9yme.gif",
+      ];
 
-    	var pick = pos[Math.floor(Math.random()*pos.length)];
+      var pick = pos[Math.floor(Math.random() * pos.length)];
 
-    	text = document.getElementById('loading')
-    	$("img.loadimg").attr("src", pick);
-    	$("#createReport").submit(function(event)	{
-    	text.style.display = "block";
-    	$(".loadimg").show();		
-    	$("#createReport").toggle();
-    	});
-
+      text = document.getElementById("loading");
+      $("img.loadimg").attr("src", pick);
+      $("#createReport").submit(function (event) {
+        text.style.display = "block";
+        $(".loadimg").show();
+        $("#createReport").toggle();
+      });
     </script>
-    </div>
-
+  </div>
 </body>
-
-
 
 {% endblock %}

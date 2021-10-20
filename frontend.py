@@ -8,11 +8,11 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("home.html")
+    return render_template("testStyles.html")
 
-@app.route('/home/')
+@app.route('/home/',methods=['GET', 'POST'])
 def home():
-	return render_template("home.html")
+	return render_template("test.html")
 
 @app.route('/rec/', methods=['GET','POST'])
 def rec():

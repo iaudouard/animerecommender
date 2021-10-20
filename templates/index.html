@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-        <script src="https://kit.fontawesome.com/6df0448e36.js" crossorigin="anonymous"></script>
-        <title>AnimeRec</title>
-        
-        <body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+    </style>
+    <script src="./index.js"></script>
+    <title>Anime Recommender</title>
 
-            <div class="bigHome">
-                <nav class='navDesk'>
-                    
-                    <ul class='navDeskUL'> 
-                        <li class='navDeskLI'><a href="http://127.0.0.1:5000/home/" class='deskAnchor'>Home</a></li>
-                        <li class='navDeskLI'><a href="http://127.0.0.1:5000/rec" class='deskAnchor'>Recommendation Bot</a></li>
-                    </ul>
-                    
-                    <h1 class='MainTitle'>Anime Recommender</h1>
-                </nav>
-            </div>
-            {% block content %}
-            {% endblock %}
-                                      
-                    
-        </body>
-        
-    </head>
+    <body
+      style="
+        background-color: #fec8cd;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <h1 style="font-family: 'Roboto Mono', monospace; color: #a30000">
+        enter an anime...
+      </h1>
+      <form
+        action="#"
+        method="post"
+        id="createReport"
+        class="recForm"
+        autocomplete="off"
+      >
+        <input
+          id="myInput"
+          class="BigBox"
+          type="text"
+          name="animeChoice"
+          placeholder="Type here..."
+        />
+      </form>
+      <h1 style="font-family: 'Roboto Mono', monospace; color: #a30000">
+        number of recommendations...
+      </h1>
+      <div id="numberIncrementer">
+        <button id="incrementUp" onclick="go()" type="button">+</button>
 
+        <p id="helloWorld">0</p>
+        <button id="incrementDown" onclick="incrementDown()">-</button>
+      </div>
+
+      <input class="subBox" type="submit" value="Go" />
+    </body>
+  </head>
 </html>

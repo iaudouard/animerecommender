@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anime Recommender</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+    .increment:hover {
+      background-color: blue;
+    }
+  </style>
+
+  <body
+    style="
+      background-color: #fec8cd;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    "
+  >
+    <h1
+      style="
+        font-family: 'Roboto Mono', monospace;
+        color: #a30000;
+        margin-top: 40vh;
+        font-size: 1.7vw;
+      "
+    >
+      enter an anime...
+    </h1>
+    <div
+      style="
+        display: flex;
+        justify-content: space-evenly;
+        width: 10vw;
+        align-items: center;
+      "
+      class="body2"
+    >
+      <button
+        type="button"
+        onclick="incrementUp()"
+        id="incrementUp"
+        style="
+          width: 2vw;
+          height: 2vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          outline: none;
+          border: none;
+          border-radius: 0.5rem;
+          background-color: #ffaeb6;
+          transition: 2s;
+        "
+        class="incrementUp"
+      >
+        <p
+          style="
+            font-size: 1vw;
+            color: #a30000;
+            font-size: 1.2vw;
+            font-family: 'Roboto Mono', monospace;
+          "
+        >
+          +
+        </p>
+      </button>
+
+      <p
+        id="number"
+        style="
+          font-size: 1vw;
+          color: #a30000;
+          font-size: 1.4vw;
+          font-family: 'Roboto Mono', monospace;
+        "
+      >
+        0
+      </p>
+      <button
+        type="button"
+        onclick="incrementDown()"
+        id="incrementDown"
+        class="incrementDown"
+        style="
+          width: 2vw;
+          height: 2vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          outline: none;
+          border: none;
+          border-radius: 0.5rem;
+          background-color: #ffaeb6;
+          transition: 2s;
+        "
+      >
+        <p
+          style="
+            font-size: 1vw;
+            color: #a30000;
+            font-size: 1.4vw;
+            font-family: 'Roboto Mono', monospace;
+          "
+        >
+          -
+        </p>
+      </button>
+    </div>
+    <script>
+      function incrementUp() {
+        document.getElementById("number").innerHTML =
+          parseInt(document.getElementById("number").innerText) + 1;
+      }
+
+      function incrementDown() {
+        if (parseInt(document.getElementById("number").innerText) > 0) {
+          document.getElementById("number").innerHTML =
+            parseInt(document.getElementById("number").innerText) - 1;
+        }
+      }
+    </script>
+  </body>
+</html>
