@@ -19,7 +19,6 @@
       flex-direction: column;
     "
   >
-    {}
     <h1
       style="
         font-family: 'Roboto Mono', monospace;
@@ -39,7 +38,8 @@
       autocomplete="off"
     >
       <input
-        id="myInput"
+        spellcheck="false"
+        id="animeSearchInput"
         type="text"
         name="animeChoice"
         placeholder="naruto..."
@@ -52,12 +52,17 @@
           font-size: 1.2vw;
           font-family: 'Roboto Mono', monospace;
           border-bottom: 0.4vh solid #a300006c;
-          border-radius: 0.5rem;
+          /* border-radius: 0.5rem; */
           color: #a30000;
           caret-color: #a30000;
         "
         autofocus
       />
+      <div
+        class="autocompleteContainer"
+        id="autocompleteContainer"
+        style="position: absolute; z-index: 2; width: 17vw; height: 20vh"
+      ></div>
     </form>
     <h2
       style="
@@ -191,6 +196,41 @@
             parseInt(document.getElementById("number").innerText) - 1;
         }
       }
+      function autocompleteValue(title) {
+        document.getElementById("animeSearchInput").value = title;
+      }
+      const animeInput = document.getElementById("animeSearchInput");
+      animeInput.onkeypress = function () {
+        fetch(
+          "https://kitsu.io/api/edge/anime?filter[text]=" + animeInput.value
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((result) => {
+            var autocompleteTitles = [];
+            for (let i = 0; i < result.data.length; i++) {
+              const resultTitle =
+                result.data[i]["attributes"]["canonicalTitle"];
+              autocompleteTitles.push(resultTitle);
+            }
+            const autocompleteContainer = document.getElementById(
+              "autocompleteContainer"
+            );
+            autocompleteContainer.innerHTML = "";
+            let list = "";
+            for (let i = 0; i < autocompleteTitles.length; i++) {
+              list +=
+                "<li class='autocompleteElementText' onclick='(function () { document.getElementById('animeSearchInput').value=" +
+                autocompleteTitles[i] +
+                "})()'>" +
+                autocompleteTitles[i] +
+                "</li>";
+            }
+            autocompleteContainer.innerHTML =
+              "<ul class='autocompleteListContainer'>" + list + "</ul>";
+          });
+      };
     </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
@@ -204,6 +244,24 @@
       ::placeholder {
         font-weight: 500;
         color: #a3000052;
+      }
+      .autocompleteListContainer {
+        list-style: none;
+        font-family: "Roboto Mono", monospace;
+        color: #a30000;
+        background-color: #fa6d7b;
+        overflow: auto;
+        height: 30vh;
+      }
+      .autocompleteElementText {
+        margin-left: 0;
+      }
+      ::-webkit-scrollbar {
+        width: 0.5vw;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #a30000;
+        border-radius: 0.5rem;
       }
     </style>
   </body>
