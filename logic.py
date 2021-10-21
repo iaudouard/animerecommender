@@ -2,10 +2,7 @@ import csv
 from difflib import SequenceMatcher
 import requests
 from bs4 import BeautifulSoup
-import numpy
-
-
-
+import json
 
 
 
@@ -18,7 +15,7 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 
-	data = open('/home/ivanadrd/mysite/AnimeData.csv', 'r', encoding="utf8")
+	data = open('AnimeData.csv', 'r', encoding="utf8")
 	reading = csv.DictReader(data, delimiter=',', )
 
 	animes = []
@@ -36,25 +33,13 @@ def getTitles():
 
 def openAnimes():
 	"""
-	Opens Anime CSV and Turns it into a Dictonary. Also vectorizes the genre in order to go faster
+	Opens Anime JSON and returns it
 
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	data = open('/home/ivanadrd/mysite/AnimeData.csv', 'r', encoding="utf8")
-	reading = csv.DictReader(data, delimiter=',', )
-
-	animes = []
-
-	for x in reading:
-		animes.append(dict(x))
-
-
-	for x in animes:
-		x['Vector'] = x['Vector'].strip('][').split(', ')
-		x['Vector'] = [int(y) for y in x['Vector']]
-
-
+	with open('AnimeData.json', 'r') as fout:
+		animes = json.load(fout)
 	return animes
 
 def similar(a, b):
@@ -74,6 +59,7 @@ def similar(a, b):
 
 def search(animes, ask):
 
+	
 	"""
 	function that gets title search and returns the propre title
 
@@ -98,8 +84,6 @@ def search(animes, ask):
 	for x in animes:
 		if x['Title'] == best:
 			return x
-
-
 
 def whatwelike(animes ,choice):
 
@@ -134,6 +118,13 @@ def notin(list, title):
 
 
 
+def dot(l1, l2):
+    
+	prod = 0
+	for x in range(len(l1)):
+    		prod += l1[x] * l2[x]
+
+	return prod
 
 def inter(animes, choice, check, amount, amnt):
 
@@ -170,7 +161,7 @@ def inter(animes, choice, check, amount, amnt):
 
 		d = x['Vector']
 
-		comp = numpy.dot(og, d)/amnt
+		comp = dot(og, d)/amnt
 
 		if comp >= check and notin(final, x['Title']) and choice['Title'] not in x['Title'] and ty == x['Type'] and x['ScoredBy'] != "" and x['Rating'] != "":
 
@@ -184,11 +175,6 @@ def inter(animes, choice, check, amount, amnt):
 
 
 	return final, simi
-
-
-
-
-
 
 
 
@@ -320,5 +306,19 @@ def run(choice, amnt):
 		return update(animes, conc)
 
 
-print(run("Naruto", 10))
 
+
+"""
+
+def make_titles():
+
+	titles = []
+	animes = openAnimes()
+	for x in animes:
+		titles.append(x["Title"])
+	with open("Anime_titles.json", "w") as fp:
+		json.dump(titles, fp)
+
+
+make_titles()
+"""
