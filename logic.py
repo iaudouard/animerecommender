@@ -10,8 +10,15 @@ import numpy
 
 
 def getTitles():
+	
+	"""
+	Get list of titles
 
-	data = open('./AnimeData.csv', 'r', encoding="utf8")
+	Returns:
+		[list]: [list of titles] --> Used for auto complete
+	"""
+
+	data = open('/home/ivanadrd/mysite/AnimeData.csv', 'r', encoding="utf8")
 	reading = csv.DictReader(data, delimiter=',', )
 
 	animes = []
@@ -24,10 +31,17 @@ def getTitles():
 	for x in animes:
 		tits.append(x['Title'])
 
+	#Play around with the tits
 	return tits
 
 def openAnimes():
-	data = open('./AnimeData.csv', 'r', encoding="utf8")
+	"""
+	Opens Anime CSV and Turns it into a Dictonary. Also vectorizes the genre in order to go faster
+
+	Returns:
+		[Dict]: [Animes Dict]
+	"""
+	data = open('/home/ivanadrd/mysite/AnimeData.csv', 'r', encoding="utf8")
 	reading = csv.DictReader(data, delimiter=',', )
 
 	animes = []
@@ -44,67 +58,58 @@ def openAnimes():
 	return animes
 
 def similar(a, b):
-    return SequenceMatcher(None, a, b).ratio()
+	"""
+	Gives ratio of similarity between two keys
+
+	Args:
+		a (string): input of user
+		b (string): anime title
+
+	Returns:
+		[type]: [description]
+	"""
+	return SequenceMatcher(None, a, b).ratio()
 
 
 
 def search(animes, ask):
-    what = []
-    for x in animes:
-    	if len(x['Title']) >= 2 and ask[0].lower() == x['Title'][0].lower() and ask[1].lower() == x['Title'][1].lower():
-    		if similar(ask, x['Title']) > 0.6 and x['Genre'] != "":
-    			pos = x['Title']
-    			what.append(pos)
 
-    amount = 0
-    best = ''
+	"""
+	function that gets title search and returns the propre title
 
-    for x in what:
-    	if similar(ask, x) > amount:
-    		amount = similar(ask, x)
-    		best = x
+	Returns:
+		string: proper title
+	"""
+	what = []
+	for x in animes:
+		if len(x['Title']) >= 2 and ask[0].lower() == x['Title'][0].lower() and ask[1].lower() == x['Title'][1].lower():
+			if similar(ask, x['Title']) > 0.6 and x['Genre'] != "":
+				pos = x['Title']
+				what.append(pos)
 
-    for x in animes:
-   		if x['Title'] == best:
-   			return x
+	amount = 0
+	best = ''
+
+	for x in what:
+		if similar(ask, x) > amount:
+			amount = similar(ask, x)
+			best = x
+
+	for x in animes:
+		if x['Title'] == best:
+			return x
 
 
 
 def whatwelike(animes ,choice):
 
-
+	"""
+	Inter function just used to call ask
+	"""
 	ask = search(animes, choice)
 
 
 	return ask
-
-"""
-
-old way, not deleting in case
-
-def inter(animes, choice, check):
-
-	yours = getGenre(choice, animes)
-
-	tp = ''
-	for x in animes:
-		if x['Title'] == choice:
-			tp = x['Type']
-			break
-	joe = []
-	simi = []
-
-
-	for x in animes:
-		n = 0
-		for g in yours:
-			if g in x['Genre']:
-				n+=1
-		simi.append(n/len(x['Genre'].split(',')))
-		if n >= len(yours)*check and choice not in x['Title']:
-			joe.append(x['Title'])
-
-		return joe, tp, simi """
 
 
 def notin(list, title):
@@ -127,36 +132,6 @@ def notin(list, title):
 			return False
 	return True
 
-
-
-
-"""def inter(animes, choice, check, amount):
-
-	musts = [ 'Sports', 'Ecchi', 'Romance']
-	has = ''
-	final = []
-	big = choice
-	title = big['Title']
-	yours = []
-	for g in big['Genre'][1:-2]:
-		yours.append(re.sub(r'\W+', '', g))
-
-	typ = big['Type']
-	simi = []
-
-	for m in musts:
-		if m in "".join(yours):
-			has = m
-			break
-	for x in animes:
-		y = SequenceMatcher(None, yours, x['Genre']).ratio()
-		if y >= check and title not in x['Title'] and typ == x['Type'] and has in x['Genre']:
-			if notin(final, x['Title']):
-				simi.append(y)
-				final.append(x)
-
-	return final, simi
-"""
 
 
 
@@ -344,4 +319,6 @@ def run(choice, amnt):
 	if conc != {} and len(conc) >= amount:
 		return update(animes, conc)
 
+
+print(run("Naruto", 10))
 
