@@ -18,7 +18,7 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 
-	data = open('/home/ivanadrd/mysite/AnimeData.csv', 'r', encoding="utf8")
+	data = open('./AnimeData.csv', 'r', encoding="utf8")
 	reading = csv.DictReader(data, delimiter=',', )
 
 	animes = []
@@ -41,7 +41,7 @@ def openAnimes():
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	data = open('/home/ivanadrd/mysite/AnimeData.csv', 'r', encoding="utf8")
+	data = open('./AnimeData.csv', 'r', encoding="utf8")
 	reading = csv.DictReader(data, delimiter=',', )
 
 	animes = []
@@ -74,6 +74,7 @@ def similar(a, b):
 
 def search(animes, ask):
 
+	
 	"""
 	function that gets title search and returns the propre title
 
@@ -82,10 +83,14 @@ def search(animes, ask):
 	"""
 	what = []
 	for x in animes:
-		if len(x['Title']) >= 2 and ask[0].lower() == x['Title'][0].lower() and ask[1].lower() == x['Title'][1].lower():
-			if similar(ask, x['Title']) > 0.6 and x['Genre'] != "":
-				pos = x['Title']
-				what.append(pos)
+		try:
+			if len(x['Title']) >= 2 and ask[0].lower() == x['Title'][0].lower() and ask[1].lower() == x['Title'][1].lower():
+				if similar(ask, x['Title']) > 0.6 and x['Genre'] != "":
+					pos = x['Title']
+
+					what.append(pos)
+		except:
+			pass
 
 	amount = 0
 	best = ''
@@ -319,6 +324,4 @@ def run(choice, amnt):
 	if conc != {} and len(conc) >= amount:
 		return update(animes, conc)
 
-
-print(run("Naruto", 10))
 
