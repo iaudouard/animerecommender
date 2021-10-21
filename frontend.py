@@ -18,15 +18,16 @@ def home():
 		amount_of_recommendations = request.form['howMany']
 
 		
-		whatisearched = whatwelike(animes, amount_of_recommendations)['Title']
-		print(user_input)
-		try:
-			yourDic = run(user_input, amount_of_recommendations)
-			num = len(yourDic)
-			return render_template("result.html", title = whatisearched, rec = yourDic, num = int(num))
-		except:
-			return render_template('test.html')
-	
+		whatisearched = whatwelike(animes, user_input)
+		print(whatisearched)
+		# try:
+		yourDic = run(user_input, amount_of_recommendations)
+		num = len(yourDic)
+		return render_template("result.html", title = whatisearched, rec = yourDic, num = int(num))
+		# except:
+		# 	return render_template('test.html')
+			
+
 	return render_template('test.html', tits = getTitles())
 		
 
