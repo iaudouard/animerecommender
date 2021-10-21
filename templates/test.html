@@ -10,12 +10,6 @@
       href="{{ url_for('static', filename='css/style.css') }}"
     />
   </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-    .increment:hover {
-      background-color: blue;
-    }
-  </style>
 
   <body
     style="
@@ -31,23 +25,65 @@
         color: #a30000;
         margin-top: 40vh;
         font-size: 1.7vw;
+        user-select: none;
       "
     >
       enter an anime...
     </h1>
+    <form
+      action="#"
+      method="post"
+      id="createReport"
+      class="recForm"
+      autocomplete="off"
+    >
+      <input
+        id="myInput"
+        type="text"
+        name="animeChoice"
+        placeholder="naruto..."
+        style="
+          background-color: transparent;
+          height: 5vh;
+          width: 17vw;
+          outline: none;
+          border: none;
+          font-size: 1.2vw;
+          font-family: 'Roboto Mono', monospace;
+          border-bottom: 0.4vh solid #a300006c;
+          border-radius: 0.5rem;
+          color: #a30000;
+          caret-color: #a30000;
+        "
+        autofocus
+      />
+    </form>
+    <h2
+      style="
+        font-family: 'Roboto Mono', monospace;
+        font-size: 1.2vw;
+        color: #a30000ca;
+        margin-top: 4vh;
+        user-select: none;
+      "
+    >
+      how many recs...
+    </h2>
     <div
       style="
         display: flex;
         justify-content: space-evenly;
         width: 10vw;
         align-items: center;
+        user-select: none;
+        margin-top: 0;
       "
-      class="body2"
     >
       <button
         type="button"
         onclick="incrementUp()"
         id="incrementUp"
+        class="increment"
         style="
           width: 2vw;
           height: 2vw;
@@ -57,10 +93,8 @@
           outline: none;
           border: none;
           border-radius: 0.5rem;
-          background-color: #ffaeb6;
-          transition: 2s;
+          transition: 0.2s;
         "
-        class="incrementUp"
       >
         <p
           style="
@@ -89,7 +123,7 @@
         type="button"
         onclick="incrementDown()"
         id="incrementDown"
-        class="incrementDown"
+        class="increment"
         style="
           width: 2vw;
           height: 2vw;
@@ -99,8 +133,7 @@
           outline: none;
           border: none;
           border-radius: 0.5rem;
-          background-color: #ffaeb6;
-          transition: 2s;
+          transition: 0.2s;
         "
       >
         <p
@@ -115,9 +148,39 @@
         </p>
       </button>
     </div>
+    <button
+      type="submit"
+      form="createReport"
+      class="increment"
+      style="
+        margin-top: 2vh;
+        height: 4vh;
+        width: 7vw;
+        transition: 0.4s;
+        font-size: 1.2vw;
+        font-family: 'Roboto Mono', monospace;
+        color: #a30000;
+        outline: none;
+        border: 0.3vh solid #a3000038;
+        border-radius: 0.5rem;
+        user-select: none;
+      "
+    >
+      submit
+    </button>
+    <input
+      name="howMany"
+      form="createReport"
+      id="howMany"
+      style="display: none; user-select: none"
+      value="0"
+    />
     <script>
       function incrementUp() {
-        document.getElementById("number").innerHTML =
+        let newValue =
+          parseInt(document.getElementById("number").innerText) + 1;
+        document.getElementById("number").innerHTML = newValue;
+        document.getElementById("howMany").value =
           parseInt(document.getElementById("number").innerText) + 1;
       }
 
@@ -128,5 +191,19 @@
         }
       }
     </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+      .increment {
+        background-color: #ffaeb6;
+      }
+      .increment:active {
+        background-color: #ff8894;
+      }
+      ::placeholder {
+        font-weight: 500;
+        color: #a3000052;
+      }
+    </style>
   </body>
 </html>
