@@ -15,21 +15,12 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 
-	data = open('AnimeData.csv', 'r', encoding="utf8")
-	reading = csv.DictReader(data, delimiter=',', )
-
-	animes = []
-
-	tits = []
-
-	for x in reading:
-		animes.append(dict(x))
-
-	for x in animes:
-		tits.append(x['Title'])
-
-	#Play around with the tits
+	with open('Anime_titles.json', 'r') as fout:
+		tits = json.load(fout)
 	return tits
+
+
+
 
 def openAnimes():
 	"""
@@ -41,6 +32,8 @@ def openAnimes():
 	with open('AnimeData.json', 'r') as fout:
 		animes = json.load(fout)
 	return animes
+
+
 
 def similar(a, b):
 	"""
@@ -61,43 +54,13 @@ def search(animes, ask):
 
 	
 	"""
-	function that gets title search and returns the propre title
+	function that gets title search and returns the propre anime dict
 
 	Returns:
 		string: proper title
 	"""
-	what = []
-	for x in animes:
-		try:
-			if len(x['Title']) >= 2 and ask[0].lower() == x['Title'][0].lower() and ask[1].lower() == x['Title'][1].lower():
-				if similar(ask, x['Title']) > 0.6 and x['Genre'] != "":
-					pos = x['Title']
+	return animes[ask]
 
-					what.append(pos)
-		except:
-			pass
-
-	amount = 0
-	best = ''
-
-	for x in what:
-		if similar(ask, x) > amount:
-			amount = similar(ask, x)
-			best = x
-
-	for x in animes:
-		if x['Title'] == best:
-			return x
-
-def whatwelike(animes ,choice):
-
-	"""
-	Inter function just used to call ask
-	"""
-	ask = search(animes, choice)
-
-
-	return ask
 
 
 def notin(list, title):
@@ -274,10 +237,9 @@ def update(animes, dic):
 def run(choice, amnt):
 
 	animes = openAnimes()
-
-	choice = whatwelike(animes, choice)
-
+	choice = search(animes, choice)
 	amount = int(amnt) #int(input("How many would u want: "))
+
 	check = 1
 	trys = 0
 	print('Searching...')
@@ -311,18 +273,22 @@ def run(choice, amnt):
 
 
 
+def penis():
+	animes = openAnimes()
+	
 
-"""
 
-def make_titles():
+"""def make_titles():
 
-	titles = []
+	titles = {}
 	animes = openAnimes()
 	for x in animes:
-		titles.append(x["Title"])
-	with open("Anime_titles.json", "w") as fp:
+		titles[x["Title"]] = x
+	with open("AnimeDataGoodFormat.json", "w") as fp:
 		json.dump(titles, fp)
 
 
-make_titles()
-"""
+make_titles()"""
+
+animes = openAnimes()
+
