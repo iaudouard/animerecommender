@@ -61,7 +61,13 @@
       <div
         class="autocompleteContainer"
         id="autocompleteContainer"
-        style="position: absolute; z-index: 2; width: 17vw; height: 20vh"
+        style="
+          position: absolute;
+          z-index: 2;
+          width: 17vw;
+          height: 20vh;
+          padding: 0;
+        "
       ></div>
     </form>
     <h2
@@ -200,7 +206,7 @@
         document.getElementById("animeSearchInput").value = title;
       }
       const animeInput = document.getElementById("animeSearchInput");
-      animeInput.onkeypress = function () {
+      animeInput.onkeyup = function () {
         fetch(
           "https://kitsu.io/api/edge/anime?filter[text]=" + animeInput.value
         )
@@ -221,9 +227,7 @@
             let list = "";
             for (let i = 0; i < autocompleteTitles.length; i++) {
               list +=
-                "<li class='autocompleteElementText' onclick='(function () { document.getElementById('animeSearchInput').value=" +
-                autocompleteTitles[i] +
-                "})()'>" +
+                "<li class='autocompleteElementText' onclick='function autocompleteFunc(){ console.log('here')}()'>" +
                 autocompleteTitles[i] +
                 "</li>";
             }
@@ -251,10 +255,15 @@
         color: #a30000;
         background-color: #fa6d7b;
         overflow: auto;
-        height: 30vh;
+        max-height: 30vh;
+        margin-top: 0;
+        padding: 0.5vw;
       }
       .autocompleteElementText {
-        margin-left: 0;
+        white-space: nowrap;
+        padding: 0.1vw;
+        user-select: none;
+        font-size: 1.2vw;
       }
       ::-webkit-scrollbar {
         width: 0.5vw;
