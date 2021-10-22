@@ -64,7 +64,7 @@
         style="
           position: absolute;
           z-index: 2;
-          width: 17vw;
+          width: 40vw;
           height: 20vh;
           padding: 0;
         "
@@ -214,22 +214,31 @@
             return res.json();
           })
           .then((result) => {
-            var autocompleteTitles = [];
+            var autocompleteElements = [];
             for (let i = 0; i < result.data.length; i++) {
+              console.log(result.data[i]["attributes"]["posterImage"]["tiny"]);
               const resultTitle =
                 result.data[i]["attributes"]["canonicalTitle"];
-              autocompleteTitles.push(resultTitle);
+              const resultImagePath =
+                result.data[i]["attributes"]["posterImage"]["tiny"];
+
+              autocompleteElements.push([
+                { title: resultTitle, image: resultImagePath },
+              ]);
             }
             const autocompleteContainer = document.getElementById(
               "autocompleteContainer"
             );
             autocompleteContainer.innerHTML = "";
             let list = "";
-            for (let i = 0; i < autocompleteTitles.length; i++) {
+            for (let i = 0; i < autocompleteElements.length; i++) {
+              console.log(autocompleteElements);
               list +=
                 "<li class='autocompleteElementText' onclick='function autocompleteFunc(){ console.log('here')}()'>" +
-                autocompleteTitles[i] +
-                "</li>";
+                autocompleteElements[i][0]["title"] +
+                "<img src='" +
+                autocompleteElements[i][0]["image"] +
+                "' /> </li>";
             }
             autocompleteContainer.innerHTML =
               "<ul class='autocompleteListContainer'>" + list + "</ul>";
@@ -255,7 +264,7 @@
         color: #a30000;
         background-color: #fa6d7b;
         overflow: auto;
-        max-height: 30vh;
+        max-height: 50vh;
         margin-top: 0;
         padding: 0.5vw;
       }
