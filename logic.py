@@ -1,10 +1,7 @@
 import csv
-from difflib import SequenceMatcher
-import requests
-from bs4 import BeautifulSoup
 import json
 
-
+#ivan is gay for cameron erni is a big fat duudy
 
 def getTitles():
 	
@@ -14,10 +11,11 @@ def getTitles():
 	Returns:
 		[list]: [list of titles] --> Used for auto complete
 	"""
-
-	with open('Anime_titles.json', 'r') as fout:
+	
+	with open("CODING/animeRecanimerecommender\AnimeData.json", 'r') as fout:
 		tits = json.load(fout)
-	return tits
+	titles = [x for x in tits]
+	return titles
 
 
 
@@ -29,29 +27,13 @@ def openAnimes():
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	with open('AnimeData.json', 'r') as fout:
+	with open("CODING/animeRec/animerecommender\AnimeData.json", 'r') as fout:
 		animes = json.load(fout)
 	return animes
 
 
-
-def similar(a, b):
-	"""
-	Gives ratio of similarity between two keys
-
-	Args:
-		a (string): input of user
-		b (string): anime title
-
-	Returns:
-		[type]: [description]
-	"""
-	return SequenceMatcher(None, a, b).ratio()
-
-
-
 def search(animes, ask):
-
+	#ivan is gay
 	
 	"""
 	function that gets title search and returns the propre anime dict
@@ -87,149 +69,153 @@ def notin(list, title):
 
 def dot(l1, l2):
     
+	"""Dot product of two vectors
+
+	Returns:
+		int : result of dot prod
+	"""
+	#ivan is gay
+
 	prod = 0
 	for x in range(len(l1)):
     		prod += l1[x] * l2[x]
 
 	return prod
 
-def inter(animes, choice, check, amount, amnt):
+
+def has_musts(musts, anime_vec):
+	"""Function that returns if anime respects all the musts
+
+	Args:
+		musts ([type]): [description]
+		anime_vec ([type]): [description]
+
+	Returns:
+		[type]: [description]
+	"""
+	same = []
+	if len(musts) > 2:
+		for x in musts:
+			if anime_vec[x] == 1:
+				same += 1
+
+		if len(same) >= len(musts)//2:
+			return True
+
+		return False
+	else:
+		for x in musts:
+			if anime_vec[x] == 0:
+				return False
+		return True
 
 
-	must = None
 
-	if choice['Vector'][14] == 1:
+def stop_doubles(n1,n2):
+	n1 = n1.split(" ")
 
-		must = 14
+	if n1[0] in n2:
+		return False
+	if len(n1) >= 2 and n1[1] in n2:
+		return False
 
-	elif choice['Vector'][4] == 1:
-
-		must = 4
-
-	elif choice['Vector'][24] == 1:
-
-		must = 24
-
-	elif choice['Vector'][12] == 1:
-
-		must = 12
+	return True
 
 
+def inter(animes, choice, check, amnt):
 
+	"""
+	needs = ["Middle School",'Isekai','Josei','Seinen', 'Shoujo', 'Shounen','Dementia',
+         'Space Opera', "Violent Retribution For Accidental Infringement", "Harem", "Romance" , "Cyberpunk" , "Dystopia"
+         , "Sports", "Sudden Girlfriend Appearance", "All Girls School", "Magic", "Space", "Future","School Clubs"
+         , "Love Polygon", "Coming Of Age", "Supernatural", "Psychological" ]
 
-	ty = choice['Type']
+	Function that finds matching anime, they need to pass the minimum amount of similarity
 
-	og = choice['Vector']
+	Returns:
+		list: list of animes that pass the minimum amount of similarity check
+	"""
 
-	final = []
+	musts_check = [0, 217, 216, 215, 213, 214, 209, 190, 102, 145, 144,
+				 146, 161, 160, 109, 5, 21, 47, 46, 76, 111, 165, 204, 203]
+	must = [x for x in range(len(choice["vector"])) if x in  musts_check and choice["vector"][x] == 1]
+
+	og = choice['vector']
+	name = choice['attributes']["canonicalTitle"]
+	final_recommendations = []
 	simi = []
-
+	
 	for x in animes:
+		anime_vec = animes[x]['vector']
+		degree_of_similarity = dot(og, anime_vec)/amnt
+		if degree_of_similarity >= check and stop_doubles(name,x):
+			if has_musts(must, anime_vec):
+				animes[x]["simi"] = degree_of_similarity
+				final_recommendations.append(animes[x])
 
-		d = x['Vector']
+			
 
-		comp = dot(og, d)/amnt
+	#ivan is gay
 
-		if comp >= check and notin(final, x['Title']) and choice['Title'] not in x['Title'] and ty == x['Type'] and x['ScoredBy'] != "" and x['Rating'] != "":
-
-			if must != None and x['Vector'][must] == 1:
-				simi.append(comp)
-				final.append(x)
-
-			elif must == None:
-				simi.append(comp)
-				final.append(x)
-
-
-	return final, simi
+	return final_recommendations
 
 
 
 
+def stop_doubles_in_ranking(animes, new_name):
 
+	new_name = new_name.split(" ")
+	for x in animes:
+		stripped_name = x.split(" ")
+		if new_name[0] in stripped_name:
+			return False
+		if len(new_name) >= 2 and new_name[1] in stripped_name:
+			return False
 
+	return True
 
+def ranking(recomendation_list, amount_to_recommend):
+	"""
+	to use : averageRating, userCount, favoritesCount, popularityRank, ratingRank
+	Function that sorts and ranks the proposed recommendations
+	Uses a weighed coeficient formula -->( similiratiy(0-54)) * (rating(0-100) * 7/10) + (Amount of ppl that gave it a rating(0-alot)*3/10)
 
-def ranking(animes, ls, amount):
+	Args:
+		recomendation_list (List of recommendations proposed)
+		amount_to_recommend (Int): the selected amount of recommendations
 
-	rank = []
+	Returns:
+		list: ranked recommendations
+	"""
+	anime_rec_ranking = []
+	anime_rec_inter = []
+	anime_rec_names = []
 
-	simi = ls[1]
-	if len(simi) < amount:
+	if len(recomendation_list) < amount_to_recommend: #check to see if the amount proposed is less than the amount asked
 		return []
 
 
-	for name in range(len(ls[0])):
-		if ls[0][name]['ScoredBy'] != '' and ls[0][name]['Rating'] != '':
-			ls[0][name]['key'] = (simi[name] * (float(ls[0][name]['Rating']) * (7/10) + float(ls[0][name]['ScoredBy'])*(3/10)))
-			rank.append(ls[0][name])
-
-	sort = sorted(rank, key=lambda k: k['key'], reverse=True)
-	ranked = {}
-	for x in range(amount):
-		ranked[x] = sort[x]
-
-
-	for x in range(len(ranked)):
-
-		ranked[x]['key'] = ""
-	return ranked
+	for anime in recomendation_list: #different attributes
+		check = [anime["attributes"]["averageRating"],anime["attributes"]["userCount"],
+		 		anime["attributes"]["favoritesCount"], anime["attributes"]["popularityRank"],
+				anime["attributes"]["ratingRank"]]
+		name = anime["attributes"]["canonicalTitle"]
+		if "" not in check and " " not in check and None not in check and stop_doubles_in_ranking(anime_rec_names,name ): #check if empty variables
+			anime["key"] = float(anime["simi"]) * float(check[0])*4/10 + float(check[1])*4/10 + float(check[2])*1/10\
+						 + float(check[3])*1/10 + float(check[4]) *1/10 #applying formula
+			anime_rec_inter.append(anime)
+			anime_rec_names.append(name)
+	
+	anime_rec_ranking = sorted(anime_rec_inter, key = lambda k: k["key"], reverse=True) 
 
 
-
-
-def update(animes, dic):
-
-
-	ok = True
-
-	for x in range(len(dic)):
-
-		if dic[x]['img'] == "":
-			ok = False
-
-	if ok:
-		return dic
-
-
-	for x in range(len(dic)):
-
-		for y in range(len(animes)):
-
-			if animes[y] == dic[x] and animes[y]['img'] == "":
-
- 				try:
- 					URL = dic[x]['Link']
- 					headers = {"user-Agent" : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
- 					page = requests.get(URL, headers = headers)
- 					soup = BeautifulSoup(page.content, 'html.parser')
- 					img = soup.find(itemprop = 'image')
- 					print(animes[y]['Title'])
-
- 					animes[y]['img'] = img["data-src"]
- 					dic[x]['img'] = img["data-src"]
-
-	 			except:
- 					animes[y]['img'] = 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'
- 					dic[x]['img'] = 'https://user-images.githubusercontent.com/24848110/33519396-7e56363c-d79d-11e7-969b-09782f5ccbab.png'
+	if len(anime_rec_ranking) < amount_to_recommend:
+		return []
+	
+	return anime_rec_ranking[0:amount_to_recommend]
 
 
 
-
-	fnames = ['Anime_id','Title','Genre','Synopsis','Type','Producer','Studio','Rating','ScoredBy','Popularity','Members','Episodes','Source','Aired','Link','Vector','img','key']
-
-	f = open('/home/ivanadrd/mysite/AnimeData.csv', 'w', encoding='utf8')
-
-	writ = csv.DictWriter(f, fieldnames = fnames)
-
-	writ.writeheader()
-
-	for x in animes:
-		writ.writerow(x)
-
-
-	f.close()
-	return dic
 
 
 
@@ -243,52 +229,35 @@ def run(choice, amnt):
 	check = 1
 	trys = 0
 	print('Searching...')
-	how = len([x for x in choice['Vector'] if x == 1])
+	how = len([x for x in choice['vector'] if x == 1])
+	partial_recs = []
+	found = False
+	while not found:
+		anime_recs = inter(animes, choice, check, how)
 
-	joe = 0
-
-	while True:
-
-		interr = inter(animes, choice, check, amount, how)
-
-		if len(interr[0]) >= amount:
-			joe = interr
-			break
+		if len(anime_recs) >= amount:
+			partial_recs = anime_recs
 
 
 		check -= 0.1
-
 		trys += 1
 
-		if trys == 9:
+		if trys == 8:
 			print('Sorry we didnt find anything...')
-			break
+			found = True
+
+		print(anime_recs)
+	#ivan is gay
+		conc = ranking(partial_recs, amount)
+		if len(conc) >= amount:
+			return conc
 
 
 
-	conc = ranking(animes, joe, amount)
+	#ivan is gay
 
-	if conc != {} and len(conc) >= amount:
-		return update(animes, conc)
+rec = run("Monster", 4)
 
-
-
-def penis():
-	animes = openAnimes()
-	
-
-
-"""def make_titles():
-
-	titles = {}
-	animes = openAnimes()
-	for x in animes:
-		titles[x["Title"]] = x
-	with open("AnimeDataGoodFormat.json", "w") as fp:
-		json.dump(titles, fp)
-
-
-make_titles()"""
-
-animes = openAnimes()
+for x in rec:
+	print(x["attributes"]["canonicalTitle"])
 
