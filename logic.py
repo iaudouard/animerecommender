@@ -246,7 +246,6 @@ def run(choice, amnt):
 			print('Sorry we didnt find anything...')
 			found = True
 
-		print(anime_recs)
 	#ivan is gay
 		conc = ranking(partial_recs, amount)
 		if len(conc) >= amount:
@@ -255,9 +254,4 @@ def run(choice, amnt):
 
 
 	#ivan is gay
-
-rec = run("Monster", 4)
-
-for x in rec:
-	print(x["attributes"]["canonicalTitle"])
 
