@@ -8,27 +8,27 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("test.html")
+    return render_template("home.html")
 
 @app.route('/home/',methods=['GET', 'POST'])
 def home():
 	if request.method == 'POST':
+		print('here')
 		animes = openAnimes()
 		user_input = request.form['animeChoice']
 		amount_of_recommendations = request.form['howMany']
-
 		
 		whatisearched = whatwelike(animes, user_input)
-		print(whatisearched)
 		# try:
 		yourDic = run(user_input, amount_of_recommendations)
+		print('here', yourDic)
 		num = len(yourDic)
 		return render_template("result.html", title = whatisearched, rec = yourDic, num = int(num))
 		# except:
 		# 	return render_template('test.html')
 			
 
-	return render_template('test.html', tits = getTitles())
+	return render_template('home.html', tits = getTitles())
 		
 
 
