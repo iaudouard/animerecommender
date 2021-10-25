@@ -68,7 +68,12 @@
           height: 20vh;
           padding: 0;
         "
-      ></div>
+      >
+        <ul
+          id="autocompleteListContainer"
+          class="autocompleteListContainer hidden"
+        ></ul>
+      </div>
     </form>
     <h2
       style="
@@ -188,27 +193,46 @@
       value="0"
     />
     <script>
+      //getting the elements which will be modified through their ID to simplify the reading of code later on
+      const animeSearchInput = document.getElementById("animeSearchInput");
+      const autocompleteContainer = document.getElementById(
+        "autocompleteContainer"
+      );
+      const autocompleteListContainer = document.getElementById(
+        "autocompleteListContainer"
+      );
+      const numberOfRecs = document.getElementById("number");
+
+      //functions which handle the clicking of the + and - buttons to increment the number of animes they get back
       function incrementUp() {
-        let newValue =
-          parseInt(document.getElementById("number").innerText) + 1;
-        document.getElementById("number").innerHTML = newValue;
+        let newValue = parseInt(numberOfRecs.innerText) + 1;
+        numberOfRecs.innerHTML = newValue;
         document.getElementById("howMany").value =
-          parseInt(document.getElementById("number").innerText) + 1;
+          parseInt(numberOfRecs.innerText) + 1;
       }
 
       function incrementDown() {
-        if (parseInt(document.getElementById("number").innerText) > 0) {
-          document.getElementById("number").innerHTML =
-            parseInt(document.getElementById("number").innerText) - 1;
+        if (parseInt(numberOfRecs.innerText) > 0) {
+          numberOfRecs.innerHTML = parseInt(numberOfRecs.innerText) - 1;
         }
       }
-      function autocompleteValue(title) {
-        document.getElementById("animeSearchInput").value = title;
+      //end of incrementation functions
+
+      //function to autocomplete the value of an element in the animeSearchInput when one of the autocomplete elements is clicked
+      //takes in the name of the anime that has been clicked on
+      function autocompleteAnimeSearchInputValue(clickedOnAnime) {
+        console.log(clickedOnAnime);
+        animeSearchInput.value = clickedOnAnime;
       }
-      const animeInput = document.getElementById("animeSearchInput");
-      animeInput.onkeyup = function () {
+
+      animeSearchInput.onkeyup = function () {
+        autocompleteListContainer.innerHTML = "";
+        if (animeSearchInput.value != "") {
+          autocompleteListContainer.classList.remove("hidden");
+        }
         fetch(
-          "https://kitsu.io/api/edge/anime?filter[text]=" + animeInput.value
+          "https://kitsu.io/api/edge/anime?filter[text]=" +
+            animeSearchInput.value
         )
           .then((res) => {
             return res.json();
@@ -216,7 +240,6 @@
           .then((result) => {
             var autocompleteElements = [];
             for (let i = 0; i < result.data.length; i++) {
-              console.log(result.data[i]["attributes"]["posterImage"]["tiny"]);
               const resultTitle =
                 result.data[i]["attributes"]["canonicalTitle"];
               const resultImagePath =
@@ -226,22 +249,36 @@
                 { title: resultTitle, image: resultImagePath },
               ]);
             }
-            const autocompleteContainer = document.getElementById(
-              "autocompleteContainer"
-            );
-            autocompleteContainer.innerHTML = "";
-            let list = "";
+
             for (let i = 0; i < autocompleteElements.length; i++) {
-              console.log(autocompleteElements);
-              list +=
-                "<li class='autocompleteElementText' onclick='function autocompleteFunc(){ console.log('here')}()'>" +
+              const autocompleteElementContainer = document.createElement("li");
+              autocompleteElementContainer.setAttribute(
+                "class",
+                "autocompleteElementContainer " +
+                  autocompleteElements[i][0]["title"]
+              );
+
+              autocompleteElementContainer.addEventListener("onclick", () =>
+                autocompleteAnimeSearchInputValue(
+                  autocompleteElements[i][0]["title"]
+                )
+              );
+              // list +=
+              //   "<li class='autocompleteElementText' onclick='function autocompleteFunc(){ console.log('here')}()'>" +
+              //   autocompleteElements[i][0]["title"] +
+              //   "<img src='" +
+              //   autocompleteElements[i][0]["image"] +
+              //   "' /> </li>";
+              autocompleteElementContainer.innerHTML =
                 autocompleteElements[i][0]["title"] +
                 "<img src='" +
                 autocompleteElements[i][0]["image"] +
-                "' /> </li>";
+                "' />";
+
+              autocompleteListContainer.appendChild(
+                autocompleteElementContainer
+              );
             }
-            autocompleteContainer.innerHTML =
-              "<ul class='autocompleteListContainer'>" + list + "</ul>";
           });
       };
     </script>
@@ -258,6 +295,9 @@
         font-weight: 500;
         color: #a3000052;
       }
+      .hidden {
+        display: none;
+      }
       .autocompleteListContainer {
         list-style: none;
         font-family: "Roboto Mono", monospace;
@@ -268,7 +308,7 @@
         margin-top: 0;
         padding: 0.5vw;
       }
-      .autocompleteElementText {
+      .autocompleteElementContainer {
         white-space: nowrap;
         padding: 0.1vw;
         user-select: none;
