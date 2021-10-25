@@ -13,6 +13,8 @@ def index():
 @app.route('/home/',methods=['GET', 'POST'])
 def home():
 	if request.method == 'POST':
+
+		
 		print('here')
 		animes = openAnimes()
 		user_input = request.form['animeChoice']
@@ -25,7 +27,8 @@ def home():
 		num = len(yourDic)
 		return render_template("result.html", title = whatisearched, rec = yourDic, num = int(num))
 		# except:
-		# 	return render_template('test.html')
+		
+		return render_template('home.html')
 			
 
 	return render_template('home.html', tits = getTitles())
