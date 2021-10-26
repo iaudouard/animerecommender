@@ -3,7 +3,7 @@ from logic import *
 import jinja2
 
 app = Flask(__name__)
-
+animes = openAnimes()
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -35,23 +35,11 @@ def home():
 @app.route('/rec/', methods=['GET','POST'])
 def rec():
     if request.method == "POST":
-    	animes = openAnimes()
-    	usr_input = request.form['animeChoice']
+    	anime_name = request.form['animeChoice']
     	amnt = request.form['howMany']
-
-    	try:
-    		whatisearched = whatwelike(animes, usr_input)['Title']
-
-    	except :
-    		return render_template('rec.html')
-    		# give limit to thing
-    	try:
-    	    yourDic = run(usr_input, amnt)
-    	    num = len(yourDic)
-    	    return render_template("result.html", title = whatisearched, rec = yourDic, num = int(num))
-    	except :
-    		return render_template('rec.html')
-
+    	list_of_recommendations = run(animes, anime_name, amnt)
+    	num = len(list_of_recommendations)
+    	return render_template("resulttesting.html", title = anime_name, rec = list_of_recommendations, num = int(num))
 
     else:
     	return render_template('rec.html', tits = getTitles())

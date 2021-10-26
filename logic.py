@@ -12,7 +12,7 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 	
-	with open("./data.json", 'r') as fout:
+	with open("CODING/animeRecanimerecommender\AnimeData.json", 'r') as fout:
 		tits = json.load(fout)
 	titles = [x for x in tits]
 	return titles
@@ -27,7 +27,7 @@ def openAnimes():
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	with open("./data.json", 'r') as fout:
+	with open("CODING/animeRec/animerecommender\AnimeData.json", 'r') as fout:
 		animes = json.load(fout)
 	return animes
 
@@ -91,23 +91,22 @@ def has_musts(musts, anime_vec):
 		anime_vec ([type]): [description]
 
 	Returns:
-		[type]: [description]
+		[bool]: [has or]
 	"""
 	same = []
-	if len(musts) > 2:
+	if len(musts) >= 2:
 		for x in musts:
 			if anime_vec[x] == 1:
-				same += 1
+				same.append(x)
 
-		if len(same) >= len(musts)//2:
+		if len(same) >= 2:
 			return True
-
 		return False
-	else:
-		for x in musts:
-			if anime_vec[x] == 0:
-				return False
-		return True
+
+	for x in musts:
+		if anime_vec[x] != 1:
+			return False
+	return True
 
 
 
@@ -126,9 +125,10 @@ def inter(animes, choice, check, amnt):
 
 	"""
 	needs = ["Middle School",'Isekai','Josei','Seinen', 'Shoujo', 'Shounen','Dementia',
-         'Space Opera', "Violent Retribution For Accidental Infringement", "Harem", "Romance" , "Cyberpunk" , "Dystopia"
-         , "Sports", "Sudden Girlfriend Appearance", "All Girls School", "Magic", "Space", "Future","School Clubs"
-         , "Love Polygon", "Coming Of Age", "Supernatural", "Psychological" ]
+         "Harem", "Romance" , "Dystopia"
+         , "Sports", "Sudden Girlfriend Appearance", "Magic", "Future","School Clubs"
+         , "Love Polygon", "Coming Of Age", "Supernatural", "Psychological","Post Apocalypse", "Angst" ]
+
 
 	Function that finds matching anime, they need to pass the minimum amount of similarity
 
@@ -136,10 +136,10 @@ def inter(animes, choice, check, amnt):
 		list: list of animes that pass the minimum amount of similarity check
 	"""
 
-	musts_check = [0, 217, 216, 215, 213, 214, 209, 190, 102, 145, 144,
-				 146, 161, 160, 109, 5, 21, 47, 46, 76, 111, 165, 204, 203]
+	musts_check = [0, 217, 216, 215, 213, 214, 209, 145, 144, 161, 160,
+					 109, 21, 46, 76, 111, 165, 204, 203, 174, 133]
 	must = [x for x in range(len(choice["vector"])) if x in  musts_check and choice["vector"][x] == 1]
-
+	
 	og = choice['vector']
 	name = choice['attributes']["canonicalTitle"]
 	final_recommendations = []
@@ -178,7 +178,7 @@ def ranking(recomendation_list, amount_to_recommend):
 	"""
 	to use : averageRating, userCount, favoritesCount, popularityRank, ratingRank
 	Function that sorts and ranks the proposed recommendations
-	Uses a weighed coeficient formula -->( similiratiy(0-54)) * (rating(0-100) * 7/10) + (Amount of ppl that gave it a rating(0-alot)*3/10)
+	Uses a weighed coeficient formula -->( similiratiy(0-1)) * (rating(0-100) * 7/10) + (Amount of ppl that gave it a rating(0-alot)*3/10)
 
 	Args:
 		recomendation_list (List of recommendations proposed)
@@ -196,13 +196,13 @@ def ranking(recomendation_list, amount_to_recommend):
 
 
 	for anime in recomendation_list: #different attributes
-		check = [anime["attributes"]["averageRating"],anime["attributes"]["userCount"],
+		check = [anime["attributes"]["averageRating"], anime["attributes"]["userCount"],
 		 		anime["attributes"]["favoritesCount"], anime["attributes"]["popularityRank"],
-				anime["attributes"]["ratingRank"]]
+				anime["attributes"]["ratingRank"],anime["attributes"]["startDate"]]
 		name = anime["attributes"]["canonicalTitle"]
 		if "" not in check and " " not in check and None not in check and stop_doubles_in_ranking(anime_rec_names,name ): #check if empty variables
-			anime["key"] = float(anime["simi"]) * float(check[0])*4/10 + float(check[1])*4/10 + float(check[2])*1/10\
-						 + float(check[3])*1/10 + float(check[4]) *1/10 #applying formula
+			anime["key"] = (float(anime["simi"])*(1+anime["simi"]))**2 * float(check[0])*4/10 + float(check[1])*4/10 + float(check[2])*1/10 \
+						 + 10*(1/float(check[3])) + 10*(1/float(check[4])) + int(check[5].split("-")[0])**2 #applying formula
 			anime_rec_inter.append(anime)
 			anime_rec_names.append(name)
 	
@@ -220,9 +220,8 @@ def ranking(recomendation_list, amount_to_recommend):
 
 
 
-def run(choice, amnt):
+def run(animes, choice, amnt):
 
-	animes = openAnimes()
 	choice = search(animes, choice)
 	amount = int(amnt) #int(input("How many would u want: "))
 
@@ -251,7 +250,7 @@ def run(choice, amnt):
 		if len(conc) >= amount:
 			return conc
 
+	return [animes[animes.keys[x]] for x in range(amnt) ]
 
 
-	#ivan is gay
 
