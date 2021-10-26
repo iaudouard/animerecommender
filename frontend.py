@@ -39,10 +39,11 @@ def rec():
     	amnt = request.form['howMany']
     	list_of_recommendations = run(animes, anime_name, amnt)
     	num = len(list_of_recommendations)
+    	print(list_of_recommendations)
     	return render_template("resulttesting.html", title = anime_name, rec = list_of_recommendations, num = int(num))
 
     else:
-    	return render_template('rec.html', tits = getTitles())
+    	return render_template('home.html', tits = getTitles())
 
 
 @app.route('/finsih/', methods=['GET', 'POST'])
