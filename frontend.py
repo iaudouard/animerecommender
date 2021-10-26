@@ -10,11 +10,14 @@ animes = openAnimes()
 def index():
     if request.method == 'POST':
 		
-        try:
-            results = run(request.form['animeChoice'], request.form['howMany'])
-            return render_template('resulttesting.html', results=results)
-        except:
-            return render_template('home.html')
+        # try:
+        #     '''animes= openAnimes()
+        results = run(animes, request.form['animeChoice'], request.form['howMany'])
+        #     print(results)'''
+        #     return render_template('result.html')
+        # except:
+            # print('except')
+        return render_template('resulttesting.html', results=results)
 
     return render_template('home.html')
 

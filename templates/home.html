@@ -42,7 +42,7 @@
         id="animeSearchInput"
         type="text"
         name="animeChoice"
-        placeholder="naruto..."
+        placeholder="naruto"
         style="
           background-color: transparent;
           height: 5vh;
@@ -98,46 +98,6 @@
     >
       <button
         type="button"
-        onclick="incrementUp()"
-        id="incrementUp"
-        class="increment"
-        style="
-          width: 2vw;
-          height: 2vw;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          outline: none;
-          border: none;
-          border-radius: 0.5rem;
-          transition: 0.2s;
-        "
-      >
-        <p
-          style="
-            font-size: 1vw;
-            color: #a30000;
-            font-size: 1.2vw;
-            font-family: 'Roboto Mono', monospace;
-          "
-        >
-          +
-        </p>
-      </button>
-
-      <p
-        id="number"
-        style="
-          font-size: 1vw;
-          color: #a30000;
-          font-size: 1.4vw;
-          font-family: 'Roboto Mono', monospace;
-        "
-      >
-        0
-      </p>
-      <button
-        type="button"
         onclick="incrementDown()"
         id="incrementDown"
         class="increment"
@@ -162,6 +122,46 @@
           "
         >
           -
+        </p>
+      </button>
+
+      <p
+        id="number"
+        style="
+          font-size: 1vw;
+          color: #a30000;
+          font-size: 1.4vw;
+          font-family: 'Roboto Mono', monospace;
+        "
+      >
+        0
+      </p>
+      <button
+        type="button"
+        onclick="incrementUp()"
+        id="incrementUp"
+        class="increment"
+        style="
+          width: 2vw;
+          height: 2vw;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          outline: none;
+          border: none;
+          border-radius: 0.5rem;
+          transition: 0.2s;
+        "
+      >
+        <p
+          style="
+            font-size: 1vw;
+            color: #a30000;
+            font-size: 1.2vw;
+            font-family: 'Roboto Mono', monospace;
+          "
+        >
+          +
         </p>
       </button>
     </div>
@@ -229,6 +229,10 @@
         autocompleteListContainer.classList.add("hidden");
       }
 
+      //this is the function that generates all the autocompletes
+      //first it fetches the autocomplete anime using the kitsu api, passing the current value of the animeSearchInput as the query arg
+      //then it loops through and gets the necessary info
+      //finally it creates a list element for each anime and adds it to the autocomplete container
       function fetchAutocompleteHandler() {
         //this is just to reset the autocoomplete list so that the lists don't accumulate
         //--> it resets and adds the new autocomplete elements everytime the user types

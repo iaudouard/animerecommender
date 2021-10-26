@@ -227,7 +227,6 @@ def run(animes, choice, amnt):
 
 	check = 1
 	trys = 0
-	print('Searching...')
 	how = len([x for x in choice['vector'] if x == 1])
 	partial_recs = []
 	found = False
