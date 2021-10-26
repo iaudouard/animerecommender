@@ -29,13 +29,14 @@
     <div id="resultsContainer" style="display: flex"></div>
     <script>
         //recommendation results passed from the flask (python)
-        const results = {{ results | tojson}}
+        const results = {{ rec | tojson }}
         const resultsContainer = document.getElementById('resultsContainer')
 
 
       //looping through the results and making a card for each one with extra information
         for (let i = 0; i<results.length;i++) {
 
+            console.log(results[i]["attributes"]["canonicalTitle"])
             //creating the card html elements
             const cardContainer = document.createElement('div')
             cardContainer.setAttribute('class','cardContainer')
