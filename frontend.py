@@ -10,28 +10,25 @@ animes = openAnimes()
 def index():
     if request.method == 'POST':
 		
-        # try:
-        #     '''animes= openAnimes()
-        results = run(animes, request.form['animeChoice'], request.form['howMany'])
-        #     print(results)'''
-        #     return render_template('result.html')
-        # except:
-            # print('except')
-        return render_template('resulttesting.html', results=results)
+        try:
+        	results = run(animes, request.form['animeChoice'], request.form['howMany'])
+        	return render_template('resulttesting.html', results=results)
+        except:
+            return render_template('home.html')
 
     return render_template('home.html')
 
 @app.route('/home/',methods=['GET', 'POST'])
 def home():
-	if request.method == 'POST':
+    if request.method == 'POST':
+		
+        try:
+        	results = run(animes, request.form['animeChoice'], request.form['howMany'])
+        	return render_template('resulttesting.html', results=results)
+        except:
+            return render_template('home.html')
 
-		try:
-			results = run(request.form['animeChoice'], request.form['howMany'])
-			return render_template('resulttesting.html', results=results)
-		except:
-			return render_template('home.html')
-	
-	return render_template('home.html')
+    return render_template('home.html')
 		
 
 
