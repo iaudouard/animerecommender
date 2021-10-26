@@ -8,7 +8,15 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("home.html")
+    if request.method == 'POST':
+		
+        try:
+            results = run(request.form['animeChoice'], request.form['howMany'])
+            return render_template('resulttesting.html', results=results)
+        except:
+            return render_template('home.html')
+
+    return render_template('home.html')
 
 @app.route('/home/',methods=['GET', 'POST'])
 def home():
