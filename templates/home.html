@@ -52,7 +52,6 @@
           font-size: 1.2vw;
           font-family: 'Roboto Mono', monospace;
           border-bottom: 0.4vh solid #a300006c;
-          /* border-radius: 0.5rem; */
           color: #a30000;
           caret-color: #a30000;
         "
@@ -64,11 +63,17 @@
         style="
           position: absolute;
           z-index: 2;
-          width: 40vw;
-          height: 20vh;
+          width: 17vw;
+          max-height: 10vh;
           padding: 0;
+          transition: 0.3s;
         "
-      ></div>
+      >
+        <ul
+          id="autocompleteListContainer"
+          class="autocompleteListContainer hidden"
+        ></ul>
+      </div>
     </form>
     <h2
       style="
@@ -188,35 +193,68 @@
       value="0"
     />
     <script>
+      //getting the elements which will be modified through their ID to simplify the reading of code later on
+      const animeSearchInput = document.getElementById("animeSearchInput");
+      const autocompleteContainer = document.getElementById(
+        "autocompleteContainer"
+      );
+      const autocompleteListContainer = document.getElementById(
+        "autocompleteListContainer"
+      );
+      const numberOfRecs = document.getElementById("number");
+
+      //functions which handle the clicking of the + and - buttons to increment the number of animes they get back
       function incrementUp() {
-        let newValue =
-          parseInt(document.getElementById("number").innerText) + 1;
-        document.getElementById("number").innerHTML = newValue;
-        document.getElementById("howMany").value =
-          parseInt(document.getElementById("number").innerText) + 1;
+        let newValue = parseInt(numberOfRecs.innerText) + 1;
+        numberOfRecs.innerHTML = newValue;
+        document.getElementById("howMany").value = parseInt(
+          numberOfRecs.innerText
+        );
       }
 
       function incrementDown() {
-        if (parseInt(document.getElementById("number").innerText) > 0) {
-          document.getElementById("number").innerHTML =
-            parseInt(document.getElementById("number").innerText) - 1;
+        if (parseInt(numberOfRecs.innerText) > 0) {
+          numberOfRecs.innerHTML = parseInt(numberOfRecs.innerText) - 1;
+          document.getElementById("howMany").value = parseInt(
+            numberOfRecs.innerText
+          );
         }
       }
-      function autocompleteValue(title) {
-        document.getElementById("animeSearchInput").value = title;
+      //end of incrementation functions
+
+      //function to autocomplete the value of an element in the animeSearchInput when one of the autocomplete elements is clicked
+      //takes in the name of the anime that has been clicked on
+      function autocompleteAnimeSearchInputValue(clickedOnAnime) {
+        animeSearchInput.value = clickedOnAnime;
+        autocompleteListContainer.classList.add("hidden");
       }
-      const animeInput = document.getElementById("animeSearchInput");
-      animeInput.onkeyup = function () {
+
+      function fetchAutocompleteHandler() {
+        //this is just to reset the autocoomplete list so that the lists don't accumulate
+        //--> it resets and adds the new autocomplete elements everytime the user types
+        autocompleteListContainer.innerHTML = "";
+        //check to add or remove the hidden class
+        //--> if the animeSearchInput is empty it will add a hidden class to the list container
+        //so that there is not just a random empty box when the animeSearchInput is empty
+        if (animeSearchInput.value != "") {
+          autocompleteListContainer.classList.remove("hidden");
+        } else {
+          autocompleteListContainer.classList.add("hidden");
+        }
+
+        //fetch request to get the autocomplete elements --> fetched in our database's api
         fetch(
-          "https://kitsu.io/api/edge/anime?filter[text]=" + animeInput.value
+          "https://kitsu.io/api/edge/anime?filter[text]=" +
+            animeSearchInput.value
         )
           .then((res) => {
             return res.json();
           })
           .then((result) => {
+            //looping through the results of the fetch request and storing the information needed for the autocomplete
             var autocompleteElements = [];
+
             for (let i = 0; i < result.data.length; i++) {
-              console.log(result.data[i]["attributes"]["posterImage"]["tiny"]);
               const resultTitle =
                 result.data[i]["attributes"]["canonicalTitle"];
               const resultImagePath =
@@ -226,24 +264,44 @@
                 { title: resultTitle, image: resultImagePath },
               ]);
             }
-            const autocompleteContainer = document.getElementById(
-              "autocompleteContainer"
-            );
-            autocompleteContainer.innerHTML = "";
-            let list = "";
+
+            //looping through the stored information and creating a list element with the title and the image for the autocomplete
             for (let i = 0; i < autocompleteElements.length; i++) {
-              console.log(autocompleteElements);
-              list +=
-                "<li class='autocompleteElementText' onclick='function autocompleteFunc(){ console.log('here')}()'>" +
+              const autocompleteElementContainer = document.createElement("li");
+              autocompleteElementContainer.setAttribute(
+                "class",
+                "autocompleteElementContainer " +
+                  autocompleteElements[i][0]["title"]
+              );
+
+              autocompleteElementContainer.addEventListener("click", () => {
+                autocompleteAnimeSearchInputValue(
+                  autocompleteElements[i][0]["title"]
+                );
+              });
+
+              autocompleteElementContainer.innerHTML =
                 autocompleteElements[i][0]["title"] +
-                "<img src='" +
+                "<img class='autocompleteElementImage' src='" +
                 autocompleteElements[i][0]["image"] +
-                "' /> </li>";
+                "' />";
+
+              autocompleteListContainer.appendChild(
+                autocompleteElementContainer
+              );
             }
-            autocompleteContainer.innerHTML =
-              "<ul class='autocompleteListContainer'>" + list + "</ul>";
           });
-      };
+      }
+
+      //there is a timeout before the autocomplete pops up to avoid a bug which occurs when the user input is too quick
+      //--> the autocomplet items don't update properly, and the autocomplete list accumulates if the user input is too fast
+      //hence the timeout, which waits for the user to stop typing for 300 milliseconds to run the autocomplete suggestions
+      let timeout = null;
+      animeSearchInput.addEventListener("keyup", function () {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => fetchAutocompleteHandler(), 300);
+      });
     </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
@@ -258,22 +316,41 @@
         font-weight: 500;
         color: #a3000052;
       }
+      .hidden {
+        display: none;
+      }
       .autocompleteListContainer {
         list-style: none;
         font-family: "Roboto Mono", monospace;
         color: #a30000;
         background-color: #fa6d7b;
-        overflow: auto;
+        overflow-x: auto;
         max-height: 50vh;
         margin-top: 0;
         padding: 0.5vw;
+        transition: 0.3s;
+        width: 17vw;
       }
-      .autocompleteElementText {
-        white-space: nowrap;
+      .autocompleteElementContainer {
+        margin: 0;
+        transition: 0.4s;
         padding: 0.1vw;
         user-select: none;
         font-size: 1.2vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
+      .autocompleteElementContainer:hover {
+        background-color: #f85263;
+      }
+
+      .autocompleteElementImage {
+        height: 10vh;
+        width: auto;
+        border-radius: 0.3rem;
+      }
+
       ::-webkit-scrollbar {
         width: 0.5vw;
       }
