@@ -14,24 +14,13 @@ def index():
 def home():
 	if request.method == 'POST':
 
-		
-		print('here')
-		animes = openAnimes()
-		user_input = request.form['animeChoice']
-		amount_of_recommendations = request.form['howMany']
-		
-		whatisearched = whatwelike(animes, user_input)
-		# try:
-		yourDic = run(user_input, amount_of_recommendations)
-		print('here', yourDic)
-		num = len(yourDic)
-		return render_template("result.html", title = whatisearched, rec = yourDic, num = int(num))
-		# except:
-		
-		return render_template('home.html')
-			
-
-	return render_template('home.html', tits = getTitles())
+		try:
+			results = run(request.form['animeChoice'], request.form['howMany'])
+			return render_template('resulttesting.html', results=results)
+		except:
+			return render_template('home.html')
+	
+	return render_template('home.html')
 		
 
 

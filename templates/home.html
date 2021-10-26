@@ -52,7 +52,6 @@
           font-size: 1.2vw;
           font-family: 'Roboto Mono', monospace;
           border-bottom: 0.4vh solid #a300006c;
-          /* border-radius: 0.5rem; */
           color: #a30000;
           caret-color: #a30000;
         "
@@ -64,9 +63,10 @@
         style="
           position: absolute;
           z-index: 2;
-          width: 40vw;
-          max-height: 20vh;
+          width: 17vw;
+          max-height: 10vh;
           padding: 0;
+          transition: 0.3s;
         "
       >
         <ul
@@ -210,8 +210,6 @@
         document.getElementById("howMany").value = parseInt(
           numberOfRecs.innerText
         );
-
-        console.log(document.getElementById("howMany").value);
       }
 
       function incrementDown() {
@@ -221,7 +219,6 @@
             numberOfRecs.innerText
           );
         }
-        console.log(document.getElementById("howMany").value);
       }
       //end of incrementation functions
 
@@ -232,11 +229,10 @@
         autocompleteListContainer.classList.add("hidden");
       }
 
-      animeSearchInput.onkeyup = function () {
+      function fetchAutocompleteHandler() {
         //this is just to reset the autocoomplete list so that the lists don't accumulate
         //--> it resets and adds the new autocomplete elements everytime the user types
         autocompleteListContainer.innerHTML = "";
-
         //check to add or remove the hidden class
         //--> if the animeSearchInput is empty it will add a hidden class to the list container
         //so that there is not just a random empty box when the animeSearchInput is empty
@@ -255,7 +251,9 @@
             return res.json();
           })
           .then((result) => {
+            //looping through the results of the fetch request and storing the information needed for the autocomplete
             var autocompleteElements = [];
+
             for (let i = 0; i < result.data.length; i++) {
               const resultTitle =
                 result.data[i]["attributes"]["canonicalTitle"];
@@ -267,6 +265,7 @@
               ]);
             }
 
+            //looping through the stored information and creating a list element with the title and the image for the autocomplete
             for (let i = 0; i < autocompleteElements.length; i++) {
               const autocompleteElementContainer = document.createElement("li");
               autocompleteElementContainer.setAttribute(
@@ -274,25 +273,16 @@
                 "autocompleteElementContainer " +
                   autocompleteElements[i][0]["title"]
               );
-              autocompleteElementContainer.setAttribute(
-                "id",
-                autocompleteElements[i][0]["image"]
-              );
 
               autocompleteElementContainer.addEventListener("click", () => {
                 autocompleteAnimeSearchInputValue(
                   autocompleteElements[i][0]["title"]
                 );
               });
-              // list +=
-              //   "<li class='autocompleteElementText' onclick='function autocompleteFunc(){ console.log('here')}()'>" +
-              //   autocompleteElements[i][0]["title"] +
-              //   "<img src='" +
-              //   autocompleteElements[i][0]["image"] +
-              //   "' /> </li>";
+
               autocompleteElementContainer.innerHTML =
                 autocompleteElements[i][0]["title"] +
-                "<img src='" +
+                "<img class='autocompleteElementImage' src='" +
                 autocompleteElements[i][0]["image"] +
                 "' />";
 
@@ -301,7 +291,17 @@
               );
             }
           });
-      };
+      }
+
+      //there is a timeout before the autocomplete pops up to avoid a bug which occurs when the user input is too quick
+      //--> the autocomplet items don't update properly, and the autocomplete list accumulates if the user input is too fast
+      //hence the timeout, which waits for the user to stop typing for 300 milliseconds to run the autocomplete suggestions
+      let timeout = null;
+      animeSearchInput.addEventListener("keyup", function () {
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => fetchAutocompleteHandler(), 300);
+      });
     </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
@@ -324,24 +324,31 @@
         font-family: "Roboto Mono", monospace;
         color: #a30000;
         background-color: #fa6d7b;
-        overflow: auto;
+        overflow-x: auto;
         max-height: 50vh;
         margin-top: 0;
         padding: 0.5vw;
+        transition: 0.3s;
+        width: 17vw;
       }
       .autocompleteElementContainer {
         margin: 0;
         transition: 0.4s;
-        white-space: nowrap;
         padding: 0.1vw;
         user-select: none;
         font-size: 1.2vw;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
       }
-      .autocompleteElementContainer:active {
-        background-color: #f74254;
+      .autocompleteElementContainer:hover {
+        background-color: #f85263;
+      }
+
+      .autocompleteElementImage {
+        height: 10vh;
+        width: auto;
+        border-radius: 0.3rem;
       }
 
       ::-webkit-scrollbar {
