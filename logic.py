@@ -1,6 +1,6 @@
 import csv
 import json
-
+import math
 #ivan is gay for cameron erni is a big fat duudy
 
 def getTitles():
@@ -12,7 +12,7 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 	
-	with open("AnimeData.json", 'r') as fout:
+	with open("AnimeDataShort.json", 'r') as fout:
 		tits = json.load(fout)
 	titles = [x for x in tits]
 	return titles
@@ -27,9 +27,9 @@ def openAnimes():
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	with open("AnimeData.json", 'r') as fout:
+	with open("AnimeDataShort.json", 'r') as fout:
 		animes = json.load(fout)
-	return animes
+	return dict(animes)
 
 
 def search(animes, ask):
@@ -94,12 +94,12 @@ def has_musts(musts, anime_vec):
 		[bool]: [has or]
 	"""
 	same = []
-	if len(musts) >= 2:
+	if len(musts) >= 3:
 		for x in musts:
 			if anime_vec[x] == 1:
 				same.append(x)
 
-		if len(same) >= 2:
+		if len(same) >= 3:
 			return True
 		return False
 
@@ -121,13 +121,25 @@ def stop_doubles(n1,n2):
 	return True
 
 
+
+
+def get_degree_of_sim(v1, v2):
+    
+	if len([y for y in v2 if y == 1]) <= 2:
+	    return 0.1
+	
+	dot1 = ((dot(v1, v2)/len([x for x in v1 if x == 1])) + (dot(v1, v2)/len([y for y in v2 if y == 1])*2)) / 3
+	dot2 = ((dot(v1, v2)/len([x for x in v1 if x == 1]))*2 + (dot(v1, v2)/len([y for y in v2 if y == 1]))) / 3
+	return min(dot1, dot2)
+
+
+
 def inter(animes, choice, check, amnt):
 
 	"""
-	needs = ["Middle School",'Isekai','Josei','Seinen', 'Shoujo', 'Shounen','Dementia',
-         "Harem", "Romance" , "Dystopia"
-         , "Sports", "Sudden Girlfriend Appearance", "Magic", "Future","School Clubs"
-         , "Love Polygon", "Coming Of Age", "Supernatural", "Psychological","Post Apocalypse", "Angst" ]
+	needs = ["Isekai", 'Bounty Hunter', 'Cooking', 'Cross Dressing', "Human Enhancement", "Super Deformed",
+            'Ninja', 'Space Opera', "Anthropomorphism", 'Slow When It Comes To Love', 'Reverse Harem', 'Music',
+			'Sports', 'Delinquent', 'time travel', 'vampire]
 
 
 	Function that finds matching anime, they need to pass the minimum amount of similarity
@@ -136,22 +148,24 @@ def inter(animes, choice, check, amnt):
 		list: list of animes that pass the minimum amount of similarity check
 	"""
 
-	musts_check = [0, 217, 216, 215, 213, 214, 209, 145, 144, 161, 160,
-					 109, 21, 46, 76, 111, 165, 204, 203, 174, 133]
+	musts_check = [217, 17, 15, 35, 53, 68, 190, 143, 106, 114, 116, 160, 19, 54, 6, 144]
 	must = [x for x in range(len(choice["vector"])) if x in  musts_check and choice["vector"][x] == 1]
 	
-	og = choice['vector']
+	choice_anime_vector = choice['vector']
 	name = choice['attributes']["canonicalTitle"]
+	anime_type = choice["attributes"]["subtype"]
 	final_recommendations = []
 	simi = []
 	
 	for x in animes:
 		anime_vec = animes[x]['vector']
-		degree_of_similarity = dot(og, anime_vec)/amnt
-		if degree_of_similarity >= check and stop_doubles(name,x):
-			if has_musts(must, anime_vec):
-				animes[x]["simi"] = degree_of_similarity
-				final_recommendations.append(animes[x])
+		if 1 in anime_vec:
+			degree_of_similarity = get_degree_of_sim(choice_anime_vector, anime_vec)
+			if degree_of_similarity >= check and stop_doubles(name,x) and anime_type == animes[x]["attributes"]["subtype"]:
+				if has_musts(must, anime_vec):
+					animes[x]["simi"] = degree_of_similarity
+					final_recommendations.append(animes[x])
+		
 
 			
 
@@ -174,7 +188,7 @@ def stop_doubles_in_ranking(animes, new_name):
 
 	return True
 
-def ranking(recomendation_list, amount_to_recommend):
+def ranking(recomendation_list, amount_to_recommend, choice):
 	"""
 	to use : averageRating, userCount, favoritesCount, popularityRank, ratingRank
 	Function that sorts and ranks the proposed recommendations
@@ -194,15 +208,13 @@ def ranking(recomendation_list, amount_to_recommend):
 	if len(recomendation_list) < amount_to_recommend: #check to see if the amount proposed is less than the amount asked
 		return []
 
-
 	for anime in recomendation_list: #different attributes
 		check = [anime["attributes"]["averageRating"], anime["attributes"]["userCount"],
 		 		anime["attributes"]["favoritesCount"], anime["attributes"]["popularityRank"],
 				anime["attributes"]["ratingRank"],anime["attributes"]["startDate"]]
 		name = anime["attributes"]["canonicalTitle"]
 		if "" not in check and " " not in check and None not in check and stop_doubles_in_ranking(anime_rec_names,name ): #check if empty variables
-			anime["key"] = (float(anime["simi"])*(1+anime["simi"]))**2 * float(check[0])*4/10 + float(check[1])*4/10 + float(check[2])*1/10 \
-						 + 10*(1/float(check[3])) + 10*(1/float(check[4])) + int(check[5].split("-")[0])**2 #applying formula
+			anime["key"] = (1+(anime["simi"])) + (float(check[0])/100 * math.log10(check[1]+0.00000001)/4) + (1/check[3] * 1/2)  #applying formula
 			anime_rec_inter.append(anime)
 			anime_rec_names.append(name)
 	
@@ -225,31 +237,33 @@ def run(animes, choice, amnt):
 	choice = search(animes, choice)
 	amount = int(amnt) #int(input("How many would u want: "))
 
-	check = 1
+	check = 0.3
 	trys = 0
 	how = len([x for x in choice['vector'] if x == 1])
 	partial_recs = []
 	found = False
 	while not found:
 		anime_recs = inter(animes, choice, check, how)
-
-		if len(anime_recs) >= amount:
+		print(len(anime_recs))
+		if len(anime_recs) >= amount+3:
 			partial_recs = anime_recs
 
 
 		check -= 0.1
 		trys += 1
 
-		if trys == 8:
+		if trys == 9:
 			print('Sorry we didnt find anything...')
 			found = True
+			conc = ranking(partial_recs, amount, choice)
+			return conc
+			
 
 	#ivan is gay
-		conc = ranking(partial_recs, amount)
+		conc = ranking(partial_recs, amount, choice)
 		if len(conc) >= amount:
 			return conc
 
-	return [animes[animes.keys[x]] for x in range(amnt) ]
-
+	return [animes[list(animes.keys())[x]] for x in range(amnt)]
 
 
