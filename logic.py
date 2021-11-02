@@ -93,20 +93,19 @@ def has_musts(musts, anime_vec):
 	Returns:
 		[bool]: [has or]
 	"""
-	same = []
-	if len(musts) >= 3:
-		for x in musts:
-			if anime_vec[x] == 1:
-				same.append(x)
+	
+	how_many = 0
+	for y in musts:
+	    if anime_vec[y] == 1:
+    		how_many += 1
+	
+	if len(musts) == 0 :
+	    return True
 
-		if len(same) >= 3:
-			return True
-		return False
-
-	for x in musts:
-		if anime_vec[x] != 1:
-			return False
-	return True
+	if how_many/len(musts) >= 0.5:
+	    return True
+	
+	return False
 
 
 
@@ -130,6 +129,7 @@ def get_degree_of_sim(v1, v2):
 	
 	dot1 = ((dot(v1, v2)/len([x for x in v1 if x == 1])) + (dot(v1, v2)/len([y for y in v2 if y == 1])*2)) / 3
 	dot2 = ((dot(v1, v2)/len([x for x in v1 if x == 1]))*2 + (dot(v1, v2)/len([y for y in v2 if y == 1]))) / 3
+
 	return min(dot1, dot2)
 
 
@@ -139,7 +139,7 @@ def inter(animes, choice, check, amnt):
 	"""
 	needs = ["Isekai", 'Bounty Hunter', 'Cooking', 'Cross Dressing', "Human Enhancement", "Super Deformed",
             'Ninja', 'Space Opera', "Anthropomorphism", 'Slow When It Comes To Love', 'Reverse Harem', 'Music',
-			'Sports', 'Delinquent', 'time travel', 'vampire]
+			'Sports', 'Delinquent', 'time travel', 'vampire', romance]
 
 
 	Function that finds matching anime, they need to pass the minimum amount of similarity
@@ -269,5 +269,4 @@ def run(animes, choice, amnt):
 			return conc
 
 	return [animes[list(animes.keys())[x]] for x in range(amnt)]
-
 
