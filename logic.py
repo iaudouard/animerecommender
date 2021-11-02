@@ -214,7 +214,11 @@ def ranking(recomendation_list, amount_to_recommend, choice):
 				anime["attributes"]["ratingRank"],anime["attributes"]["startDate"]]
 		name = anime["attributes"]["canonicalTitle"]
 		if "" not in check and " " not in check and None not in check and stop_doubles_in_ranking(anime_rec_names,name ): #check if empty variables
-			anime["key"] = (1+(anime["simi"])) + (float(check[0])/100 * math.log10(check[1]+0.00000001)/4) + (1/check[3] * 1/2)  #applying formula
+			anime["key"] = (1+(anime["simi"])) + (float(check[0])/100 * math.log10(check[1]+0.00000001)/4) + (1/check[3] * 1/2) + \
+						0.3/(1 + abs(int(choice["attributes"]["startDate"].split("-")[0]) - int(check[5].split("-")[0]))) #applying formula
+
+
+				
 			anime_rec_inter.append(anime)
 			anime_rec_names.append(name)
 	
