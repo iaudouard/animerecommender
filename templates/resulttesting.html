@@ -39,7 +39,7 @@
             //creating the card html elements
             const cardContainer = document.createElement('div')
             cardContainer.setAttribute('class','cardContainer')
-            cardContainer.style.backgroundImage = "url('"+results[i]['attributes']["posterImage"]["large"]+"')"
+            cardContainer.style.backgroundImage = "url('"+results[i]['attributes']["posterImage"]+"')"
 
             const cardInformationContainer = document.createElement('div')
             cardInformationContainer.setAttribute('class', 'cardInformationContainer')
@@ -49,7 +49,6 @@
             cardTitle.setAttribute('class', 'cardTitle')
             cardInformationContainer.appendChild(cardTitle)
             //end
-
 
             cardTitle.innerHTML = results[i]['attributes']['canonicalTitle']
 

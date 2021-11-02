@@ -1,7 +1,6 @@
 
 import json
-import requests
-geners = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android', 'All Girls School',
+"""geners = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android', 'All Girls School',
  'Vampire', 'Wrestling', 'Samurai', 'Elf', 'Pirate', 'Bishounen', 'Tentacle', 'Boxing', 'Musical Band',
   'Cooking', 'Air Force', 'Bounty Hunter', 'High School', 'Delinquent', 'Maid', 'Magic', 'Cyborg', 'Alien',
    'Zombie', 'Robot', 'Martial Arts', 'Angel', 'Waitress', 'Dragon', 'Assassin', 'Idol', 'Nurse', 'Magical Girl',
@@ -31,17 +30,12 @@ geners = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android',
     'Dementia', 'Kids', 'Family', 'Target Demographics', 'Shoujo', 'Shounen', 'Seinen', 'Josei', 'Isekai']
 
 
-needs = ["Middle School",'Isekai','Josei','Seinen', 'Shoujo', 'Shounen','Dementia',
-         'Space Opera', "Violent Retribution For Accidental Infringement", "Harem", "Romance" , "Cyberpunk" , "Dystopia"
-         , "Sports", "Sudden Girlfriend Appearance", "All Girls School", "Magic", "Space", "Future","School Clubs"
-         , "Love Polygon", "Coming Of Age", "Supernatural", "Psychological" ]
+needs = ["Isekai", 'Bounty Hunter', 'Cooking', 'Cross Dressing', "Human Enhancement", "Super Deformed",
+         'Ninja', 'Space Opera', "Anthropomorphism", 'Slow When It Comes To Love', 'Reverse Harem', 'Music', 'Sports', 'Delinquent']
 
 
 
-
-"""
-needs_by_id = [0, 217, 216, 215, 213, 214, 209, 190, 102, 145, 144, 146, 161, 160, 109, 5, 21, 47, 46, 76, 111, 165, 204, 203]
-
+needs_by_id = []
 for x in needs:
     if x in geners:
         needs_by_id.append(geners.index(x))
@@ -50,13 +44,11 @@ for x in needs:
 print(len(needs))
 print(len(needs_by_id))
 
-print(needs_by_id)"""
+print(needs_by_id)
+"""
 
-
-
+"""
 #https://kitsu.io/api/edge/anime/1/categories?page%5Blimit%5D=100&page%5Boffset%5D=0
-
-base = [0] * len(geners)
 
 def openAnimes():
     
@@ -66,29 +58,48 @@ def openAnimes():
 
 animes = openAnimes()
 
-for x in animes:
-    base = [0] * len(geners)
-    if animes[x]["vector"] == base:
-        try:
-            gen = requests.get("https://kitsu.io/api/edge/anime?filter[text]="+x).json()
-            cats_fetch = gen["data"][0]["relationships"]["categories"]["links"]["related"] + "?page%5Blimit%5D=100&page%5Boffset%5D=0"
-            gen_list = [y["attributes"]["title"] for y in requests.get(cats_fetch).json()["data"]]
-            print("yesss", gen_list)
-            if gen_list != []:
-                for g in gen_list:
-                    base[geners.index(g)] = 1
-                animes[x]["vector"] = base[::]
-                print(animes[x]["vector"])
-        except:
-            print("no")
-            animes[x]["vector"] = base[::]
+aniimes_short = {}
+
+for anime in animes:
+
+    try:
+        new_dict = {"attributes": {"averageRating":animes[anime]["attributes"]["averageRating"], "canonicalTitle" : animes[anime]["attributes"]["canonicalTitle"],
+                                "startDate":animes[anime]["attributes"]["startDate"], "ratingRank" : animes[anime]["attributes"]["ratingRank"],
+                                    "popularityRank": animes[anime]["attributes"]["popularityRank"], "favoritesCount" : animes[anime]["attributes"]["favoritesCount"],
+                                    "userCount" : animes[anime]["attributes"]["userCount"], "subtype" : animes[anime]["attributes"]["subtype"],
+                                    "synopsis":animes[anime]["attributes"]["synopsis"], "posterImage" : animes[anime]['attributes']["posterImage"]["large"] },
+                    "vector" : animes[anime]["vector"]  
+                    }
+        aniimes_short[anime] = new_dict
+    except :
+        pass
 
 
 
-with open("AnimeData.json", "w") as fp:
-		json.dump(animes, fp)
+with open("AnimeDataShort.json", "w") as fp:
+		json.dump(aniimes_short, fp)
 
 
+"""
+rando = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android', 'All Girls School',
+ 'Vampire', 'Wrestling', 'Samurai', 'Elf', 'Pirate', 'Bishounen', 'Tentacle', 'Boxing', 'Musical Band',
+  'Cooking', 'Air Force', 'Bounty Hunter', 'High School', 'Delinquent', 'Maid', 'Magic', 'Cyborg', 'Alien',
+   'Zombie', 'Robot', 'Martial Arts', 'Angel', 'Waitress', 'Dragon', 'Assassin', 'Idol', 'Nurse', 'Magical Girl',
+    'Ghost', 'Cross Dressing', 'Loli', 'Deity', 'Ninja', 'Office Lady', 'Gunfights', 'Battle Royale', 'Swordplay',
+     'Super Power', 'Present', 'Past', 'Future', 'Space', 'Fantasy World', 'Desert', 'Earth', 'Island', 'Countryside',
+    'Human Enhancement', 'Time Travel', 'Mecha', 'Space Travel', 'Alternative Past', 'Historical', 'Alternative Present',
+    'Power Suit', 'Transforming Craft', 'Piloted Robot', 'Demon', 'High Fantasy', 'Contemporary Fantasy', 'Dark Fantasy',
+    'Absurdist Humour', 'Super Deformed', 'Slapstick', 'Breaking The Fourth Wall', 'Parody', 'Satire', 'Other Planet',
+    'Shipboard', 'University', 'School Clubs', 'Japan', 'Korea', 'China', 'Russia', 'Tokyo', 'Kyoto', 'New York',
+    'Heian Period', 'Victorian Period', 'Sengoku Period', 'Tokugawa Period', 'World War II', 'Bakumatsu   Meiji Period',
+    'Voyeurism', 'Netorare', 'Ahegao', 'Violence', 'Combat', 'Tennis', 'Volleyball', 'Motorsport', 'Basketball', 'Mars',
+    'Street Racing', 'Formula Racing', 'Violent Retribution For Accidental Infringement', 'Feudal Warfare',
+    'Humanoid Alien', 'Parasite', 'Slow When It Comes To Love', 'Shoujo Ai', 'Shounen Ai',
+    'Sudden Girlfriend Appearance', 'Unrequited Love', 'Love Polygon', 'Plot Continuity', 'Stereotypes',
+    'Reverse Harem', 'Performance', 'Music', 'Baseball', 'France', 'United Kingdom', 'Italy', 'Germany',
+    'United States', 'Europe', 'Americas', 'Middle East', 'Asia', 'Africa', 'Floating Island', 'Parallel Universe',
+    'Virtual Reality', 'Mafia', 'Action', 'Angst', 'Blackmail', 'Science Fiction', 'Fantasy', 'Adventure',
+    'Horror', 'Thriller', 'Comedy', 'Henshin', 'Ecchi', 'Anthropomorphism', 'Romance']
 
-
+print(len(rando))
 
