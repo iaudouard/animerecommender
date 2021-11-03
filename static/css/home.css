@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+::-webkit-scrollbar {
+  width: 0.5vw;
+}
+::-webkit-scrollbar-thumb {
+  background: #a30000;
+  border-radius: 0.5rem;
+}
+::placeholder {
+  font-weight: 500;
+  color: #a3000052;
+}
+
+.homeBody {
+  background-color: #fec8cd;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.animeSearchInputLabel {
+  font-family: "Roboto Mono", monospace;
+  color: #a30000;
+  margin-top: 40vh;
+  font-size: 1.7vw;
+  user-select: none;
+}
+
+.animeSearchInput {
+  background-color: transparent;
+  height: 5vh;
+  width: 17vw;
+  outline: none;
+  border: none;
+  font-size: 1.2vw;
+  font-family: "Roboto Mono", monospace;
+  border-bottom: 0.4vh solid #a30000;
+  color: #a30000;
+  caret-color: #a30000;
+  transition: 0.5s;
+}
+.animeSearchInput:focus {
+  border-bottom: 0.4vh solid white;
+}
+
+.autocompleteContainer {
+  position: absolute;
+  z-index: 2;
+  width: 17vw;
+  max-height: 10vh;
+  padding: 0;
+  transition: 0.3s;
+}
+
+.autocompleteListContainer {
+  list-style: none;
+  font-family: "Roboto Mono", monospace;
+  color: #a30000;
+  background-color: white;
+  overflow-x: auto;
+  max-height: 50vh;
+  margin-top: 0;
+  padding: 0.5vw;
+  transition: 0.3s;
+  width: 17vw;
+}
+.autocompleteElementContainer {
+  margin: 0;
+  transition: 0.4s;
+  padding: 0.1vw;
+  user-select: none;
+  font-size: 1.2vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 0.4vh solid #a30000; */
+}
+.autocompleteElementContainer:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.autocompleteElementImage {
+  height: 10vh;
+  width: auto;
+  border-radius: 0.3rem;
+}
+
+.numberOfRecsLabel {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.2vw;
+  color: #a30000ca;
+  margin-top: 4vh;
+  user-select: none;
+}
+
+.numberOfRecsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  width: 10vw;
+  align-items: center;
+  user-select: none;
+  margin-top: 0;
+}
+
+.numberOfRecsText {
+  font-size: 1vw;
+  font-size: 1.4vw;
+  font-family: "Roboto Mono", monospace;
+  transition: 0.3s;
+}
+
+.incrementButton {
+  width: 2vw;
+  height: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 0.2s;
+}
+
+.incrementButtonText {
+  font-size: 1vw;
+  color: white;
+  font-size: 1.4vw;
+  font-family: "Roboto Mono", monospace;
+}
+
+.submitButton {
+  margin-top: 2vh;
+  height: 4vh;
+  width: 7vw;
+  transition: 0.4s;
+  font-size: 1.2vw;
+  font-family: "Roboto Mono", monospace;
+  color: #a30000;
+  outline: none;
+  border: 0.3vh solid #a30000;
+  border-radius: 0.5rem;
+  user-select: none;
+}
+
+.button {
+  background-color: #ffaeb6;
+}
+.button:active {
+  background-color: #ff8894;
+}
+.standard-color {
+  color: #a30000;
+}
+.white {
+  color: white;
+}
+.hidden {
+  display: none;
+}
+.hiddenNumber {
+  display: none;
+  user-select: none;
+}

@@ -12,7 +12,7 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 	
-	with open("AnimeDataShort.json", 'r') as fout:
+	with open("./data/AnimeDataShort.json", 'r') as fout:
 		tits = json.load(fout)
 	titles = [x for x in tits]
 	return titles
@@ -27,7 +27,7 @@ def openAnimes():
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	with open("AnimeDataShort.json", 'r') as fout:
+	with open("./data/AnimeDataShort.json", 'r') as fout:
 		animes = json.load(fout)
 	return dict(animes)
 

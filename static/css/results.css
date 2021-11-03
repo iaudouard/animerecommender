@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+.resultsBody {
+  background-color: #fec8cd;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fas {
+  position: absolute;
+  left: 3vw;
+  top: 5vh;
+  color: #a30000;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.fas:hover {
+  color: white;
+}
+
+.resultsContainerLabel {
+  font-family: "Roboto Mono", monospace;
+  color: #a30000;
+  margin-top: 40vh;
+  font-size: 1.7vw;
+  user-select: none;
+}
+
+.resultsContainer {
+  display: flex;
+}
+
+.cardContainer {
+  height: 30vh;
+  width: 13vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 1rem;
+  margin: 0 1.5vw;
+  position: relative;
+}
+.cardInformationContainer {
+  position: absolute;
+  bottom: 0;
+  height: 30%;
+  background-color: #fec8cdb9;
+  width: 100%;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.cardTitle {
+  font-family: "Roboto Mono", monospace;
+  color: #a30000;
+  font-size: 1.2vw;
+  padding-left: 0.4vw;
+  opacity: 1;
+}
