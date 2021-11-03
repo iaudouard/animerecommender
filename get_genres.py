@@ -1,4 +1,3 @@
-
 import json
 """geners = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android', 'All Girls School',
  'Vampire', 'Wrestling', 'Samurai', 'Elf', 'Pirate', 'Bishounen', 'Tentacle', 'Boxing', 'Musical Band',
@@ -28,40 +27,27 @@ import json
     'Navy', 'Student Government', 'Juujin', 'Robot Helper', 'Soccer', 'Content Indicators', 'Dynamic', 'Elements', 
     'Setting', 'Themes', 'Psychological', 'Supernatural', 'Mystery', 'Gender Bender', 'Yaoi', 'Anime Influenced',
     'Dementia', 'Kids', 'Family', 'Target Demographics', 'Shoujo', 'Shounen', 'Seinen', 'Josei', 'Isekai']
-
-
 needs = ["Isekai", 'Bounty Hunter', 'Cooking', 'Cross Dressing', "Human Enhancement", "Super Deformed",
          'Ninja', 'Space Opera', "Anthropomorphism", 'Slow When It Comes To Love', 'Reverse Harem', 'Music', 'Sports', 'Delinquent']
-
-
-
 needs_by_id = []
 for x in needs:
     if x in geners:
         needs_by_id.append(geners.index(x))
-
-
 print(len(needs))
 print(len(needs_by_id))
-
 print(needs_by_id)
 """
 
 """
 #https://kitsu.io/api/edge/anime/1/categories?page%5Blimit%5D=100&page%5Boffset%5D=0
-
 def openAnimes():
     
     with open('AnimeData.json', 'r') as fout:
         animes = json.load(fout)
     return animes
-
 animes = openAnimes()
-
 aniimes_short = {}
-
 for anime in animes:
-
     try:
         new_dict = {"attributes": {"averageRating":animes[anime]["attributes"]["averageRating"], "canonicalTitle" : animes[anime]["attributes"]["canonicalTitle"],
                                 "startDate":animes[anime]["attributes"]["startDate"], "ratingRank" : animes[anime]["attributes"]["ratingRank"],
@@ -73,13 +59,8 @@ for anime in animes:
         aniimes_short[anime] = new_dict
     except :
         pass
-
-
-
 with open("AnimeDataShort.json", "w") as fp:
 		json.dump(aniimes_short, fp)
-
-
 """
 rando = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android', 'All Girls School',
  'Vampire', 'Wrestling', 'Samurai', 'Elf', 'Pirate', 'Bishounen', 'Tentacle', 'Boxing', 'Musical Band',
@@ -100,6 +81,3 @@ rando = ['Middle School', 'Cycling', 'Elementary School', 'Mermaid', 'Android', 
     'United States', 'Europe', 'Americas', 'Middle East', 'Asia', 'Africa', 'Floating Island', 'Parallel Universe',
     'Virtual Reality', 'Mafia', 'Action', 'Angst', 'Blackmail', 'Science Fiction', 'Fantasy', 'Adventure',
     'Horror', 'Thriller', 'Comedy', 'Henshin', 'Ecchi', 'Anthropomorphism', 'Romance']
-
-print(len(rando))
-

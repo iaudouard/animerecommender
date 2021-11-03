@@ -5,28 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anime Recommender</title>
+    <script
+      src="https://kit.fontawesome.com/40db60ac4e.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/results.css') }}"
+    />
   </head>
-  <body
-    id="body"
-    style="
-      background-color: #fec8cd;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-    "
-  >
-    <h1
-      style="
-        font-family: 'Roboto Mono', monospace;
-        color: #a30000;
-        margin-top: 40vh;
-        font-size: 1.7vw;
-        user-select: none;
-      "
-    >
-      your results...
-    </h1>
-    <div id="resultsContainer" style="display: flex"></div>
+
+  <body id="body" class="resultsBody">
+    <a href="/home"><i class="fas fa-arrow-left fa-3x"></i></a>
+    <h1 class="resultsContainerLabel">your results...</h1>
+    <div id="resultsContainer" class="resultsContainer"></div>
     <script>
         //recommendation results passed from the flask (python)
         const results = {{ results | tojson }}
@@ -56,36 +48,5 @@
 
         }
     </script>
-
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-
-      .cardContainer {
-        height: 30vh;
-        width: 13vw;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-        border-radius: 1rem;
-        margin: 0 1.5vw;
-        position: relative;
-      }
-      .cardInformationContainer {
-        position: absolute;
-        bottom: 0;
-        height: 30%;
-        background-color: #fec8cdb9;
-        width: 100%;
-        border-bottom-left-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-      }
-      .cardTitle {
-        font-family: "Roboto Mono", monospace;
-        color: #a30000;
-        font-size: 1.2vw;
-        padding-left: 0.4vw;
-        opacity: 1;
-      }
-    </style>
   </body>
 </html>

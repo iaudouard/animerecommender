@@ -7,36 +7,13 @@
     <title>Anime Recommender</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
+      href="{{ url_for('static', filename='css/home.css') }}"
     />
   </head>
 
-  <body
-    style="
-      background-color: #fec8cd;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-    "
-  >
-    <h1
-      style="
-        font-family: 'Roboto Mono', monospace;
-        color: #a30000;
-        margin-top: 40vh;
-        font-size: 1.7vw;
-        user-select: none;
-      "
-    >
-      enter an anime :
-    </h1>
-    <form
-      action="#"
-      method="post"
-      id="createReport"
-      class="recForm"
-      autocomplete="off"
-    >
+  <body class="homeBody">
+    <h1 class="animeSearchInputLabel">enter an anime :</h1>
+    <form action="#" method="post" id="createReport" autocomplete="off">
       <input
         spellcheck="false"
         id="animeSearchInput"
@@ -44,147 +21,40 @@
         type="text"
         name="animeChoice"
         placeholder="naruto..."
-        style="
-          background-color: transparent;
-          height: 5vh;
-          width: 17vw;
-          outline: none;
-          border: none;
-          font-size: 1.2vw;
-          font-family: 'Roboto Mono', monospace;
-          border-bottom: 0.4vh solid #a30000;
-          color: #a30000;
-          caret-color: #a30000;
-          transition: 0.5s;
-        "
       />
-      <div
-        class="autocompleteContainer"
-        id="autocompleteContainer"
-        style="
-          position: absolute;
-          z-index: 2;
-          width: 17vw;
-          max-height: 10vh;
-          padding: 0;
-          transition: 0.3s;
-        "
-      >
+      <div class="autocompleteContainer" id="autocompleteContainer">
         <ul
           id="autocompleteListContainer"
           class="autocompleteListContainer hidden"
         ></ul>
       </div>
     </form>
-    <h2
-      style="
-        font-family: 'Roboto Mono', monospace;
-        font-size: 1.2vw;
-        color: #a30000ca;
-        margin-top: 4vh;
-        user-select: none;
-      "
-    >
-      how many recs?
-    </h2>
-    <div
-      style="
-        display: flex;
-        justify-content: space-evenly;
-        width: 10vw;
-        align-items: center;
-        user-select: none;
-        margin-top: 0;
-      "
-    >
+    <h2 class="numberOfRecsLabel">how many recs?</h2>
+    <div class="numberOfRecsContainer">
       <button
         type="button"
         onclick="incrementDown()"
         id="incrementDown"
-        class="button"
-        style="
-          width: 2vw;
-          height: 2vw;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          outline: none;
-          border: none;
-          border-radius: 0.5rem;
-          transition: 0.2s;
-        "
+        class="button incrementButton"
       >
-        <p
-          style="
-            font-size: 1vw;
-            color: white;
-            font-size: 1.4vw;
-            font-family: 'Roboto Mono', monospace;
-          "
-        >
-          -
-        </p>
+        <p class="incrementButtonText">-</p>
       </button>
 
-      <p
-        class="standard-color"
-        id="number"
-        style="
-          font-size: 1vw;
-          font-size: 1.4vw;
-          font-family: 'Roboto Mono', monospace;
-          transition: 0.3s;
-        "
-      >
-        0
-      </p>
+      <p class="numberOfRecsText standard-color" id="number">0</p>
       <button
         type="button"
         onclick="incrementUp()"
         id="incrementUp"
-        class="button"
-        style="
-          width: 2vw;
-          height: 2vw;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          outline: none;
-          border: none;
-          border-radius: 0.5rem;
-          transition: 0.2s;
-        "
+        class="button incrementButton"
       >
-        <p
-          style="
-            font-size: 1vw;
-            color: white;
-            font-size: 1.2vw;
-            font-family: 'Roboto Mono', monospace;
-          "
-        >
-          +
-        </p>
+        <p class="incrementButtonText">+</p>
       </button>
     </div>
     <button
       type="submit"
       id="submitButton"
       form="createReport"
-      class="button sub"
-      style="
-        margin-top: 2vh;
-        height: 4vh;
-        width: 7vw;
-        transition: 0.4s;
-        font-size: 1.2vw;
-        font-family: 'Roboto Mono', monospace;
-        color: #a30000;
-        outline: none;
-        border: 0.3vh solid #a30000;
-        border-radius: 0.5rem;
-        user-select: none;
-      "
+      class="button submitButton"
     >
       submit
     </button>
@@ -192,218 +62,129 @@
       name="howMany"
       form="createReport"
       id="howMany"
-      style="display: none; user-select: none"
+      class="hiddenNumber"
       value="0"
     />
-    <script>
-      //getting the elements which will be modified through their ID to simplify the reading of code later on
-      const animeSearchInput = document.getElementById("animeSearchInput");
-      const autocompleteContainer = document.getElementById(
-        "autocompleteContainer"
-      );
-      const autocompleteListContainer = document.getElementById(
-        "autocompleteListContainer"
-      );
-      const numberOfRecs = document.getElementById("number");
-      const submitButton = document.getElementById("submitButton");
+  </body>
 
-      //functions which handle the clicking of the + and - buttons to increment the number of animes they get back
-      function incrementUp() {
-        if (![...numberOfRecs.classList].includes("white")) {
-          numberOfRecs.classList.remove("standard-color");
-          numberOfRecs.classList.add("white");
-        }
-        let newValue = parseInt(numberOfRecs.innerText) + 1;
-        numberOfRecs.innerHTML = newValue;
+  <script>
+    //getting the elements which will be modified through their ID to simplify the reading of code later on
+    const animeSearchInput = document.getElementById("animeSearchInput");
+    const autocompleteContainer = document.getElementById(
+      "autocompleteContainer"
+    );
+    const autocompleteListContainer = document.getElementById(
+      "autocompleteListContainer"
+    );
+    const numberOfRecs = document.getElementById("number");
+    const submitButton = document.getElementById("submitButton");
+
+    //functions which handle the clicking of the + and - buttons to increment the number of animes they get back
+    function incrementUp() {
+      if (![...numberOfRecs.classList].includes("white")) {
+        numberOfRecs.classList.remove("standard-color");
+        numberOfRecs.classList.add("white");
+      }
+      let newValue = parseInt(numberOfRecs.innerText) + 1;
+      numberOfRecs.innerHTML = newValue;
+      document.getElementById("howMany").value = parseInt(
+        numberOfRecs.innerText
+      );
+    }
+
+    function incrementDown() {
+      if (parseInt(numberOfRecs.innerText) > 0) {
+        numberOfRecs.innerHTML = parseInt(numberOfRecs.innerText) - 1;
         document.getElementById("howMany").value = parseInt(
           numberOfRecs.innerText
         );
       }
-
-      function incrementDown() {
-        if (parseInt(numberOfRecs.innerText) > 0) {
-          numberOfRecs.innerHTML = parseInt(numberOfRecs.innerText) - 1;
-          document.getElementById("howMany").value = parseInt(
-            numberOfRecs.innerText
-          );
-        }
-        if (parseInt(numberOfRecs.innerText) === 0) {
-          numberOfRecs.classList.add("standard-color");
-          numberOfRecs.classList.remove("white");
-        }
+      if (parseInt(numberOfRecs.innerText) === 0) {
+        numberOfRecs.classList.add("standard-color");
+        numberOfRecs.classList.remove("white");
       }
-      //end of incrementation functions
+    }
+    //end of incrementation functions
 
-      //function to autocomplete the value of an element in the animeSearchInput when one of the autocomplete elements is clicked
-      //takes in the name of the anime that has been clicked on
-      function autocompleteAnimeSearchInputValue(clickedOnAnime) {
-        animeSearchInput.value = clickedOnAnime;
+    //function to autocomplete the value of an element in the animeSearchInput when one of the autocomplete elements is clicked
+    //takes in the name of the anime that has been clicked on
+    function autocompleteAnimeSearchInputValue(clickedOnAnime) {
+      animeSearchInput.value = clickedOnAnime;
+      autocompleteListContainer.classList.add("hidden");
+    }
+
+    //this is the function that generates all the autocompletes
+    //first it fetches the autocomplete anime using the kitsu api, passing the current value of the animeSearchInput as the query arg
+    //then it loops through and gets the necessary info
+    //finally it creates a list element for each anime and adds it to the autocomplete container
+    function fetchAutocompleteHandler() {
+      //this is just to reset the autocoomplete list so that the lists don't accumulate
+      //--> it resets and adds the new autocomplete elements everytime the user types
+      autocompleteListContainer.innerHTML = "";
+      //check to add or remove the hidden class
+      //--> if the animeSearchInput is empty it will add a hidden class to the list container
+      //so that there is not just a random empty box when the animeSearchInput is empty
+      if (animeSearchInput.value != "") {
+        autocompleteListContainer.classList.remove("hidden");
+      } else {
         autocompleteListContainer.classList.add("hidden");
       }
 
-      //this is the function that generates all the autocompletes
-      //first it fetches the autocomplete anime using the kitsu api, passing the current value of the animeSearchInput as the query arg
-      //then it loops through and gets the necessary info
-      //finally it creates a list element for each anime and adds it to the autocomplete container
-      function fetchAutocompleteHandler() {
-        //this is just to reset the autocoomplete list so that the lists don't accumulate
-        //--> it resets and adds the new autocomplete elements everytime the user types
-        autocompleteListContainer.innerHTML = "";
-        //check to add or remove the hidden class
-        //--> if the animeSearchInput is empty it will add a hidden class to the list container
-        //so that there is not just a random empty box when the animeSearchInput is empty
-        if (animeSearchInput.value != "") {
-          autocompleteListContainer.classList.remove("hidden");
-        } else {
-          autocompleteListContainer.classList.add("hidden");
-        }
+      //fetch request to get the autocomplete elements --> fetched in our database's api
+      fetch(
+        "https://kitsu.io/api/edge/anime?filter[text]=" + animeSearchInput.value
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((result) => {
+          //looping through the results of the fetch request and storing the information needed for the autocomplete
+          var autocompleteElements = [];
 
-        //fetch request to get the autocomplete elements --> fetched in our database's api
-        fetch(
-          "https://kitsu.io/api/edge/anime?filter[text]=" +
-            animeSearchInput.value
-        )
-          .then((res) => {
-            return res.json();
-          })
-          .then((result) => {
-            //looping through the results of the fetch request and storing the information needed for the autocomplete
-            var autocompleteElements = [];
+          for (let i = 0; i < result.data.length; i++) {
+            const resultTitle = result.data[i]["attributes"]["canonicalTitle"];
+            const resultImagePath =
+              result.data[i]["attributes"]["posterImage"]["tiny"];
 
-            for (let i = 0; i < result.data.length; i++) {
-              const resultTitle =
-                result.data[i]["attributes"]["canonicalTitle"];
-              const resultImagePath =
-                result.data[i]["attributes"]["posterImage"]["tiny"];
+            autocompleteElements.push([
+              { title: resultTitle, image: resultImagePath },
+            ]);
+          }
 
-              autocompleteElements.push([
-                { title: resultTitle, image: resultImagePath },
-              ]);
-            }
+          //looping through the stored information and creating a list element with the title and the image for the autocomplete
+          for (let i = 0; i < autocompleteElements.length; i++) {
+            const autocompleteElementContainer = document.createElement("li");
+            autocompleteElementContainer.setAttribute(
+              "class",
+              "autocompleteElementContainer " +
+                autocompleteElements[i][0]["title"]
+            );
 
-            //looping through the stored information and creating a list element with the title and the image for the autocomplete
-            for (let i = 0; i < autocompleteElements.length; i++) {
-              const autocompleteElementContainer = document.createElement("li");
-              autocompleteElementContainer.setAttribute(
-                "class",
-                "autocompleteElementContainer " +
-                  autocompleteElements[i][0]["title"]
+            autocompleteElementContainer.addEventListener("click", () => {
+              autocompleteAnimeSearchInputValue(
+                autocompleteElements[i][0]["title"]
               );
+            });
 
-              autocompleteElementContainer.addEventListener("click", () => {
-                autocompleteAnimeSearchInputValue(
-                  autocompleteElements[i][0]["title"]
-                );
-              });
+            autocompleteElementContainer.innerHTML =
+              autocompleteElements[i][0]["title"] +
+              "<img class='autocompleteElementImage' src='" +
+              autocompleteElements[i][0]["image"] +
+              "' />";
 
-              autocompleteElementContainer.innerHTML =
-                autocompleteElements[i][0]["title"] +
-                "<img class='autocompleteElementImage' src='" +
-                autocompleteElements[i][0]["image"] +
-                "' />";
+            autocompleteListContainer.appendChild(autocompleteElementContainer);
+          }
+        });
+    }
 
-              autocompleteListContainer.appendChild(
-                autocompleteElementContainer
-              );
-            }
-          });
-      }
+    //there is a timeout before the autocomplete pops up to avoid a bug which occurs when the user input is too quick
+    //--> the autocomplet items don't update properly, and the autocomplete list accumulates if the user input is too fast
+    //hence the timeout, which waits for the user to stop typing for 300 milliseconds to run the autocomplete suggestions
+    let timeout = null;
+    animeSearchInput.addEventListener("keyup", function () {
+      clearTimeout(timeout);
 
-      //there is a timeout before the autocomplete pops up to avoid a bug which occurs when the user input is too quick
-      //--> the autocomplet items don't update properly, and the autocomplete list accumulates if the user input is too fast
-      //hence the timeout, which waits for the user to stop typing for 300 milliseconds to run the autocomplete suggestions
-      let timeout = null;
-      animeSearchInput.addEventListener("keyup", function () {
-        clearTimeout(timeout);
-
-        timeout = setTimeout(() => fetchAutocompleteHandler(), 300);
-      });
-
-      //styling shit to make the input border color change when its clicked on
-      animeSearchInput.addEventListener("focus", function () {
-        animeSearchInput.style.borderBottom = "0.4vh solid white";
-      });
-      animeSearchInput.addEventListener("focusout", function () {
-        animeSearchInput.style.borderBottom = "0.4vh solid #a30000";
-      });
-
-      //
-      submitButton.addEventListener("focus", function () {
-        submitButton.style.border = "0.3vh solid white";
-        submitButton.style.color = "white";
-      });
-      submitButton.addEventListener("focusout", function () {
-        submitButton.style.border = "0.3vh solid #a30000";
-        submitButton.style.color = "#a3000";
-      });
-    </script>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
-
-      .button {
-        background-color: #ffaeb6;
-      }
-      .button:focus {
-        background-color: #ff8894;
-      }
-
-      ::placeholder {
-        font-weight: 500;
-        color: #a3000052;
-      }
-      .hidden {
-        display: none;
-      }
-      /* .animeSearchInput:focus {
-        background-color: blue;
-      } */
-      .standard-color {
-        color: #a30000;
-      }
-      .white {
-        color: white;
-      }
-
-      .autocompleteListContainer {
-        list-style: none;
-        font-family: "Roboto Mono", monospace;
-        color: #a30000;
-        background-color: white;
-        overflow-x: auto;
-        max-height: 50vh;
-        margin-top: 0;
-        padding: 0.5vw;
-        transition: 0.3s;
-        width: 17vw;
-      }
-      .autocompleteElementContainer {
-        margin: 0;
-        transition: 0.4s;
-        padding: 0.1vw;
-        user-select: none;
-        font-size: 1.2vw;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        /* border: 0.4vh solid #a30000; */
-      }
-      .autocompleteElementContainer:hover {
-        background-color: rgb(223, 223, 223);
-      }
-
-      .autocompleteElementImage {
-        height: 10vh;
-        width: auto;
-        border-radius: 0.3rem;
-      }
-
-      ::-webkit-scrollbar {
-        width: 0.5vw;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #a30000;
-        border-radius: 0.5rem;
-      }
-    </style>
-  </body>
+      timeout = setTimeout(() => fetchAutocompleteHandler(), 300);
+    });
+  </script>
 </html>

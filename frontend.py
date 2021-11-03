@@ -1,6 +1,5 @@
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, render_template, request
 from logic import *
-import jinja2
 
 app = Flask(__name__)
 animes = openAnimes()
@@ -12,7 +11,7 @@ def index():
 		
         
         results = run(animes, request.form['animeChoice'], request.form['howMany'])
-        return render_template('resulttesting.html', results=results)
+        return render_template('results.html', results=results)
     
 
     return render_template('home.html')
@@ -23,7 +22,7 @@ def home():
 		
         try:
         	results = run(animes, request.form['animeChoice'], request.form['howMany'])
-        	return render_template('resulttesting.html', results=results)
+        	return render_template('results.html', results=results)
         except:
             return render_template('home.html')
 
