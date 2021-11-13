@@ -237,6 +237,7 @@ def ranking(recomendation_list, amount_to_recommend, choice):
 
 
 def run(animes, choice, amnt):
+	print(choice)
 
 	choice = search(animes, choice)
 	amount = int(amnt) #int(input("How many would u want: "))
@@ -248,7 +249,6 @@ def run(animes, choice, amnt):
 	found = False
 	while not found:
 		anime_recs = inter(animes, choice, check, how)
-		print(len(anime_recs))
 		if len(anime_recs) >= amount+3:
 			partial_recs = anime_recs
 
@@ -257,7 +257,6 @@ def run(animes, choice, amnt):
 		trys += 1
 
 		if trys == 9:
-			print('Sorry we didnt find anything...')
 			found = True
 			conc = ranking(partial_recs, amount, choice)
 			return conc
