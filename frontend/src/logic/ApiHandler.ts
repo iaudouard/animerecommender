@@ -19,4 +19,6 @@ export default async function fetchRecommendations(
     .then((json) => {
       console.log(json.data);
     });
+
+  return data;
 }
