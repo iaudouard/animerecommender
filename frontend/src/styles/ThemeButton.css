@@ -1,0 +1,15 @@
+.themeButtonContainer {
+  height: 4vh;
+  width: 4vh;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1vh;
+  cursor: pointer;
+  position: absolute;
+  align-self: flex-end;
+  top: 3vh;
+  right: 1.7vw;
+}
