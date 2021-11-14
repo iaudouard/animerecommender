@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
+* {
+  font-family: "Roboto Mono", monospace;
+  font-size: 100%;
+}
+
 body {
   margin: 0;
 }
@@ -12,13 +17,13 @@ body {
   flex-direction: column;
 }
 
-.contentContainer {
-  margin-top: 35vh;
+.formContainer {
+  margin-top: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 30vh;
+  height: 20vh;
 }
 
 .incrementContainer {
@@ -26,7 +31,6 @@ body {
   align-items: center;
   justify-content: space-evenly;
   width: 10vw;
-  font-family: "Roboto Mono", monospace;
   font-size: 1.1vw;
   color: #a30000;
 }
@@ -34,6 +38,8 @@ body {
 .animeSearchInput {
   width: 17vw;
   height: 5vh;
+  padding: 0;
+  font-size: 1.1rem;
   outline: none;
   border: none;
   border-bottom: 0.4vh solid #a30000;
@@ -43,17 +49,4 @@ body {
 
 .animeSearchInput:focus {
   border-bottom: 0.4vh solid white;
-}
-
-.submitButton {
-  width: 5vw;
-  height: 4vh;
-  background-color: #f68a95;
-  border-radius: 0.5vw;
-  border: 0.3vh solid #a30000;
-  outline: none;
-  font-family: "Roboto Mono", monospace;
-  color: #a30000;
-  cursor: pointer;
-  font-size: 1vw;
 }
