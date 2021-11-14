@@ -4,12 +4,11 @@ import fetchRecommendations from "../logic/api";
 import Button from "../components/Button";
 import ThemeButton from "../components/ThemeButton";
 import { Link } from "react-router-dom";
-import { darling, poop, hana } from "../constants/themes";
+import { themes } from "../constants/themes";
 
 interface Props {}
 
 const App = () => {
-  const themes = [poop, hana, darling];
   const [themeIndex, setThemeIndex] = useState<number>(0);
   const [searchInputFocus, setSearchInputFocus] = useState<boolean>(false);
   const [colorTheme, setColorTheme] = useState(themes[themeIndex]);
@@ -33,11 +32,7 @@ const App = () => {
     setNumberOfRecommendations(numberOfRecommendations + 1);
   };
 
-  const handleSubmit = (): void => {
-    console.log(
-      fetchRecommendations(animeSearchInput, numberOfRecommendations)
-    );
-  };
+  const handleSubmit = (): void => {};
 
   const handleThemeSwitch = () => {
     let tempIndex = themeIndex;
@@ -47,7 +42,7 @@ const App = () => {
   };
 
   return (
-    <div className="App" style={{ backgroundColor: colorTheme["bng"] }}>
+    <div className="Home" style={{ backgroundColor: colorTheme["bng"] }}>
       <ThemeButton
         Icon={colorTheme["Icon"]}
         Color={colorTheme["primary"]}
@@ -62,6 +57,7 @@ const App = () => {
             borderBottom: `0.4vh solid ${
               searchInputFocus ? "white" : colorTheme["secondary"]
             }`,
+            color: colorTheme["secondary"],
           }}
           onFocus={() => setSearchInputFocus(true)}
           onBlur={() => setSearchInputFocus(false)}
@@ -89,7 +85,17 @@ const App = () => {
           />
         </div>
       </div>
-      <Link to="/results" style={{ textDecoration: "none" }}>
+      <Link
+        to={{
+          pathname: "/results",
+          state: {
+            animeTitle: animeSearchInput,
+            numberOfRecommendations: numberOfRecommendations,
+            themeIndex: themeIndex,
+          },
+        }}
+        style={{ textDecoration: "none" }}
+      >
         <Button
           type="submit"
           primaryColor={colorTheme["primary"]}
