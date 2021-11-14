@@ -32,23 +32,34 @@ function App() {
 
   return (
     <div className="App">
-      <input onChange={(ev) => updateAnimeSearchInput(ev)}></input>
-      <div className="incrementContainer">
-        <IncrementButton
-          primaryColor="#ffaeb6"
-          secondaryColor="#a30000"
-          incrementFunction={() => handleIncrementDown()}
-          sign="-"
-        />
-        {numberOfRecommendations}
-        <IncrementButton
-          primaryColor="#ffaeb6"
-          secondaryColor="#a30000"
-          incrementFunction={() => handleIncrementUp()}
-          sign="+"
-        />
+      <div className="contentContainer">
+        <p>enter an anime:</p>
+        <input
+          className="animeSearchInput"
+          onChange={(ev) => updateAnimeSearchInput(ev)}
+          placeholder="naruto..."
+        ></input>
+        <div className="incrementContainer">
+          <IncrementButton
+            primaryColor="#ffaeb6"
+            secondaryColor="#a30000"
+            terceryColor="#f68a95"
+            incrementFunction={() => handleIncrementDown()}
+            sign="-"
+          />
+          {numberOfRecommendations}
+          <IncrementButton
+            primaryColor="#ffaeb6"
+            secondaryColor="#a30000"
+            terceryColor="#f68a95"
+            incrementFunction={() => handleIncrementUp()}
+            sign="+"
+          />
+        </div>
+        <button className="submitButton" onClick={() => handleSubmit()}>
+          submit
+        </button>
       </div>
-      <button onClick={() => handleSubmit()}>Submit</button>
     </div>
   );
 }
