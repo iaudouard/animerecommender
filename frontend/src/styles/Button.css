@@ -1,0 +1,29 @@
+.button {
+  font-family: "Roboto Mono", monospace;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  transition: 0.2s;
+  border: none;
+  outline: none;
+}
+
+.submit {
+  width: 5vw;
+  height: 4vh;
+  border-radius: 0.5vw;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.increment {
+  width: 2vw;
+  height: 2vw;
+  border-radius: 0.4vw;
+  cursor: pointer;
+  font-size: 1.2vw;
+}
