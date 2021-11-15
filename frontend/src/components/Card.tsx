@@ -3,15 +3,21 @@ import "../styles/Card.css";
 
 interface Props {
   title: string;
-  secondary: string;
+  color: Object;
   poster: string;
+  synopsis: string;
 }
 
 export default function Card({
   title,
-  secondary,
+  color,
   poster,
+  synopsis,
 }: Props): ReactElement {
+  function rgbDictionaryToString(dictionary) {
+    const rgba = `rgba(${dictionary["r"]}, ${dictionary["g"]}, ${dictionary["b"]}, 0.8)`;
+    return rgba;
+  }
   return (
     <div
       className="cardContainer"
@@ -20,7 +26,15 @@ export default function Card({
         backgroundSize: "cover",
       }}
     >
-      <p className="cardTitle">{title}</p>
+      <div className="cardContent">
+        <p className="cardSynopsis">{synopsis}</p>
+        <p
+          className="cardTitle"
+          style={{ backgroundColor: rgbDictionaryToString(color) }}
+        >
+          {title}
+        </p>
+      </div>
     </div>
   );
 }

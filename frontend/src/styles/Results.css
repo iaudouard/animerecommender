@@ -3,12 +3,12 @@ body {
 }
 
 .Results {
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
 }
 .resultsContainer {
   display: flex;
+  margin-top: 25vh;
 }

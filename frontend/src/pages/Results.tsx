@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../styles/Results.css";
-import fetchRecommendations from "../logic/api";
+import fetchRecommendations from "../utils/api";
 import { CoffeeLoading } from "react-loadingg";
 import Card from "../components/Card";
 import { ThemeContext } from "../App";
+import rgbConverter from "../utils/rgbConverter";
 
 interface Props {}
 
@@ -13,12 +14,11 @@ export default function Results({}: Props) {
   const state = location.state;
   const [isLoading, setIsLoading] = useState(true);
   const [recommendations, setRecommendations] = useState([]);
+
   useEffect(() => {
     async function fetcher() {
-      const data = await fetchRecommendations(
-        state.animeTitle,
-        state.numberOfRecommendations
-      );
+      const url = `https://ivanadrd.pythonanywhere.com/?anime_title=${state.animeTitle}&number_of_anime=${state.numberOfRecommendations}`;
+      const data = await fetchRecommendations(url);
       setRecommendations(data["data"]);
       setIsLoading(false);
     }
@@ -42,7 +42,8 @@ export default function Results({}: Props) {
                     <Card
                       title={item["attributes"]["canonicalTitle"]}
                       poster={item["attributes"]["posterImage"]}
-                      secondary={colorThemeContext["secondary"]}
+                      synopsis={item["attributes"]["synopsis"]}
+                      color={rgbConverter(colorThemeContext["primary"])}
                     />
                   );
                 })}
