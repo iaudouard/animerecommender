@@ -3,7 +3,7 @@
 * {
   font-family: "Roboto Mono", monospace;
   font-size: 1vw;
-  transition: 0.2s;
+  transition: background-color ease 0.2s;
 }
 
 body {
@@ -42,7 +42,7 @@ body {
   outline: none;
   border: none;
   background-color: transparent;
-  transition: 0.3s;
+  transition: border-bottom ease 0.3s;
 }
 
 .animeSearchInput:focus {
