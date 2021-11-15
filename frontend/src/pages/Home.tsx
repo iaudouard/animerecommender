@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
 import Button from "../components/Button";
+import Autocomplete from "../components/Autocomplete";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../App";
 
@@ -52,6 +53,7 @@ const App = () => {
                 onFocus={() => setSearchInputFocus(true)}
                 onBlur={() => setSearchInputFocus(false)}
               ></input>
+              <Autocomplete animeSearchInputValue={animeSearchInput} />
               <div
                 className="incrementContainer"
                 style={{ color: colorThemeContext["secondary"] }}

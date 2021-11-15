@@ -11,14 +11,14 @@ body {
 }
 
 .Home {
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 .formContainer {
-  margin-top: 40vh;
+  margin-top: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

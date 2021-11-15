@@ -9,7 +9,5 @@
   border-radius: 1vh;
   cursor: pointer;
   position: absolute;
-  align-self: flex-end;
-  top: 3vh;
-  right: 1.7vw;
+  right: 3vw;
 }
