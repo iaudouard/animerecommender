@@ -1,0 +1,19 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  margin: 0 1vw;
+  color: white;
+  width: 13vw;
+  height: 35vh;
+  border-radius: 1vw;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.cardContainer:hover {
+  box-shadow: 0.2vw 0.2vw 0.2vw rgb(37, 37, 37);
+}
+
+.cardTitle {
+  user-select: none;
+}

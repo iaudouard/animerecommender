@@ -9,3 +9,6 @@ body {
   justify-content: center;
   flex-direction: column;
 }
+.resultsContainer {
+  display: flex;
+}
