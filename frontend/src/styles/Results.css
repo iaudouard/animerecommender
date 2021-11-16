@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+}
+
+.Results {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.resultsContainer {
+  display: flex;
+  margin-top: 25vh;
+}

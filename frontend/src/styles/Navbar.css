@@ -1,0 +1,12 @@
+.navbarContainer {
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+.icon {
+  cursor: pointer;
+  transition: 0.3s;
+  margin-left: 3vw;
+}
