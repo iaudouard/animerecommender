@@ -4,4 +4,3 @@ You can test it out at: https://www.animerecommender.net/
 You can also use our API service at: https://rapidapi.com/uruguay-nomas-uruguay-nomas-default/api/anime-recommender
 
 
-MIT LICENSE
