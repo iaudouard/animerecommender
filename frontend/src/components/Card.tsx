@@ -1,9 +1,10 @@
 import React, { ReactElement } from "react";
 import "../styles/Card.css";
+import rgbDictionaryToString from "../utils/rgbConverter";
 
 interface Props {
   title: string;
-  color: Object;
+  color: string;
   poster: string;
   synopsis: string;
 }
@@ -14,10 +15,6 @@ export default function Card({
   poster,
   synopsis,
 }: Props): ReactElement {
-  function rgbDictionaryToString(dictionary) {
-    const rgba = `rgba(${dictionary["r"]}, ${dictionary["g"]}, ${dictionary["b"]}, 0.8)`;
-    return rgba;
-  }
   return (
     <div
       className="cardContainer"
@@ -26,15 +23,24 @@ export default function Card({
         backgroundSize: "cover",
       }}
     >
-      <div className="cardContent">
-        <p className="cardSynopsis">{synopsis}</p>
-        <p
-          className="cardTitle"
-          style={{ backgroundColor: rgbDictionaryToString(color) }}
-        >
-          {title}
-        </p>
-      </div>
+      <a
+        href={"https://myanimelist.net/"}
+        style={{
+          textDecoration: "none",
+          color: "white",
+          display: "block",
+        }}
+      >
+        <div className="cardContent">
+          <p className="cardSynopsis">{synopsis}</p>
+          <p
+            className="cardTitle"
+            style={{ backgroundColor: rgbDictionaryToString(color, 0.8) }}
+          >
+            {title}
+          </p>
+        </div>
+      </a>
     </div>
   );
 }

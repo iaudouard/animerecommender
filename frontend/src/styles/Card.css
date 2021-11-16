@@ -7,9 +7,13 @@
   height: 40vh;
   border-radius: 1vw;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background-color ease 0.2s;
+  transition: transform 500ms ease;
 }
 
+.cardContainer:hover {
+  transform: scale(1.05);
+}
 .cardContent {
   display: flex;
   flex-direction: column-reverse;
@@ -40,6 +44,10 @@
   padding: 0 0.4vw;
   height: 10vh;
   overflow-y: auto;
+  transition: 300ms;
+}
+.cardContainer:hover .cardSynopsis {
+  height: 25vh;
 }
 
 ::-webkit-scrollbar {
