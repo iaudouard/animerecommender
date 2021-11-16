@@ -5,7 +5,6 @@ import fetchRecommendations from "../utils/api";
 import { CoffeeLoading } from "react-loadingg";
 import Card from "../components/Card";
 import { ThemeContext } from "../App";
-import rgbConverter from "../utils/rgbConverter";
 
 interface Props {}
 
@@ -43,7 +42,7 @@ export default function Results({}: Props) {
                       title={item["attributes"]["canonicalTitle"]}
                       poster={item["attributes"]["posterImage"]}
                       synopsis={item["attributes"]["synopsis"]}
-                      color={rgbConverter(colorThemeContext["primary"])}
+                      color={colorThemeContext["primary"]}
                     />
                   );
                 })}

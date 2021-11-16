@@ -1,4 +1,4 @@
-export default function hexToRgb(hex: string) {
+export function hexToRgbDictionary(hex: string) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
@@ -7,4 +7,10 @@ export default function hexToRgb(hex: string) {
         b: parseInt(result[3], 16),
       }
     : "#fff";
+}
+
+export default function hexToRgbString(hex: string, opacity: number) {
+  const dictionary = hexToRgbDictionary(hex);
+  const rgba = `rgba(${dictionary["r"]}, ${dictionary["g"]}, ${dictionary["b"]},${opacity})`;
+  return rgba;
 }
