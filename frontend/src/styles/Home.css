@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+* {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1vw;
+  transition: background-color ease 0.2s;
+}
+
+body {
+  margin: 0;
+}
+
+.Home {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.formContainer {
+  margin-top: 35vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 20vh;
+}
+
+.incrementContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 10vw;
+  font-size: 1.1vw;
+}
+
+.animeSearchInput {
+  width: 17vw;
+  height: 5vh;
+  padding: 0;
+  font-size: 1.1rem;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  transition: border-bottom ease 0.3s;
+}
+
+.animeSearchInput:focus {
+  border-bottom: 0.4vh solid white;
+}

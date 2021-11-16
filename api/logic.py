@@ -1,7 +1,6 @@
-import csv
 import json
 import math
-#ivan is gay for cameron erni is a big fat duudy
+
 
 def getTitles():
 	
@@ -33,7 +32,6 @@ def openAnimes():
 
 
 def search(animes, ask):
-	#ivan is gay
 	
 	"""
 	function that gets title search and returns the propre anime dict
@@ -74,7 +72,6 @@ def dot(l1, l2):
 	Returns:
 		int : result of dot prod
 	"""
-	#ivan is gay
 
 	prod = 0
 	for x in range(len(l1)):
@@ -169,7 +166,6 @@ def inter(animes, choice, check, amnt):
 
 			
 
-	#ivan is gay
 
 	return final_recommendations
 
@@ -248,7 +244,6 @@ def run(animes, choice, amnt):
 	found = False
 	while not found:
 		anime_recs = inter(animes, choice, check, how)
-		print(len(anime_recs))
 		if len(anime_recs) >= amount+3:
 			partial_recs = anime_recs
 
@@ -257,13 +252,10 @@ def run(animes, choice, amnt):
 		trys += 1
 
 		if trys == 9:
-			print('Sorry we didnt find anything...')
 			found = True
 			conc = ranking(partial_recs, amount, choice)
 			return conc
 			
-
-	#ivan is gay
 		conc = ranking(partial_recs, amount, choice)
 		if len(conc) >= amount:
 			return conc
