@@ -14,22 +14,29 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   max-width: 80vw;
+  height: 45vh;
+  align-items: center;
 }
 ::-webkit-scrollbar {
-  width: 1vw;
-  height: 1vw;
+  width: 10px;
+  border-radius: 0.3vw;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background: grey;
+  background: #f1f1f1;
+  border-radius: 0.3vw;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: white;
-  border-radius: 1vw;
+  background: #888;
+  border-radius: 0.3vw;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .error {

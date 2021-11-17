@@ -33,12 +33,12 @@ export default function Card({
       >
         <div className="cardContent">
           <p className="cardSynopsis">{synopsis}</p>
-          <p
-            className="cardTitle"
+          <div
+            className="titleBng"
             style={{ backgroundColor: rgbDictionaryToString(color, 0.8) }}
           >
-            {title}
-          </p>
+            <p className="cardTitle">{title}</p>
+          </div>
         </div>
       </div>
     </a>
