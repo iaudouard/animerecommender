@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from "react";
 import ThemeButton from "./ThemeButton";
 import { ThemeContext } from "../App";
 import "../styles/Navbar.css";
-import { FaUserAlt } from "react-icons/fa";
+
 import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -13,7 +13,6 @@ interface Props {
 
 export default function Navbar({ clickHandler }: Props): ReactElement {
   const [homeHover, setHomeHover] = useState(false);
-  const [userHover, setUserHover] = useState(false);
 
   return (
     <motion.div initial="out" exit="out" animate="in">
@@ -33,13 +32,7 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
                   onMouseLeave={() => setHomeHover(false)}
                 />
               </Link>
-              <FaUserAlt
-                color={userHover ? "white" : colorThemeContext["secondary"]}
-                className="icon"
-                size={"1vw"}
-                onMouseEnter={() => setUserHover(true)}
-                onMouseLeave={() => setUserHover(false)}
-              />
+
               <ThemeButton
                 Icon={colorThemeContext["Icon"]}
                 Color={colorThemeContext["primary"]}
