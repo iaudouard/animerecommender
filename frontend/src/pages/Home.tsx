@@ -5,6 +5,9 @@ import Autocomplete from "../components/Autocomplete";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
+import { store } from "react-notifications-component";
+import { error } from "../constants/error";
+import "animate.css/animate.min.css";
 
 interface Props {}
 
@@ -37,6 +40,21 @@ const App = () => {
     setAutocompleteVisible(false);
   }
 
+  const handleSubmit = () => {
+    if (animeSearchInput === "" && numberOfRecommendations === 0) {
+      store.addNotification(error("please enter an anime"));
+      store.addNotification(
+        error("please enter the number of recommendations you want")
+      );
+    } else if (animeSearchInput === "") {
+      store.addNotification(error("please enter an anime"));
+    } else if (numberOfRecommendations === 0) {
+      store.addNotification(
+        error("please enter the number of recommendations you want")
+      );
+    }
+  };
+
   return (
     <ThemeContext.Consumer>
       {(colorThemeContext) => {
@@ -46,31 +64,27 @@ const App = () => {
             style={{ backgroundColor: colorThemeContext["bng"] }}
           >
             <div className="formContainer">
-              <div>
-                <input
-                  className="animeSearchInput"
-                  onChange={(ev) => updateAnimeSearchInput(ev)}
-                  placeholder="enter an anime..."
-                  style={{
-                    borderBottom: `0.4vh solid ${
-                      searchInputFocus
-                        ? "white"
-                        : colorThemeContext["secondary"]
-                    }`,
-                    color: colorThemeContext["secondary"],
-                  }}
-                  value={animeSearchInput}
-                  onFocus={() => setSearchInputFocus(true)}
-                  onBlur={() => setSearchInputFocus(false)}
-                ></input>
+              <input
+                className="animeSearchInput"
+                onChange={(ev) => updateAnimeSearchInput(ev)}
+                placeholder="enter an anime..."
+                style={{
+                  borderBottom: `0.4vh solid ${
+                    searchInputFocus ? "white" : colorThemeContext["secondary"]
+                  }`,
+                  color: colorThemeContext["secondary"],
+                }}
+                value={animeSearchInput}
+                onFocus={() => setSearchInputFocus(true)}
+                onBlur={() => setSearchInputFocus(false)}
+              ></input>
 
-                <Autocomplete
-                  animeSearchInputValue={animeSearchInput}
-                  color={colorThemeContext["secondary"]}
-                  clickHandler={(title) => handleAutocomplete(title)}
-                  visible={autocompleteVisible}
-                />
-              </div>
+              <Autocomplete
+                animeSearchInputValue={animeSearchInput}
+                color={colorThemeContext["secondary"]}
+                clickHandler={(title) => handleAutocomplete(title)}
+                visible={autocompleteVisible}
+              />
 
               <div
                 className="incrementContainer"
@@ -95,13 +109,17 @@ const App = () => {
                 />
               </div>
               <Link
-                to={{
-                  pathname: "/results",
-                  state: {
-                    animeTitle: animeSearchInput,
-                    numberOfRecommendations: numberOfRecommendations,
-                  },
-                }}
+                to={
+                  animeSearchInput != "" && numberOfRecommendations != 0
+                    ? {
+                        pathname: "/results",
+                        state: {
+                          animeTitle: animeSearchInput,
+                          numberOfRecommendations: numberOfRecommendations,
+                        },
+                      }
+                    : { pathname: "/" }
+                }
                 style={{ textDecoration: "none" }}
               >
                 <Button
@@ -109,7 +127,7 @@ const App = () => {
                   primaryColor={colorThemeContext["primary"]}
                   secondaryColor={colorThemeContext["secondary"]}
                   terceryColor={colorThemeContext["tercery"]}
-                  handleClick={() => {}}
+                  handleClick={() => handleSubmit()}
                   label="submit"
                 />
               </Link>
