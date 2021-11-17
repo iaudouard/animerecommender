@@ -22,16 +22,18 @@ export default function App({}: Props) {
   };
   return (
     <ThemeContext.Provider value={colorTheme}>
-      <ReactNotification />
-      <Router>
-        <AnimatePresence>
-          <Navbar clickHandler={() => handleThemeSwitch()} />
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/results" exact component={Results} />
-          </Switch>
-        </AnimatePresence>
-      </Router>
+      <div style={{ height: "100vh", backgroundColor: colorTheme["bng"] }}>
+        <ReactNotification />
+        <Router>
+          <AnimatePresence>
+            <Navbar clickHandler={() => handleThemeSwitch()} />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/results" exact component={Results} />
+            </Switch>
+          </AnimatePresence>
+        </Router>
+      </div>
     </ThemeContext.Provider>
   );
 }
