@@ -11,4 +11,23 @@ body {
 .resultsContainer {
   display: flex;
   margin-top: 25vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 80vw;
+}
+::-webkit-scrollbar {
+  width: 1vw;
+  height: 1vw;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 1vw;
 }
