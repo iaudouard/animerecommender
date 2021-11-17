@@ -13,7 +13,7 @@ body {
   margin-top: 25vh;
   overflow-x: auto;
   overflow-y: hidden;
-  width: 80vw;
+  max-width: 80vw;
 }
 ::-webkit-scrollbar {
   width: 1vw;
