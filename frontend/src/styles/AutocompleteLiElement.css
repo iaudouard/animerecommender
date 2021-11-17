@@ -1,5 +1,6 @@
 .AutocompleteLiElement {
   min-height: 7vh;
+  max-height: 18vh;
   background-color: white;
   padding: 0.3vw;
   width: 100%;

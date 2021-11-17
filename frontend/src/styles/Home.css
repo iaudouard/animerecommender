@@ -17,7 +17,7 @@ body {
 }
 
 .formContainer {
-  margin-top: 35vh;
+  margin-top: 33vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -46,7 +46,4 @@ body {
 
 .animeSearchInput:focus {
   border-bottom: 0.4vh solid white;
-}
-.animeSearchInput::-webkit-scrollbar {
-  display: none !important;
 }
