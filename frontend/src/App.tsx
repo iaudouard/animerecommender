@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
@@ -14,6 +14,10 @@ interface Props {}
 
 export default function App({}: Props) {
   const [colorTheme, setColorTheme] = useState<any>(themes[0]);
+
+  useEffect(() => {
+    document.title = "Anime Recommender";
+  });
 
   const handleThemeSwitch = () => {
     let tempIndex = themes.indexOf(colorTheme);
