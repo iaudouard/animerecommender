@@ -24,6 +24,7 @@ export default function Results({}: Props) {
     fetcher();
   }, []);
 
+  console.log(recommendations);
   return (
     <ThemeContext.Consumer>
       {(colorThemeContext) => {

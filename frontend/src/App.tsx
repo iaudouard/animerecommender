@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
 import { themes } from "./constants/themes";
-import ThemeButton from "./components/ThemeButton";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 
 export const ThemeContext = createContext(themes[0]);
@@ -21,11 +21,13 @@ export default function App({}: Props) {
   return (
     <ThemeContext.Provider value={colorTheme}>
       <Router>
-        <Navbar clickHandler={() => handleThemeSwitch()} />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/results" exact component={Results} />
-        </Switch>
+        <AnimatePresence>
+          <Navbar clickHandler={() => handleThemeSwitch()} />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/results" exact component={Results} />
+          </Switch>
+        </AnimatePresence>
       </Router>
     </ThemeContext.Provider>
   );

@@ -1,0 +1,15 @@
+.AutocompleteLiElement {
+  min-height: 7vh;
+  background-color: white;
+  padding: 0.3vw;
+  width: 100%;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.AutocompleteLiElement:hover {
+  background-color: darkgray;
+}
