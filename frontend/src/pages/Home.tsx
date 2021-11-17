@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { pageTransitions } from "../constants/transitions";
 import { store } from "react-notifications-component";
 import { error } from "../constants/error";
+import fetch from "../utils/api";
 import "animate.css/animate.min.css";
 
 interface Props {}
@@ -43,7 +44,9 @@ const App = () => {
     setAutocompleteVisible(false);
   }
 
-  const handleSubmit = () => {
+  async function handleSubmit() {
+    const url = `https://ivanadrd.pythonanywhere.com/title_exists?anime_title=${animeSearchInput}`;
+    const animeExists = await fetch(url);
     if (animeSearchInput === "" && numberOfRecommendations === 0) {
       store.addNotification(error("please enter an anime"));
       store.addNotification(
@@ -55,8 +58,10 @@ const App = () => {
       store.addNotification(
         error("please enter the number of recommendations you want")
       );
+    } else if (animeExists) {
+      store.addNotification(error("please enter a valid anime title"));
     }
-  };
+  }
 
   return (
     <motion.div
