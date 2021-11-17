@@ -10,3 +10,6 @@
 .hidden {
   display: none;
 }
+.Autocomplete::-webkit-scrollbar {
+  display: none !important;
+}

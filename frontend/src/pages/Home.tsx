@@ -29,7 +29,9 @@ const App = () => {
   const handleIncrementDown = (): void => {
     numberOfRecommendations > 0
       ? setNumberOfRecommendations((currNum) => currNum - 1)
-      : console.log("");
+      : store.addNotification(
+          error("recommendations cannot be a negative number")
+        );
   };
 
   const handleIncrementUp = (): void => {
@@ -37,7 +39,7 @@ const App = () => {
   };
 
   async function handleAutocomplete(title) {
-    const set = await setAnimeSearchInput(title);
+    await setAnimeSearchInput(title);
     setAutocompleteVisible(false);
   }
 
@@ -121,7 +123,7 @@ const App = () => {
                 </div>
                 <Link
                   to={
-                    animeSearchInput != "" && numberOfRecommendations != 0
+                    animeSearchInput !== "" && numberOfRecommendations !== 0
                       ? {
                           pathname: "/results",
                           state: {

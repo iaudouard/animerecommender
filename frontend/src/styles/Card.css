@@ -43,19 +43,13 @@
   font-size: 0.7vw;
   padding: 0 0.4vw;
   height: 10vh;
-  overflow-y: auto;
+  overflow-y: scroll;
   transition: 300ms;
 }
+.cardSynopsis::-webkit-scrollbar {
+  display: none !important;
+}
+
 .cardContainer:hover .cardSynopsis {
   height: 25vh;
-}
-
-::-webkit-scrollbar {
-  width: 1vw;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: "white";
-  border-radius: 0.5vw;
 }
