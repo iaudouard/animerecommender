@@ -7,6 +7,8 @@ import Card from "../components/Card";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
 import { pageTransitions } from "../constants/transitions";
+import { error } from "../constants/error";
+import { store } from "react-notifications-component";
 
 interface Props {}
 
@@ -22,11 +24,13 @@ export default function Results({}: Props) {
       const data = await fetchRecommendations(url);
       setRecommendations(data["data"]);
       setIsLoading(false);
+      if (typeof data["data"] !== "object") {
+        store.addNotification(error("invalid request"));
+      }
     }
     fetcher();
   }, []);
 
-  console.log(recommendations);
   return (
     <motion.div
       initial="out"
@@ -45,16 +49,20 @@ export default function Results({}: Props) {
                 <CoffeeLoading color={colorThemeContext["secondary"]} />
               ) : (
                 <div className="resultsContainer">
-                  {recommendations.map((item: any, index: number) => {
-                    return (
-                      <Card
-                        title={item["attributes"]["canonicalTitle"]}
-                        poster={item["attributes"]["posterImage"]}
-                        synopsis={item["attributes"]["synopsis"]}
-                        color={colorThemeContext["primary"]}
-                      />
-                    );
-                  })}
+                  {typeof recommendations === "string" ? (
+                    <p className="error">404 not found</p>
+                  ) : (
+                    recommendations.map((item: any, index: number) => {
+                      return (
+                        <Card
+                          title={item["attributes"]["canonicalTitle"]}
+                          poster={item["attributes"]["posterImage"]}
+                          synopsis={item["attributes"]["synopsis"]}
+                          color={colorThemeContext["primary"]}
+                        />
+                      );
+                    })
+                  )}
                 </div>
               )}
             </div>

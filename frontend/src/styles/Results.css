@@ -31,3 +31,8 @@ body {
   background: white;
   border-radius: 1vw;
 }
+
+.error {
+  color: red;
+  margin-top: 15vh;
+}

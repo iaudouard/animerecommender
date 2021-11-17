@@ -47,6 +47,7 @@ const App = () => {
   async function handleSubmit() {
     const url = `https://ivanadrd.pythonanywhere.com/title_exists?anime_title=${animeSearchInput}`;
     const animeExists = await fetch(url);
+
     if (animeSearchInput === "" && numberOfRecommendations === 0) {
       store.addNotification(error("please enter an anime"));
       store.addNotification(
@@ -58,7 +59,7 @@ const App = () => {
       store.addNotification(
         error("please enter the number of recommendations you want")
       );
-    } else if (animeExists) {
+    } else if (!animeExists) {
       store.addNotification(error("please enter a valid anime title"));
     }
   }
@@ -126,6 +127,7 @@ const App = () => {
                     type="increment"
                   />
                 </div>
+
                 <Link
                   to={
                     animeSearchInput !== "" && numberOfRecommendations !== 0
