@@ -20,6 +20,11 @@ export default function Results({}: Props) {
 
   useEffect(() => {
     async function fetcher() {
+      if (state === undefined) {
+        setIsLoading(false);
+        store.addNotification(error("invalid request"));
+        return {};
+      }
       const url = `https://ivanadrd.pythonanywhere.com/?anime_title=${state.animeTitle}&number_of_anime=${state.numberOfRecommendations}`;
       const data = await fetchRecommendations(url);
       setRecommendations(data["data"]);
@@ -49,7 +54,8 @@ export default function Results({}: Props) {
                 <CoffeeLoading color={colorThemeContext["secondary"]} />
               ) : (
                 <div className="resultsContainer">
-                  {typeof recommendations === "string" ? (
+                  {typeof recommendations !== "object" ||
+                  state === undefined ? (
                     <p className="error">404 not found</p>
                   ) : (
                     recommendations.map((item: any, index: number) => {
