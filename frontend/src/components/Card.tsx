@@ -16,19 +16,19 @@ export default function Card({
   synopsis,
 }: Props): ReactElement {
   return (
-    <div
-      className="cardContainer"
+    <a
+      href={"https://myanimelist.net/"}
       style={{
-        backgroundImage: `url(${poster})`,
-        backgroundSize: "cover",
+        textDecoration: "none",
+        color: "white",
+        display: "block",
       }}
     >
-      <a
-        href={"https://myanimelist.net/"}
+      <div
+        className="cardContainer"
         style={{
-          textDecoration: "none",
-          color: "white",
-          display: "block",
+          backgroundImage: `url(${poster})`,
+          backgroundSize: "cover",
         }}
       >
         <div className="cardContent">
@@ -40,7 +40,7 @@ export default function Card({
             {title}
           </p>
         </div>
-      </a>
-    </div>
+      </div>
+    </a>
   );
 }

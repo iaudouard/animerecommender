@@ -1,0 +1,12 @@
+.Autocomplete {
+  max-height: 30vh;
+  background-color: white;
+  flex-direction: column;
+  width: 17vw;
+  z-index: 1;
+  overflow-y: auto;
+  position: absolute;
+}
+.hidden {
+  display: none;
+}
