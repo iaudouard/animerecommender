@@ -5,6 +5,8 @@ import fetchRecommendations from "../utils/api";
 import { CoffeeLoading } from "react-loadingg";
 import Card from "../components/Card";
 import { ThemeContext } from "../App";
+import { motion } from "framer-motion";
+import { pageTransitions } from "../constants/transitions";
 
 interface Props {}
 
@@ -26,32 +28,39 @@ export default function Results({}: Props) {
 
   console.log(recommendations);
   return (
-    <ThemeContext.Consumer>
-      {(colorThemeContext) => {
-        return (
-          <div
-            className="Results"
-            style={{ backgroundColor: colorThemeContext["bng"] }}
-          >
-            {isLoading ? (
-              <CoffeeLoading color={colorThemeContext["secondary"]} />
-            ) : (
-              <div className="resultsContainer">
-                {recommendations.map((item: any, index: number) => {
-                  return (
-                    <Card
-                      title={item["attributes"]["canonicalTitle"]}
-                      poster={item["attributes"]["posterImage"]}
-                      synopsis={item["attributes"]["synopsis"]}
-                      color={colorThemeContext["primary"]}
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        );
-      }}
-    </ThemeContext.Consumer>
+    <motion.div
+      initial="out"
+      animate="in"
+      exit="out"
+      variants={pageTransitions}
+    >
+      <ThemeContext.Consumer>
+        {(colorThemeContext) => {
+          return (
+            <div
+              className="Results"
+              style={{ backgroundColor: colorThemeContext["bng"] }}
+            >
+              {isLoading ? (
+                <CoffeeLoading color={colorThemeContext["secondary"]} />
+              ) : (
+                <div className="resultsContainer">
+                  {recommendations.map((item: any, index: number) => {
+                    return (
+                      <Card
+                        title={item["attributes"]["canonicalTitle"]}
+                        poster={item["attributes"]["posterImage"]}
+                        synopsis={item["attributes"]["synopsis"]}
+                        color={colorThemeContext["primary"]}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        }}
+      </ThemeContext.Consumer>
+    </motion.div>
   );
 }
