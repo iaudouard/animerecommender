@@ -23,13 +23,14 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
               className="navbarContainer"
               style={{ backgroundColor: colorThemeContext["bng"] }}
             >
-              <Link to="/" style={{ textDecoration: "none" }}>
+              <Link to="/" style={{ textDecoration: "none", display: "block" }}>
                 <AiFillHome
                   color={homeHover ? "white" : colorThemeContext["secondary"]}
                   className="icon"
-                  size={"1.2vw"}
+                  size={"1.6rem"}
                   onMouseEnter={() => setHomeHover(true)}
                   onMouseLeave={() => setHomeHover(false)}
+                  onClick={() => {}}
                 />
               </Link>
 

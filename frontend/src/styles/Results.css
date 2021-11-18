@@ -8,30 +8,42 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
 .resultsContainer {
   display: flex;
-  margin-top: 25vh;
+  margin-top: 20vh;
   overflow-x: auto;
   overflow-y: hidden;
   max-width: 80vw;
-  height: 45vh;
+  height: 30rem;
   align-items: center;
 }
+@media screen and (max-height: 768px) {
+  .resultsContainer {
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
-  border-radius: 0.3vw;
+  border-radius: 0.4rem;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 0.3vw;
+  border-radius: 0.4rem;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 0.3vw;
+  border-radius: 0.4rem;
 }
 
 /* Handle on hover */

@@ -5,7 +5,7 @@ import Autocomplete from "../components/Autocomplete";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
-import { pageTransitions } from "../constants/transitions";
+import { variants, transition } from "../constants/transitions";
 import { store } from "react-notifications-component";
 import { error } from "../constants/error";
 import fetch from "../utils/api";
@@ -69,15 +69,13 @@ const App = () => {
       initial="out"
       animate="in"
       exit="out"
-      variants={pageTransitions}
+      variants={variants}
+      transition={transition}
     >
       <ThemeContext.Consumer>
         {(colorThemeContext) => {
           return (
-            <div
-              className="Home"
-              style={{ backgroundColor: colorThemeContext["bng"] }}
-            >
+            <div className="Home">
               <div className="formContainer">
                 <div className="inputContainer">
                   <input
