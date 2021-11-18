@@ -1,6 +1,7 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "../styles/Card.css";
 import rgbDictionaryToString from "../utils/rgbConverter";
+import useWindowDimensions from "../constants/dimensions";
 
 interface Props {
   title: string;
@@ -15,32 +16,25 @@ export default function Card({
   poster,
   synopsis,
 }: Props): ReactElement {
+  const { width, height } = useWindowDimensions();
+
   return (
-    <a
-      href={"https://myanimelist.net/"}
+    <div
+      className="cardContainer"
       style={{
-        textDecoration: "none",
-        color: "white",
-        display: "block",
+        backgroundImage: `url(${poster})`,
+        backgroundSize: "cover",
       }}
     >
-      <div
-        className="cardContainer"
-        style={{
-          backgroundImage: `url(${poster})`,
-          backgroundSize: "cover",
-        }}
-      >
-        <div className="cardContent">
-          <p className="cardSynopsis">{synopsis}</p>
-          <div
-            className="titleBng"
-            style={{ backgroundColor: rgbDictionaryToString(color, 0.8) }}
-          >
-            <p className="cardTitle">{title}</p>
-          </div>
+      <div className="cardContent">
+        <p className="cardSynopsis">{synopsis}</p>
+        <div
+          className="titleBng"
+          style={{ backgroundColor: rgbDictionaryToString(color, 0.8) }}
+        >
+          <p className="cardTitle">{title}</p>
         </div>
       </div>
-    </a>
+    </div>
   );
 }

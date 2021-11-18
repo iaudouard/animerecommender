@@ -6,7 +6,7 @@ import { CoffeeLoading } from "react-loadingg";
 import Card from "../components/Card";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
-import { pageTransitions } from "../constants/transitions";
+import { variants, transition } from "../constants/transitions";
 import { error } from "../constants/error";
 import { store } from "react-notifications-component";
 
@@ -41,15 +41,13 @@ export default function Results({}: Props) {
       initial="out"
       animate="in"
       exit="out"
-      variants={pageTransitions}
+      variants={variants}
+      transition={transition}
     >
       <ThemeContext.Consumer>
         {(colorThemeContext) => {
           return (
-            <div
-              className="Results"
-              style={{ backgroundColor: colorThemeContext["bng"] }}
-            >
+            <div className="Results">
               {isLoading ? (
                 <CoffeeLoading color={colorThemeContext["secondary"]} />
               ) : (

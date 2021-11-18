@@ -7,6 +7,14 @@
 }
 .icon {
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.6s;
   margin-left: 3vw;
+}
+@media screen and (max-height: 768px) {
+  .navbarContainer {
+    height: 8rem;
+  }
+  .icon {
+    margin-left: 2rem;
+  }
 }
