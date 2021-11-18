@@ -32,7 +32,7 @@ export default function App({}: Props) {
         className="App"
         style={{ height: "100%", backgroundColor: colorTheme["bng"] }}
       >
-        <Meta />
+        <Meta themeColor={colorTheme["bng"]} />
         <ReactNotification />
         <Router>
           <AnimatePresence>
