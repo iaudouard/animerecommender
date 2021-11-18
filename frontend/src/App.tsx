@@ -7,6 +7,8 @@ import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import Meta from "./components/Meta";
+import "./styles/App.css";
 
 export const ThemeContext = createContext(themes[0]);
 
@@ -16,8 +18,8 @@ export default function App({}: Props) {
   const [colorTheme, setColorTheme] = useState<any>(themes[0]);
 
   useEffect(() => {
-    document.title = "Anime Recommender";
-  });
+    document.body.style.backgroundColor = colorTheme["bng"];
+  }, [colorTheme]);
 
   const handleThemeSwitch = () => {
     let tempIndex = themes.indexOf(colorTheme);
@@ -26,7 +28,11 @@ export default function App({}: Props) {
   };
   return (
     <ThemeContext.Provider value={colorTheme}>
-      <div style={{ height: "100vh", backgroundColor: colorTheme["bng"] }}>
+      <div
+        className="App"
+        style={{ height: "100%", backgroundColor: colorTheme["bng"] }}
+      >
+        <Meta />
         <ReactNotification />
         <Router>
           <AnimatePresence>
