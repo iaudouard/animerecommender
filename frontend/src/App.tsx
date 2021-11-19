@@ -33,9 +33,6 @@ export default function App({}: Props) {
         className="App"
         style={{ height: "100%", backgroundColor: colorTheme["bng"] }}
       >
-        <Helmet>
-          <title>Anime Recommender</title>
-        </Helmet>
         <Meta themeColor={colorTheme["bng"]} />
         <ReactNotification />
         <Router>
