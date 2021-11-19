@@ -2,31 +2,40 @@ import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
-import { themes } from "./constants/themes";
+import { themes, themeNames } from "./constants/themes";
 import { AnimatePresence } from "framer-motion";
+import {
+  handleLocalStorageColorThemeChange,
+  colorThemeInitCheck,
+} from "./utils/localStorage";
 import Navbar from "./components/Navbar";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import Meta from "./components/Meta";
-import { Helmet } from "react-helmet";
 import "./styles/App.css";
 
-export const ThemeContext = createContext(themes[0]);
+export const ThemeContext = createContext(colorThemeInitCheck());
 
 interface Props {}
 
 export default function App({}: Props) {
-  const [colorTheme, setColorTheme] = useState<any>(themes[0]);
+  const [colorTheme, setColorTheme] = useState<any>(
+    themes[colorThemeInitCheck()]
+  );
 
   useEffect(() => {
     document.body.style.backgroundColor = colorTheme["bng"];
   }, [colorTheme]);
 
-  const handleThemeSwitch = () => {
-    let tempIndex = themes.indexOf(colorTheme);
-    let newIndex = tempIndex < themes.length - 1 ? tempIndex + 1 : 0;
-    setColorTheme(themes[newIndex]);
-  };
+  async function handleThemeSwitch() {
+    let tempIndex = Object.keys(themes).indexOf(colorThemeInitCheck());
+    let newIndex =
+      tempIndex < Object.keys(themes).length - 1 ? tempIndex + 1 : 0;
+    let newThemeName = themeNames[newIndex];
+    setColorTheme(themes[newThemeName]);
+    handleLocalStorageColorThemeChange(newThemeName);
+  }
+
   return (
     <ThemeContext.Provider value={colorTheme}>
       <div
