@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import Meta from "./components/Meta";
+import { Helmet } from "react-helmet";
 import "./styles/App.css";
 
 export const ThemeContext = createContext(themes[0]);
@@ -32,6 +33,9 @@ export default function App({}: Props) {
         className="App"
         style={{ height: "100%", backgroundColor: colorTheme["bng"] }}
       >
+        <Helmet>
+          <title>Anime Recommender</title>
+        </Helmet>
         <Meta themeColor={colorTheme["bng"]} />
         <ReactNotification />
         <Router>
