@@ -31,4 +31,5 @@ export const hana = {
   tercery: "#123129",
 };
 export const errorColor = "red";
-export const themes = [poop, hana, darling];
+export const themes = { poop: poop, hana: hana, darling: darling };
+export const themeNames = ["poop", "hana", "darling"];
