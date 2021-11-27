@@ -2,7 +2,9 @@ import React, { ReactElement, useState } from "react";
 import ThemeButton from "./ThemeButton";
 import { ThemeContext } from "../App";
 import "../styles/Navbar.css";
-import { AiFillHome } from "react-icons/ai";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -11,7 +13,8 @@ interface Props {
 }
 
 export default function Navbar({ clickHandler }: Props): ReactElement {
-  const [homeHover, setHomeHover] = useState(false);
+  const [homeIconHover, setHomeIconHover] = useState(false);
+  const [userIconHover, setUserIconHover] = useState(false);
 
   return (
     <motion.div initial="out" exit="out" animate="in">
@@ -23,28 +26,34 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
               style={{ backgroundColor: colorThemeContext["bng"] }}
             >
               <Link to="/" style={{ textDecoration: "none", display: "block" }}>
-                <AiFillHome
-                  color={homeHover ? "white" : colorThemeContext["secondary"]}
+                <FontAwesomeIcon
+                  color={
+                    homeIconHover ? "white" : colorThemeContext["secondary"]
+                  }
                   className="icon"
-                  size={"1.6rem"}
-                  onMouseEnter={() => setHomeHover(true)}
-                  onMouseLeave={() => setHomeHover(false)}
+                  icon={faHome}
+                  size="lg"
+                  onMouseEnter={() => setHomeIconHover(true)}
+                  onMouseLeave={() => setHomeIconHover(false)}
                   onClick={() => {}}
                 />
               </Link>
-              {/* <Link
+              <Link
                 to="/login"
                 style={{ textDecoration: "none", display: "block" }}
               >
-                <AiFillHome
-                  color={homeHover ? "white" : colorThemeContext["secondary"]}
+                <FontAwesomeIcon
+                  color={
+                    userIconHover ? "white" : colorThemeContext["secondary"]
+                  }
                   className="icon"
-                  size={"1.6rem"}
-                  onMouseEnter={() => setHomeHover(true)}
-                  onMouseLeave={() => setHomeHover(false)}
+                  icon={faUser}
+                  size="lg"
+                  onMouseEnter={() => setUserIconHover(true)}
+                  onMouseLeave={() => setUserIconHover(false)}
                   onClick={() => {}}
                 />
-              </Link> */}
+              </Link>
 
               <ThemeButton
                 Icon={colorThemeContext["Icon"]}
