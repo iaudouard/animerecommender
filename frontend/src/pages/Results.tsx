@@ -33,7 +33,7 @@ export default function Results({}: Props) {
   }, []);
 
   useEffect(() => {
-    if (recommendations.length > 0) {
+    if (recommendations["data"].length > 0) {
       setIsLoading(false);
     } else if (recommendations["data"] === false) {
       store.addNotification(error("anime not found, please try again"));
