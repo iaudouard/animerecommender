@@ -2,7 +2,6 @@ import React, { ReactElement, useState } from "react";
 import ThemeButton from "./ThemeButton";
 import { ThemeContext } from "../App";
 import "../styles/Navbar.css";
-
 import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -24,6 +23,19 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
               style={{ backgroundColor: colorThemeContext["bng"] }}
             >
               <Link to="/" style={{ textDecoration: "none", display: "block" }}>
+                <AiFillHome
+                  color={homeHover ? "white" : colorThemeContext["secondary"]}
+                  className="icon"
+                  size={"1.6rem"}
+                  onMouseEnter={() => setHomeHover(true)}
+                  onMouseLeave={() => setHomeHover(false)}
+                  onClick={() => {}}
+                />
+              </Link>
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", display: "block" }}
+              >
                 <AiFillHome
                   color={homeHover ? "white" : colorThemeContext["secondary"]}
                   className="icon"
