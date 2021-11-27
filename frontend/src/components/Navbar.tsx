@@ -32,7 +32,7 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
                   onClick={() => {}}
                 />
               </Link>
-              <Link
+              {/* <Link
                 to="/login"
                 style={{ textDecoration: "none", display: "block" }}
               >
@@ -44,7 +44,7 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
                   onMouseLeave={() => setHomeHover(false)}
                   onClick={() => {}}
                 />
-              </Link>
+              </Link> */}
 
               <ThemeButton
                 Icon={colorThemeContext["Icon"]}
