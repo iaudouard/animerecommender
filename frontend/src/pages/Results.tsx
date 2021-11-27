@@ -1,41 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, Redirect } from "react-router-dom";
 import "../styles/Results.css";
 import fetchRecommendations from "../utils/api";
-import { CoffeeLoading } from "react-loadingg";
 import Card from "../components/Card";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
 import { error } from "../constants/error";
 import { store } from "react-notifications-component";
+import Spinner from "../components/Spinner";
 
 interface Props {}
 
 export default function Results({}: Props) {
   const location = useLocation();
   const state = location.state;
-  const [isLoading, setIsLoading] = useState(true);
-  const [recommendations, setRecommendations] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [recommendations, setRecommendations] = useState<Array<Object>>([]);
 
   useEffect(() => {
     async function fetcher() {
-      if (state === undefined) {
-        setIsLoading(false);
-        store.addNotification(error("invalid request"));
-        return {};
-      }
       const url = `https://ivanadrd.pythonanywhere.com/?anime_title=${state.animeTitle}&number_of_anime=${state.numberOfRecommendations}`;
       const data = await fetchRecommendations(url);
-      setRecommendations(data["data"]);
-      setIsLoading(false);
-      if (typeof data["data"] !== "object") {
-        store.addNotification(error("invalid request"));
-      }
+
+      await setRecommendations(data);
     }
-    fetcher();
+    if (state === undefined) {
+      store.addNotification(error("Failed to load request, please try again"));
+    } else {
+      fetcher();
+    }
   }, []);
 
+  useEffect(() => {
+    if (recommendations.length > 0) {
+      setIsLoading(false);
+    } else if (recommendations["data"] === false) {
+      store.addNotification(error("anime not found, please try again"));
+      setIsLoading(false);
+    }
+  }, [recommendations]);
+
+  if (state === undefined) {
+    return <Redirect to="/" />;
+  }
   return (
     <motion.div
       initial="out"
@@ -49,24 +57,22 @@ export default function Results({}: Props) {
           return (
             <div className="Results">
               {isLoading ? (
-                <CoffeeLoading color={colorThemeContext["secondary"]} />
+                <Spinner size="2x" color={colorThemeContext["secondary"]} />
+              ) : recommendations["data"] === false ? (
+                <Redirect to="/" />
               ) : (
                 <div className="resultsContainer">
-                  {typeof recommendations !== "object" ||
-                  state === undefined ? (
-                    <p className="error">404 not found</p>
-                  ) : (
-                    recommendations.map((item: any, index: number) => {
-                      return (
-                        <Card
-                          title={item["attributes"]["canonicalTitle"]}
-                          poster={item["attributes"]["posterImage"]}
-                          synopsis={item["attributes"]["synopsis"]}
-                          color={colorThemeContext["primary"]}
-                        />
-                      );
-                    })
-                  )}
+                  {recommendations["data"].map((item: any, index: number) => {
+                    return (
+                      <Card
+                        title={item["attributes"]["canonicalTitle"]}
+                        poster={item["attributes"]["posterImage"]}
+                        synopsis={item["attributes"]["synopsis"]}
+                        color={colorThemeContext["primary"]}
+                        key={index}
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>
