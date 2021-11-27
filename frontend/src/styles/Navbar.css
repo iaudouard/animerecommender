@@ -7,7 +7,7 @@
 }
 .icon {
   cursor: pointer;
-  transition: 0.6s;
+  transition: color 0.8s;
   margin-left: 3vw;
 }
 @media screen and (max-height: 768px) {
