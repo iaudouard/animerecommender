@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from "react";
 import "../styles/Button.css";
 
 interface Props {
-  type: string;
+  type: "submit" | "increment";
   handleClick: () => void;
   label: string;
   primaryColor: string;

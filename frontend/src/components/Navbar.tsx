@@ -2,9 +2,10 @@ import React, { ReactElement, useState } from "react";
 import ThemeButton from "./ThemeButton";
 import { ThemeContext } from "../App";
 import "../styles/Navbar.css";
+import { FaUserAlt } from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -26,34 +27,36 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
               style={{ backgroundColor: colorThemeContext["bng"] }}
             >
               <Link to="/" style={{ textDecoration: "none", display: "block" }}>
-                <FontAwesomeIcon
+                <AiFillHome
                   color={
                     homeIconHover ? "white" : colorThemeContext["secondary"]
                   }
                   className="icon"
-                  icon={faHome}
-                  size="lg"
+                  size={24}
+                  // icon={faHome}
+                  // size="lg"
                   onMouseEnter={() => setHomeIconHover(true)}
                   onMouseLeave={() => setHomeIconHover(false)}
                   onClick={() => {}}
                 />
               </Link>
-              {/* <Link
+              <Link
                 to="/login"
                 style={{ textDecoration: "none", display: "block" }}
               >
-                <FontAwesomeIcon
+                <FaUserAlt
                   color={
                     userIconHover ? "white" : colorThemeContext["secondary"]
                   }
                   className="icon"
-                  icon={faUser}
-                  size="lg"
+                  size={21}
+                  // icon={faUser}
+                  // size="lg"
                   onMouseEnter={() => setUserIconHover(true)}
                   onMouseLeave={() => setUserIconHover(false)}
                   onClick={() => {}}
                 />
-              </Link> */}
+              </Link>
 
               <ThemeButton
                 Icon={colorThemeContext["Icon"]}
