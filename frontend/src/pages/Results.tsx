@@ -6,7 +6,7 @@ import Card from "../components/Card";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
-import { error } from "../constants/error";
+import { error } from "../utils/notifications";
 import { store } from "react-notifications-component";
 import Spinner from "../components/Spinner";
 
@@ -33,7 +33,6 @@ export default function Results({}: Props) {
   }, []);
 
   useEffect(() => {
-
     if (recommendations["data"]) {
       if (recommendations["data"].length > 0) {
         setIsLoading(false);
@@ -56,11 +55,11 @@ export default function Results({}: Props) {
       transition={transition}
     >
       <ThemeContext.Consumer>
-        {(colorThemeContext) => {
+        {(Theme) => {
           return (
             <div className="Results">
               {isLoading ? (
-                <Spinner size="2x" color={colorThemeContext["secondary"]} />
+                <Spinner size="2x" color={Theme["secondary"]} />
               ) : recommendations["data"] === false ? (
                 <Redirect to="/" />
               ) : (
@@ -71,7 +70,7 @@ export default function Results({}: Props) {
                         title={item["attributes"]["canonicalTitle"]}
                         poster={item["attributes"]["posterImage"]}
                         synopsis={item["attributes"]["synopsis"]}
-                        color={colorThemeContext["primary"]}
+                        color={Theme["primary"]}
                         key={index}
                       />
                     );

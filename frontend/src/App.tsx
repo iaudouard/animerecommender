@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
-import Login from "./pages/Login";
+import Login from "./pages/Account";
 import { themes, themeNames } from "./constants/themes";
 import { AnimatePresence } from "framer-motion";
 import {

@@ -7,7 +7,7 @@ import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
 import { store } from "react-notifications-component";
-import { error } from "../constants/error";
+import { error } from "../utils/notifications";
 import fetch from "../utils/api";
 import "animate.css/animate.min.css";
 
@@ -68,7 +68,7 @@ const App = () => {
       transition={transition}
     >
       <ThemeContext.Consumer>
-        {(colorThemeContext) => {
+        {(Theme) => {
           return (
             <div className="Home">
               <div className="formContainer">
@@ -79,11 +79,9 @@ const App = () => {
                     placeholder="enter an anime..."
                     style={{
                       borderBottom: `0.4vh solid ${
-                        searchInputFocus
-                          ? "white"
-                          : colorThemeContext["secondary"]
+                        searchInputFocus ? "white" : Theme["secondary"]
                       }`,
-                      color: colorThemeContext["secondary"],
+                      color: Theme["secondary"],
                     }}
                     value={animeSearchInput}
                     onFocus={() => setSearchInputFocus(true)}
@@ -92,7 +90,7 @@ const App = () => {
 
                   <Autocomplete
                     animeSearchInputValue={animeSearchInput}
-                    color={colorThemeContext["secondary"]}
+                    color={Theme["secondary"]}
                     clickHandler={(title) => handleAutocomplete(title)}
                     visible={autocompleteVisible}
                   />
@@ -100,21 +98,21 @@ const App = () => {
 
                 <div
                   className="incrementContainer"
-                  style={{ color: colorThemeContext["secondary"] }}
+                  style={{ color: Theme["secondary"] }}
                 >
                   <Button
-                    primaryColor={colorThemeContext["primary"]}
-                    secondaryColor={colorThemeContext["secondary"]}
-                    terceryColor={colorThemeContext["tercery"]}
+                    primaryColor={Theme["primary"]}
+                    secondaryColor={Theme["secondary"]}
+                    terceryColor={Theme["tercery"]}
                     handleClick={() => handleIncrementDown()}
                     label="-"
                     type="increment"
                   />
                   {numberOfRecommendations}
                   <Button
-                    primaryColor={colorThemeContext["primary"]}
-                    secondaryColor={colorThemeContext["secondary"]}
-                    terceryColor={colorThemeContext["tercery"]}
+                    primaryColor={Theme["primary"]}
+                    secondaryColor={Theme["secondary"]}
+                    terceryColor={Theme["tercery"]}
                     handleClick={() => handleIncrementUp()}
                     label="+"
                     type="increment"
@@ -137,9 +135,9 @@ const App = () => {
                 >
                   <Button
                     type="submit"
-                    primaryColor={colorThemeContext["primary"]}
-                    secondaryColor={colorThemeContext["secondary"]}
-                    terceryColor={colorThemeContext["tercery"]}
+                    primaryColor={Theme["primary"]}
+                    secondaryColor={Theme["secondary"]}
+                    terceryColor={Theme["tercery"]}
                     handleClick={() => handleSubmit()}
                     label="submit"
                   />
