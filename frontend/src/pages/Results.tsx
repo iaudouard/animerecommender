@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, Redirect } from "react-router-dom";
-import "../styles/Results.css";
+import "../styles/pages/Results.css";
 import fetchRecommendations from "../utils/api";
 import Card from "../components/Card";
 import { ThemeContext } from "../App";

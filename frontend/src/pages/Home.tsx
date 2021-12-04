@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "../styles/Home.css";
-import Button from "../components/Button";
-import Autocomplete from "../components/Autocomplete";
+import "../styles/pages/Home.css";
+import IncrementButton from "../components/buttons/IncrementButton";
+import SubmitButton from "../components/buttons/SubmitButton";
+import Autocomplete from "../components/autocomplete/Autocomplete";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
@@ -100,22 +101,20 @@ const App = () => {
                   className="incrementContainer"
                   style={{ color: Theme["secondary"] }}
                 >
-                  <Button
+                  <IncrementButton
                     primaryColor={Theme["primary"]}
                     secondaryColor={Theme["secondary"]}
                     terceryColor={Theme["tercery"]}
                     handleClick={() => handleIncrementDown()}
                     label="-"
-                    type="increment"
                   />
                   {numberOfRecommendations}
-                  <Button
+                  <IncrementButton
                     primaryColor={Theme["primary"]}
                     secondaryColor={Theme["secondary"]}
                     terceryColor={Theme["tercery"]}
                     handleClick={() => handleIncrementUp()}
                     label="+"
-                    type="increment"
                   />
                 </div>
 
@@ -133,8 +132,7 @@ const App = () => {
                   }
                   style={{ textDecoration: "none" }}
                 >
-                  <Button
-                    type="submit"
+                  <SubmitButton
                     primaryColor={Theme["primary"]}
                     secondaryColor={Theme["secondary"]}
                     terceryColor={Theme["tercery"]}

@@ -1,23 +1,24 @@
-import { auth } from "../config/firebase.config";
+import { auth, db } from "./firebase.config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-
-import { error, success } from "./notifications";
+import { error, success } from "../utils/notifications";
 import { store } from "react-notifications-component";
+import { createNewUserDoc } from "./firebase.utils.handledata";
 
 export async function signup(
-  email,
-  password,
-  route: Function,
+  email: string,
+  password: string,
+  username: string,
   setLoading: Function
 ) {
   setLoading(true);
   createUserWithEmailAndPassword(auth, email, password)
     .then((res) => {
+      createNewUserDoc(res.user.uid, email, username);
       store.addNotification(success("account created!"));
-      route();
+      setLoading(false);
     })
     .catch((err) => {
       if (err.code.includes("auth/weak-password")) {
@@ -31,17 +32,11 @@ export async function signup(
     });
 }
 
-export async function signin(
-  email,
-  password,
-  route: Function,
-  setLoading: Function
-) {
-  setLoading(true);
+export async function signin(email, password, setLoading: Function) {
   signInWithEmailAndPassword(auth, email, password)
     .then((res) => {
       store.addNotification(success("signed in!"));
-      route();
+      setLoading(false);
     })
     .catch((err) => {
       store.addNotification(error("error signing up, please try again..."));
@@ -49,9 +44,9 @@ export async function signin(
     });
 }
 
-export async function signout(setLoading, route) {
+export async function signout(setLoading, window) {
   setLoading(true);
   auth.signOut().then((res) => {
-    route();
+    window.location.reload();
   });
 }

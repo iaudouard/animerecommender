@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
-import Login from "./pages/Account";
+import Account from "./pages/Account";
 import { themes, themeNames } from "./constants/themes";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -13,7 +13,7 @@ import Navbar from "./components/Navbar";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import Meta from "./components/Meta";
-import "./styles/App.css";
+import "./styles/pages/App.css";
 
 export const ThemeContext = createContext(colorThemeInitCheck());
 
@@ -51,7 +51,7 @@ export default function App({}: Props) {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/results" exact component={Results} />
-              <Route path="/login" exact component={Login} />
+              <Route path="/account" exact component={Account} />
             </Switch>
           </AnimatePresence>
         </Router>
