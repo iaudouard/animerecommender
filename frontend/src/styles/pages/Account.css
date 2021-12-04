@@ -15,7 +15,6 @@
 .signIn {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
   margin: 0 1rem;
 }
@@ -26,16 +25,4 @@
 
 .signUp {
   height: 100%;
-}
-
-.formField {
-  width: 13rem;
-  height: 2rem;
-  padding: 0.5rem;
-  font-size: 0.8rem;
-  border-radius: 1rem;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  transition: border-bottom ease 0.3s;
 }

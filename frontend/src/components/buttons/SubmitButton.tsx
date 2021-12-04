@@ -1,8 +1,7 @@
 import React, { ReactElement, useState } from "react";
-import "../styles/Button.css";
+import "../../styles/components/buttons/SubmitButton.css";
 
 interface Props {
-  type: "submit" | "increment";
   handleClick: () => void;
   label: string;
   primaryColor: string;
@@ -10,8 +9,7 @@ interface Props {
   terceryColor: string;
 }
 
-export default function Button({
-  type,
+export default function SubmitButton({
   handleClick,
   label,
   primaryColor,
@@ -30,7 +28,7 @@ export default function Button({
 
   return (
     <div
-      className={`button ${type}`}
+      className="Submit"
       onClick={() => handleClick()}
       style={{
         backgroundColor: isActive ? terceryColor : primaryColor,

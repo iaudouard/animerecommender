@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import "../styles/SignoutButton.css";
+import "../../styles/components/buttons/SignoutButton.css";
 
 interface Props {
   primary: string;

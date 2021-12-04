@@ -1,0 +1,25 @@
+{
+  "presets": ["module:metro-react-native-babel-preset"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"], //  This says the root of your project folder
+        // To make your imports look better
+        // Insert your whatever name to make alias for the imports
+        // In this example I'm using @components to referring the components folder
+        // That located inside src folder.
+        // Note: You can make a lot of aliases in here
+        "alias": {
+          "@components": "./components",
+          "@buttons": "./components/buttons",
+          "@styles": "./styles",
+          "@pages": "./pages",
+          "@autocomplete": "./autocomplete",
+          "@utils": "./utils",
+          "@firebase": "./firebase"
+        }
+      }
+    ]
+  ]
+}

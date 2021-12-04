@@ -1,0 +1,12 @@
+.formField {
+  width: 13rem;
+  height: 2rem;
+  padding: 0.5rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.9rem;
+  border-radius: 0.7rem;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  transition: border-bottom ease 0.3s;
+}

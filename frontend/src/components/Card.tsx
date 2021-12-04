@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import "../styles/Card.css";
+import "../styles/components/Card.css";
 import rgbDictionaryToString from "../utils/rgbConverter";
 import useWindowDimensions from "../constants/dimensions";
 

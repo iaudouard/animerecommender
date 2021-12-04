@@ -1,57 +1,65 @@
 import React, { ReactElement, useState, useEffect, useContext } from "react";
-import "../styles/Login.css";
+import "../styles/pages/Account.css";
 import { ThemeContext } from "../App";
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
-import { signin, signup, signout } from "../utils/firebase.utils";
-import Button from "../components/Button";
+import { signin, signup, signout } from "../firebase/firebase.utils.auth";
+import SubmitButton from "../components/buttons/SubmitButton";
 import { store } from "react-notifications-component";
 import { error } from "../utils/notifications";
-import { useHistory } from "react-router-dom";
 import Spinner from "../components/Spinner";
-import { auth } from "../config/firebase.config";
+import { auth } from "../firebase/firebase.config";
 import FormField from "../components/FormField";
-import SignoutButton from "../components/SignoutButton";
+import SignoutButton from "../components/buttons/SignoutButton";
+import { readData } from "../firebase/firebase.utils.handledata";
 
 interface Props {}
 
 export default function Account({}: Props): ReactElement {
-  const [signUpUsername, setSignUpUsername] = useState("");
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPassword, setSignUpPassword] = useState("");
-  const [signUpPasswordConfirm, setSignUpPasswordConfirm] = useState("");
-  const [signInEmail, setSignInEmail] = useState("");
-  const [signInPassword, setSignInPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(false);
+  const [signUpUsername, setSignUpUsername] = useState<string>("");
+  const [signUpEmail, setSignUpEmail] = useState<string>("");
+  const [signUpPassword, setSignUpPassword] = useState<string>("");
+  const [signUpPasswordConfirm, setSignUpPasswordConfirm] =
+    useState<string>("");
+  const [signInEmail, setSignInEmail] = useState<string>("");
+  const [signInPassword, setSignInPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<boolean>(false);
+  const [userData, setUserData] = useState<Array<Object>>([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(true);
-        setIsLoading(false);
+        readData(user.uid)
+          .then((res) => {
+            setUserData(res);
+          })
+          .then(() => {
+            console.log(userData);
+            setIsLoading(false);
+          });
       } else {
         setIsLoading(false);
       }
     });
-  });
+  }, []);
 
-  const history = useHistory();
-
-  const handleRoute = () => {
-    history.push("/");
+  const handleSignin = () => {
+    setIsLoading(true);
+    signin(signInEmail, signInPassword, setIsLoading);
   };
 
-  const handleSignIn = () => {
-    signin(signInEmail, signInPassword, handleRoute, setIsLoading);
-  };
-
-  const handleSignUp = () => {
+  const handleSignup = () => {
     if (signUpPassword === signUpPasswordConfirm) {
-      signup(signUpEmail, signUpPassword, handleRoute, setIsLoading);
+      signup(signUpEmail, signUpPassword, signUpUsername, setIsLoading);
     } else {
       store.addNotification(error("passwords are not the same..."));
     }
+  };
+
+  const handleSignout = () => {
+    signout(setIsLoading, window);
   };
 
   return (
@@ -73,7 +81,7 @@ export default function Account({}: Props): ReactElement {
                   primary={Theme["primary"]}
                   secondary={Theme["secondary"]}
                   tercery={Theme["tercery"]}
-                  clickHandler={() => signout(setIsLoading, handleRoute)}
+                  clickHandler={() => handleSignout()}
                 />
               ) : (
                 <div className="form">
@@ -92,15 +100,16 @@ export default function Account({}: Props): ReactElement {
                       placeholder="password..."
                       Theme={Theme}
                       setInput={setSignUpPassword}
+                      password={true}
                     />
                     <FormField
                       placeholder="confirm password..."
                       Theme={Theme}
                       setInput={setSignUpPasswordConfirm}
+                      password={true}
                     />
-                    <Button
-                      handleClick={() => handleSignUp()}
-                      type="submit"
+                    <SubmitButton
+                      handleClick={() => handleSignup()}
                       primaryColor={Theme["primary"]}
                       secondaryColor={Theme["secondary"]}
                       terceryColor={Theme["tercery"]}
@@ -117,10 +126,10 @@ export default function Account({}: Props): ReactElement {
                       placeholder="password..."
                       Theme={Theme}
                       setInput={setSignInPassword}
+                      password={true}
                     />
-                    <Button
-                      handleClick={() => handleSignIn()}
-                      type="submit"
+                    <SubmitButton
+                      handleClick={() => handleSignin()}
                       primaryColor={Theme["primary"]}
                       secondaryColor={Theme["secondary"]}
                       terceryColor={Theme["tercery"]}

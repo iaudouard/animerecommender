@@ -1,11 +1,9 @@
 import React, { ReactElement, useState } from "react";
-import ThemeButton from "./ThemeButton";
+import ThemeButton from "./buttons/ThemeButton";
 import { ThemeContext } from "../App";
-import "../styles/Navbar.css";
+import "../styles/components/Navbar.css";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -41,7 +39,7 @@ export default function Navbar({ clickHandler }: Props): ReactElement {
                 />
               </Link>
               <Link
-                to="/login"
+                to="/account"
                 style={{ textDecoration: "none", display: "block" }}
               >
                 <FaUserAlt
