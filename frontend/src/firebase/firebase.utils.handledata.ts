@@ -33,3 +33,17 @@ export function createNewUserDoc(
   const userRef = doc(db, "users", uid);
   return setDoc(userRef, { email: email, username: username, theme: theme });
 }
+
+export function getUsername(uid: string) {
+  const userRef = doc(db, "users", uid);
+  return getDoc(userRef)
+    .then((res) => {
+      const data = res.data();
+      if (data) {
+        return data["username"];
+      }
+    })
+    .catch((err) => {
+      return store.addNotification(error(err.message));
+    });
+}

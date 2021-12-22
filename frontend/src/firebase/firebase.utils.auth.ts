@@ -11,16 +11,13 @@ import { checkLocalStorage } from "../utils/localStorage";
 export async function signup(
   email: string,
   password: string,
-  username: string,
-  setLoading: Function
+  username: string
 ) {
-  setLoading(true);
   const theme = checkLocalStorage("colorTheme");
   createUserWithEmailAndPassword(auth, email, password)
     .then((res) => {
       createNewUserDoc(res.user.uid, email, username, theme);
       store.addNotification(success("account created!"));
-      setLoading(false);
     })
     .catch((err) => {
       if (err.code.includes("auth/weak-password")) {
@@ -30,25 +27,21 @@ export async function signup(
       } else {
         store.addNotification(error("error signing up, please try again..."));
       }
-      setLoading(false);
     });
 }
 
-export async function signin(email, password, setLoading: Function) {
-  signInWithEmailAndPassword(auth, email, password)
+export async function signin(email, password) {
+  return signInWithEmailAndPassword(auth, email, password)
     .then((res) => {
-      store.addNotification(success("signed in!"));
-      setLoading(false);
+      return res;
     })
-    .catch((err) => {
+    .catch(() => {
       store.addNotification(error("error signing up, please try again..."));
-      setLoading(false);
     });
 }
 
-export async function signout(setLoading, window) {
-  setLoading(true);
-  auth.signOut().then((res) => {
+export async function signout(window) {
+  auth.signOut().then(() => {
     window.location.reload();
   });
 }

@@ -29,7 +29,10 @@ export default function SubmitButton({
   return (
     <div
       className="Submit"
-      onClick={() => handleClick()}
+      onClick={(e) => {
+        e.preventDefault();
+        handleClick();
+      }}
       style={{
         backgroundColor: isActive ? terceryColor : primaryColor,
         color: secondaryColor,
