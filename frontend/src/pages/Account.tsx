@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect, useContext } from "react";
 import "../styles/pages/Account.css";
-import { ThemeContext } from "../App";
+import { ThemeContext } from "../context/ThemeContext";
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
 import { signin, signup, signout } from "../firebase/firebase.utils.auth";
@@ -16,11 +16,13 @@ import { readData } from "../firebase/firebase.utils.handledata";
 interface Props {}
 
 export default function Account({}: Props): ReactElement {
+  const Theme = useContext(ThemeContext)["theme"];
   const [signUpUsername, setSignUpUsername] = useState<string>("");
   const [signUpEmail, setSignUpEmail] = useState<string>("");
   const [signUpPassword, setSignUpPassword] = useState<string>("");
-  const [signUpPasswordConfirm, setSignUpPasswordConfirm] =
-    useState<string>("");
+  const [signUpPasswordConfirm, setSignUpPasswordConfirm] = useState<string>(
+    ""
+  );
   const [signInEmail, setSignInEmail] = useState<string>("");
   const [signInPassword, setSignInPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -70,78 +72,72 @@ export default function Account({}: Props): ReactElement {
       variants={variants}
       transition={transition}
     >
-      <ThemeContext.Consumer>
-        {(Theme) => {
-          return (
-            <div className="Login">
-              {isLoading ? (
-                <Spinner size="2x" color={Theme["secondary"]} />
-              ) : user ? (
-                <SignoutButton
-                  primary={Theme["primary"]}
-                  secondary={Theme["secondary"]}
-                  tercery={Theme["tercery"]}
-                  clickHandler={() => handleSignout()}
-                />
-              ) : (
-                <div className="form">
-                  <div className="signUp">
-                    <FormField
-                      placeholder="username..."
-                      Theme={Theme}
-                      setInput={setSignUpUsername}
-                    />
-                    <FormField
-                      placeholder="email..."
-                      Theme={Theme}
-                      setInput={setSignUpEmail}
-                    />
-                    <FormField
-                      placeholder="password..."
-                      Theme={Theme}
-                      setInput={setSignUpPassword}
-                      password={true}
-                    />
-                    <FormField
-                      placeholder="confirm password..."
-                      Theme={Theme}
-                      setInput={setSignUpPasswordConfirm}
-                      password={true}
-                    />
-                    <SubmitButton
-                      handleClick={() => handleSignup()}
-                      primaryColor={Theme["primary"]}
-                      secondaryColor={Theme["secondary"]}
-                      terceryColor={Theme["tercery"]}
-                      label="sign up"
-                    />
-                  </div>
-                  <div className="signIn">
-                    <FormField
-                      placeholder="email..."
-                      Theme={Theme}
-                      setInput={setSignInEmail}
-                    />
-                    <FormField
-                      placeholder="password..."
-                      Theme={Theme}
-                      setInput={setSignInPassword}
-                      password={true}
-                    />
-                    <SubmitButton
-                      handleClick={() => handleSignin()}
-                      primaryColor={Theme["primary"]}
-                      secondaryColor={Theme["secondary"]}
-                      terceryColor={Theme["tercery"]}
-                      label="sign in"
-                    />
-                  </div>
-                </div>
-              )}
+      <div className="Login">
+        {isLoading ? (
+          <Spinner size="2x" color={Theme["secondary"]} />
+        ) : user ? (
+          <SignoutButton
+            primary={Theme["primary"]}
+            secondary={Theme["secondary"]}
+            tercery={Theme["tercery"]}
+            clickHandler={() => handleSignout()}
+          />
+        ) : (
+          <div className="form">
+            <div className="signUp">
+              <FormField
+                placeholder="username..."
+                Theme={Theme}
+                setInput={setSignUpUsername}
+              />
+              <FormField
+                placeholder="email..."
+                Theme={Theme}
+                setInput={setSignUpEmail}
+              />
+              <FormField
+                placeholder="password..."
+                Theme={Theme}
+                setInput={setSignUpPassword}
+                password={true}
+              />
+              <FormField
+                placeholder="confirm password..."
+                Theme={Theme}
+                setInput={setSignUpPasswordConfirm}
+                password={true}
+              />
+              <SubmitButton
+                handleClick={() => handleSignup()}
+                primaryColor={Theme["primary"]}
+                secondaryColor={Theme["secondary"]}
+                terceryColor={Theme["tercery"]}
+                label="sign up"
+              />
             </div>
-          );
-        }}
-      </ThemeContext.Consumer>
+            <div className="signIn">
+              <FormField
+                placeholder="email..."
+                Theme={Theme}
+                setInput={setSignInEmail}
+              />
+              <FormField
+                placeholder="password..."
+                Theme={Theme}
+                setInput={setSignInPassword}
+                password={true}
+              />
+              <SubmitButton
+                handleClick={() => handleSignin()}
+                primaryColor={Theme["primary"]}
+                secondaryColor={Theme["secondary"]}
+                terceryColor={Theme["tercery"]}
+                label="sign in"
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 }

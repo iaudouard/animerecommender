@@ -6,6 +6,7 @@ import {
 import { error, success } from "../utils/notifications";
 import { store } from "react-notifications-component";
 import { createNewUserDoc } from "./firebase.utils.handledata";
+import { checkLocalStorage } from "../utils/localStorage";
 
 export async function signup(
   email: string,
@@ -14,9 +15,10 @@ export async function signup(
   setLoading: Function
 ) {
   setLoading(true);
+  const theme = checkLocalStorage("colorTheme");
   createUserWithEmailAndPassword(auth, email, password)
     .then((res) => {
-      createNewUserDoc(res.user.uid, email, username);
+      createNewUserDoc(res.user.uid, email, username, theme);
       store.addNotification(success("account created!"));
       setLoading(false);
     })

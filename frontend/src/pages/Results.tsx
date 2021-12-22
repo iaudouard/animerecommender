@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation, Redirect } from "react-router-dom";
 import "../styles/pages/Results.css";
 import fetchRecommendations from "../utils/api";
 import Card from "../components/Card";
-import { ThemeContext } from "../App";
+import { ThemeContext } from "../context/ThemeContext";
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
 import { error } from "../utils/notifications";
@@ -13,6 +13,7 @@ import Spinner from "../components/Spinner";
 interface Props {}
 
 export default function Results({}: Props) {
+  const Theme = useContext(ThemeContext)["theme"];
   const location = useLocation();
   const state = location.state;
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -54,33 +55,27 @@ export default function Results({}: Props) {
       variants={variants}
       transition={transition}
     >
-      <ThemeContext.Consumer>
-        {(Theme) => {
-          return (
-            <div className="Results">
-              {isLoading ? (
-                <Spinner size="2x" color={Theme["secondary"]} />
-              ) : recommendations["data"] === false ? (
-                <Redirect to="/" />
-              ) : (
-                <div className="resultsContainer">
-                  {recommendations["data"].map((item: any, index: number) => {
-                    return (
-                      <Card
-                        title={item["attributes"]["canonicalTitle"]}
-                        poster={item["attributes"]["posterImage"]}
-                        synopsis={item["attributes"]["synopsis"]}
-                        color={Theme["primary"]}
-                        key={index}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        }}
-      </ThemeContext.Consumer>
+      <div className="Results">
+        {isLoading ? (
+          <Spinner size="2x" color={Theme["secondary"]} />
+        ) : recommendations["data"] === false ? (
+          <Redirect to="/" />
+        ) : (
+          <div className="resultsContainer">
+            {recommendations["data"].map((item: any, index: number) => {
+              return (
+                <Card
+                  title={item["attributes"]["canonicalTitle"]}
+                  poster={item["attributes"]["posterImage"]}
+                  synopsis={item["attributes"]["synopsis"]}
+                  color={Theme["primary"]}
+                  key={index}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 }
