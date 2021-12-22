@@ -19,8 +19,17 @@ export function readData(uid: string) {
 export function addLikedAnime(uid: string, animeTitle: string) {
   const userRef = doc(db, "users", uid);
 }
-
-export function createNewUserDoc(uid: string, email: string, username: string) {
+export function changeUserTheme(uid: string, newTheme: string) {
   const userRef = doc(db, "users", uid);
-  return setDoc(userRef, { email: email, username: username });
+  return setDoc(userRef, { theme: newTheme }, { merge: true });
+}
+
+export function createNewUserDoc(
+  uid: string,
+  email: string,
+  username: string,
+  theme: string | null
+) {
+  const userRef = doc(db, "users", uid);
+  return setDoc(userRef, { email: email, username: username, theme: theme });
 }
