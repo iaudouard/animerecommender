@@ -6,17 +6,18 @@ import { variants, transition } from "../constants/transitions";
 import { signin, signup, signout } from "../firebase/firebase.utils.auth";
 import SubmitButton from "../components/buttons/SubmitButton";
 import { store } from "react-notifications-component";
-import { error } from "../utils/notifications";
+import { error, success } from "../utils/notifications";
 import Spinner from "../components/Spinner";
 import { auth } from "../firebase/firebase.config";
 import FormField from "../components/FormField";
-import SignoutButton from "../components/buttons/SignoutButton";
-import { readData } from "../firebase/firebase.utils.handledata";
+import { readData, getUsername } from "../firebase/firebase.utils.handledata";
+import { UserContext } from "../context/UserContext";
 
 interface Props {}
 
 export default function Account({}: Props): ReactElement {
   const Theme = useContext(ThemeContext)["theme"];
+  const user = useContext(UserContext);
   const [signUpUsername, setSignUpUsername] = useState<string>("");
   const [signUpEmail, setSignUpEmail] = useState<string>("");
   const [signUpPassword, setSignUpPassword] = useState<string>("");
@@ -25,43 +26,58 @@ export default function Account({}: Props): ReactElement {
   );
   const [signInEmail, setSignInEmail] = useState<string>("");
   const [signInPassword, setSignInPassword] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [user, setUser] = useState<boolean>(false);
-  const [userData, setUserData] = useState<Array<Object>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(user ? true : false);
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    async function fetchData() {
       if (user) {
-        setUser(true);
-        readData(user.uid)
-          .then((res) => {
-            setUserData(res);
-          })
-          .then(() => {
-            console.log(userData);
-            setIsLoading(false);
-          });
-      } else {
+        const uid = user["uid"];
+        const data = await readData(uid);
+        setUserData(data);
         setIsLoading(false);
       }
-    });
+    }
+    fetchData();
   }, []);
 
   const handleSignin = () => {
     setIsLoading(true);
-    signin(signInEmail, signInPassword, setIsLoading);
+    signin(signInEmail, signInPassword)
+      .then((res) => {
+        const uid = res["user"]["uid"];
+        readData(uid)
+          .then((res) => {
+            setUserData(res);
+          })
+          .then(() => {
+            setIsLoading(false);
+            store.addNotification(success("signed in!"));
+          });
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleSignup = () => {
     if (signUpPassword === signUpPasswordConfirm) {
-      signup(signUpEmail, signUpPassword, signUpUsername, setIsLoading);
+      setIsLoading(true);
+      signup(signUpEmail, signUpPassword, signUpUsername)
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setIsLoading(false);
+        });
     } else {
       store.addNotification(error("passwords are not the same..."));
     }
   };
 
   const handleSignout = () => {
-    signout(setIsLoading, window);
+    setIsLoading(true);
+    signout(window);
   };
 
   return (
@@ -76,12 +92,18 @@ export default function Account({}: Props): ReactElement {
         {isLoading ? (
           <Spinner size="2x" color={Theme["secondary"]} />
         ) : user ? (
-          <SignoutButton
-            primary={Theme["primary"]}
-            secondary={Theme["secondary"]}
-            tercery={Theme["tercery"]}
-            clickHandler={() => handleSignout()}
-          />
+          <>
+            <p style={{ color: Theme["secondary"] }}>
+              Hi, {userData["username"]}
+            </p>
+            <SubmitButton
+              primaryColor={Theme["primary"]}
+              secondaryColor={Theme["secondary"]}
+              terceryColor={Theme["tercery"]}
+              handleClick={() => handleSignout()}
+              label="sign out"
+            />
+          </>
         ) : (
           <div className="form">
             <div className="signUp">
