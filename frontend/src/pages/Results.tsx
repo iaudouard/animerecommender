@@ -16,7 +16,7 @@ interface Props {}
 
 export default function Results({}: Props) {
   const Theme = useContext(ThemeContext)["theme"];
-  const user = useContext(UserContext);
+  const user = useContext(UserContext)["user"];
   const location = useLocation();
   const state = location.state;
   const [isLoading, setIsLoading] = useState<boolean>(true);

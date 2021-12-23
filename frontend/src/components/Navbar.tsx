@@ -13,7 +13,7 @@ interface Props {}
 
 export default function Navbar({}: Props): ReactElement {
   const Theme = useContext(ThemeContext)["theme"];
-  const changeTheme = useContext(ThemeContext)["changeTheme"];
+  const cycleTheme = useContext(ThemeContext)["cycleTheme"];
 
   const [homeIconHover, setHomeIconHover] = useState(false);
   const [userIconHover, setUserIconHover] = useState(false);
@@ -51,7 +51,7 @@ export default function Navbar({}: Props): ReactElement {
         <ThemeButton
           Icon={Theme["Icon"]}
           Color={Theme["primary"]}
-          clickHandler={() => changeTheme()}
+          clickHandler={() => cycleTheme("hi")}
         />
       </div>
     </motion.div>

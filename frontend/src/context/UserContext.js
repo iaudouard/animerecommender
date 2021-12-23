@@ -6,13 +6,9 @@ import { themes } from "../constants/themes";
 
 export const UserContext = createContext([]);
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export default function UserProvider({ children }: Props): ReactElement {
-  const [user, setUser] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export default function UserProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const initTheme = colorThemeInitCheck();
 
@@ -25,8 +21,14 @@ export default function UserProvider({ children }: Props): ReactElement {
     return unsubscribe;
   }, []);
 
+  const changeUserContext = (newUser) => {
+    setUser(newUser);
+  };
+
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider
+      value={{ user: user, changeUserContext: changeUserContext }}
+    >
       {!isLoading ? (
         children
       ) : (

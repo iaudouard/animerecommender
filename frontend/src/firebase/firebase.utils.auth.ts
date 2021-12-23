@@ -2,10 +2,12 @@ import { auth, db } from "./firebase.config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { error, success } from "../utils/notifications";
 import { store } from "react-notifications-component";
-import { createNewUserDoc } from "./firebase.utils.handledata";
+import { createNewUserDoc, readData } from "./firebase.utils.handledata";
 import { checkLocalStorage } from "../utils/localStorage";
 
 export async function signup(
@@ -44,4 +46,24 @@ export async function signout(window) {
   auth.signOut().then(() => {
     window.location.reload();
   });
+}
+
+export async function signinWithSocial(provider) {
+  return signInWithPopup(auth, provider)
+    .then((res) => {
+      return res.user;
+    })
+    .then((user) => {
+      const uid = user.uid;
+
+      return readData(uid).then((res) => {
+        const name = user.displayName;
+        const email = user.providerData[0].email;
+        const theme = checkLocalStorage("colorTheme");
+        if (!res) {
+          createNewUserDoc(uid, email!, name!, theme);
+        }
+        return user;
+      });
+    });
 }

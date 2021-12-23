@@ -45,3 +45,20 @@
   height: 50vh;
   align-items: center;
 }
+.signInButtons {
+  display: flex;
+}
+.socials {
+  display: flex;
+  margin-left: 0.3rem;
+}
+
+.socialButton {
+  border-radius: 0.4rem;
+  outline: none;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  margin: 0 0.3rem;
+}
