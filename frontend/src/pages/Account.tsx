@@ -8,10 +8,10 @@ import SubmitButton from "../components/buttons/SubmitButton";
 import { store } from "react-notifications-component";
 import { error, success } from "../utils/notifications";
 import Spinner from "../components/Spinner";
-import { auth } from "../firebase/firebase.config";
 import FormField from "../components/FormField";
-import { readData, getUsername } from "../firebase/firebase.utils.handledata";
+import { readData } from "../firebase/firebase.utils.handledata";
 import { UserContext } from "../context/UserContext";
+import Card from "../components/Card";
 
 interface Props {}
 
@@ -27,15 +27,17 @@ export default function Account({}: Props): ReactElement {
   const [signInEmail, setSignInEmail] = useState<string>("");
   const [signInPassword, setSignInPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(user ? true : false);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({ likedAnime: [] });
 
   useEffect(() => {
     async function fetchData() {
       if (user) {
         const uid = user["uid"];
-        const data = await readData(uid);
-        setUserData(data);
-        setIsLoading(false);
+        await readData(uid)
+          .then((res) => {
+            setUserData(res);
+          })
+          .then(() => setIsLoading(false));
       }
     }
     fetchData();
@@ -88,14 +90,49 @@ export default function Account({}: Props): ReactElement {
       variants={variants}
       transition={transition}
     >
-      <div className="Login">
+      <div className="Account">
         {isLoading ? (
           <Spinner size="2x" color={Theme["secondary"]} />
         ) : user ? (
-          <>
+          <motion.div
+            initial="out"
+            animate="in"
+            exit="out"
+            variants={variants}
+            transition={transition}
+            className="Account"
+          >
             <p style={{ color: Theme["secondary"] }}>
               Hi, {userData["username"]}
             </p>
+            <div
+              className="likedAnimeContainer"
+              style={{ backgroundColor: Theme["primary"] }}
+            >
+              <p style={{ color: Theme["secondary"] }}>liked anime:</p>
+              <div className="cardsContainer">
+                {userData["likedAnime"].map((anime) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Card
+                        poster={anime["image"]}
+                        color={Theme["secondary"]}
+                        height={20}
+                      />
+                      <p style={{ color: Theme["secondary"] }}>
+                        {anime["title"]}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
             <SubmitButton
               primaryColor={Theme["primary"]}
               secondaryColor={Theme["secondary"]}
@@ -103,7 +140,7 @@ export default function Account({}: Props): ReactElement {
               handleClick={() => handleSignout()}
               label="sign out"
             />
-          </>
+          </motion.div>
         ) : (
           <div className="form">
             <div className="signUp">

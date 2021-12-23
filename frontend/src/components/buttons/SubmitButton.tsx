@@ -30,7 +30,6 @@ export default function SubmitButton({
     <div
       className="Submit"
       onClick={(e) => {
-        e.preventDefault();
         handleClick();
       }}
       style={{

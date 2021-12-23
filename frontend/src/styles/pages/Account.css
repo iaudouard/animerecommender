@@ -1,4 +1,4 @@
-.Login {
+.Account {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,4 +25,23 @@
 
 .signUp {
   height: 100%;
+}
+
+.likedAnimeContainer {
+  height: 57vh;
+  width: 70vw;
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  flex-direction: column;
+}
+
+.cardsContainer {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  height: 50vh;
+  align-items: center;
 }
