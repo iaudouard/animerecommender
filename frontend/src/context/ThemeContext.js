@@ -20,7 +20,7 @@ export const ThemeContext = createContext([]);
 export default function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(themes[colorThemeInitCheck()]);
   const [isLoading, setIsLoading] = useState(true);
-  const user = useContext(UserContext);
+  const user = useContext(UserContext)["user"];
 
   useEffect(() => {
     if (user) {
@@ -38,7 +38,7 @@ export default function ThemeProvider({ children }) {
     }
   }, []);
 
-  const changeTheme = () => {
+  const cycleTheme = (t) => {
     const keys = Object.keys(themes);
     const values = Object.values(themes);
     const currIndex = values.indexOf(theme);
@@ -52,8 +52,15 @@ export default function ThemeProvider({ children }) {
     }
   };
 
+  const changeTheme = (newTheme) => {
+    setTheme(themes[newTheme]);
+    handleLocalStorageThemeChange(newTheme);
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme: theme, changeTheme: changeTheme }}>
+    <ThemeContext.Provider
+      value={{ theme: theme, cycleTheme: cycleTheme, changeTheme: changeTheme }}
+    >
       {!isLoading ? (
         children
       ) : (
