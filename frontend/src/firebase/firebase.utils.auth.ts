@@ -48,22 +48,24 @@ export async function signout(window) {
   });
 }
 
-export async function signinWithSocial(provider) {
+export async function signInWithSocial(provider) {
   return signInWithPopup(auth, provider)
     .then((res) => {
+      console.log(res);
       return res.user;
     })
     .then((user) => {
       const uid = user.uid;
-
       return readData(uid).then((res) => {
+        console.log(user);
         const name = user.displayName;
-        const email = user.providerData[0].email;
+        const email = user.email;
         const theme = checkLocalStorage("colorTheme");
         if (!res) {
           createNewUserDoc(uid, email!, name!, theme);
         }
         return user;
       });
-    });
+    })
+    .catch((err) => console.log(err));
 }

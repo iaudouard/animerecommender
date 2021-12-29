@@ -7,24 +7,28 @@ import {
   signin,
   signup,
   signout,
-  signinWithSocial,
+  signInWithSocial,
 } from "../firebase/firebase.utils.auth";
 import SubmitButton from "../components/buttons/SubmitButton";
 import { store } from "react-notifications-component";
 import { error, success } from "../utils/notifications";
 import Spinner from "../components/Spinner";
 import FormField from "../components/FormField";
-import { readData } from "../firebase/firebase.utils.handledata";
+import {
+  deleteLikedAnime,
+  readData,
+} from "../firebase/firebase.utils.handledata";
 import { UserContext } from "../context/UserContext";
 import Card from "../components/Card";
-import { githubProvider } from "../firebase/firebase.config";
-import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
+import { githubProvider, googleProvider } from "../firebase/firebase.config";
+import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 interface Props {}
 
 export default function Account({}: Props): ReactElement {
   const Theme = useContext(ThemeContext)["theme"];
   const user = useContext(UserContext)["user"];
   const changeTheme = useContext(ThemeContext)["changeTheme"];
+
   const [signUpUsername, setSignUpUsername] = useState<string>("");
   const [signUpEmail, setSignUpEmail] = useState<string>("");
   const [signUpPassword, setSignUpPassword] = useState<string>("");
@@ -33,8 +37,9 @@ export default function Account({}: Props): ReactElement {
   );
   const [signInEmail, setSignInEmail] = useState<string>("");
   const [signInPassword, setSignInPassword] = useState<string>("");
+
   const [isLoading, setIsLoading] = useState<boolean>(user ? true : false);
-  const [userData, setUserData] = useState({ likedAnime: [] });
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -72,7 +77,27 @@ export default function Account({}: Props): ReactElement {
 
   const handleGithubSignin = () => {
     setIsLoading(true);
-    signinWithSocial(githubProvider)
+    signInWithSocial(githubProvider)
+      .then((res) => {
+        const uid = res["uid"];
+        readData(uid)
+          .then((res) => {
+            setUserData(res);
+            changeTheme(res["theme"]);
+          })
+          .then(() => {
+            setIsLoading(false);
+            store.addNotification(success("signed in!"));
+          });
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleGoogleSignin = () => {
+    setIsLoading(true);
+    signInWithSocial(googleProvider)
       .then((res) => {
         const uid = res["uid"];
         readData(uid)
@@ -152,6 +177,15 @@ export default function Account({}: Props): ReactElement {
                         poster={anime["image"]}
                         color={Theme["secondary"]}
                         height={20}
+                        deleteable
+                        onClick={() =>
+                          deleteLikedAnime(user.uid, anime["title"]).then(
+                            (res) => {
+                              const newLiked = { likedAnime: res };
+                              setUserData({ ...userData, ...newLiked });
+                            }
+                          )
+                        }
                       />
                       <p style={{ color: Theme["secondary"] }}>
                         {anime["title"]}
@@ -231,11 +265,11 @@ export default function Account({}: Props): ReactElement {
                     <AiFillGithub color="white" size={26} />
                   </button>
                   <button
-                    onClick={() => console.log("not yet")}
+                    onClick={() => handleGoogleSignin()}
                     className="socialButton"
-                    style={{ backgroundColor: "#1DA1F2" }}
+                    style={{ backgroundColor: "#DB4437" }}
                   >
-                    <AiOutlineTwitter color="white" size={26} />
+                    <AiOutlineGoogle color="white" size={26} />
                   </button>
                 </div>
               </div>
