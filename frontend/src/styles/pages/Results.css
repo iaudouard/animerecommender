@@ -30,27 +30,22 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  border-radius: 0.4rem;
+  width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 0.4rem;
+  border-radius: 0.3rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-.error {
-  color: red;
 }

@@ -19,4 +19,9 @@
 
 body {
   margin: 0;
+  overflow: hidden;
+}
+
+.App {
+  height: 100vh;
 }

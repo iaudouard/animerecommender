@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import "../styles/Spinner.css";
+import "../styles/components/Spinner.css";
 
 interface Props {
   color: string;
