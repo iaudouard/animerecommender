@@ -15,6 +15,6 @@ export function colorThemeInitCheck() {
   }
 }
 
-export function handleLocalStorageColorThemeChange(newThemeName) {
+export function handleLocalStorageThemeChange(newThemeName) {
   setLocalStorage("colorTheme", newThemeName);
 }

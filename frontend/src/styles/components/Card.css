@@ -1,17 +1,11 @@
 @media screen and (min-height: 768px) {
   .cardContainer {
-    min-width: 20rem;
-    max-width: 20rem;
-    height: 26rem;
     border-radius: 1.3rem;
     margin: 0 1.3rem;
   }
 }
 @media screen and (max-height: 768px) {
   .cardContainer {
-    min-width: 19rem;
-    max-width: 19rem;
-    height: 26rem;
     border-radius: 1.3rem;
     margin: 1rem 1.3rem;
   }

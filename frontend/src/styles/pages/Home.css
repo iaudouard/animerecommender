@@ -37,7 +37,3 @@
   background-color: transparent;
   transition: border-bottom ease 0.3s;
 }
-
-.animeSearchInput:focus {
-  border-bottom: 0.4vh solid white;
-}
