@@ -35,6 +35,28 @@ export async function addLikedAnime(uid: string, anime: Object) {
 
   return setDoc(userRef, { likedAnime: liked }, { merge: true });
 }
+
+export async function deleteLikedAnime(uid: string, title: string) {
+  const userRef = doc(db, "users", uid);
+  const liked = await getDoc(userRef)
+    .then((res) => {
+      return res.data();
+    })
+    .then((data) => {
+      if (data) {
+        return data["likedAnime"];
+      }
+    });
+
+  for (var i = 0; i < liked.length; i++) {
+    if (liked[i]["title"] === title) {
+      liked.splice(i, 1);
+    }
+  }
+
+  setDoc(userRef, { likedAnime: liked }, { merge: true });
+  return liked;
+}
 export function changeUserTheme(uid: string, newTheme: string) {
   const userRef = doc(db, "users", uid);
   return setDoc(userRef, { theme: newTheme }, { merge: true });
