@@ -1,13 +1,16 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import "../styles/Card.css";
+import React, { ReactElement, useState } from "react";
+import "../styles/components/Card.css";
 import rgbDictionaryToString from "../utils/rgbConverter";
-import useWindowDimensions from "../constants/dimensions";
+import { GoTrashcan } from "react-icons/go";
 
 interface Props {
-  title: string;
+  title?: string;
   color: string;
   poster: string;
-  synopsis: string;
+  synopsis?: string;
+  height?: number;
+  deleteable?: true;
+  onClick?: () => void;
 }
 
 export default function Card({
@@ -15,26 +18,58 @@ export default function Card({
   color,
   poster,
   synopsis,
+  height,
+  deleteable,
+  onClick,
 }: Props): ReactElement {
-  const { width, height } = useWindowDimensions();
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="cardContainer"
       style={{
         backgroundImage: `url(${poster})`,
         backgroundSize: "cover",
+        height: height ? height + "rem" : "26rem",
+        minWidth: height ? height * (3 / 4) + "rem" : 26 * (3 / 4) + "rem",
       }}
+      onClick={onClick}
     >
-      <div className="cardContent">
-        <p className="cardSynopsis">{synopsis}</p>
+      {deleteable && (
         <div
-          className="titleBng"
-          style={{ backgroundColor: rgbDictionaryToString(color, 0.8) }}
+          style={
+            isHovered
+              ? {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                  borderRadius: "1.3rem",
+                  height: "100%",
+                  width: "100%",
+                  transition: "0.4s",
+                }
+              : { display: "none", transition: "0.4s" }
+          }
         >
-          <p className="cardTitle">{title}</p>
+          <GoTrashcan size={28} />
         </div>
-      </div>
+      )}
+      {title ? (
+        <div className="cardContent">
+          <p className="cardSynopsis">{synopsis}</p>
+          <div
+            className="titleBng"
+            style={{ backgroundColor: rgbDictionaryToString(color, 0.8) }}
+          >
+            <p className="cardTitle">{title}</p>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

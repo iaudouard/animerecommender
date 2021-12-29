@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import "../styles/ThemeButton.css";
+import "../../styles/components/buttons/ThemeButton.css";
 
 interface Props {
   Icon: () => React.ReactElement;
