@@ -1,4 +1,4 @@
-import { GiTwirlyFlower, GiBullHorns } from "react-icons/gi";
+import { GiTwirlyFlower, GiBullHorns, GiRayGun } from "react-icons/gi";
 import { FaPoop } from "react-icons/fa";
 
 export const darling = {
@@ -30,6 +30,21 @@ export const hana = {
   secondary: "#eaa09c",
   tercery: "#123129",
 };
-export const errorColor = "red";
-export const themes = { poop: poop, hana: hana, darling: darling };
-export const themeNames = ["poop", "hana", "darling"];
+
+export const laser = {
+  Icon: function () {
+    return <GiRayGun color="#009eaf" />;
+  },
+  bng: "#221b44",
+  primary: "#b82356",
+  secondary: "#009eaf",
+  tercery: "#751a3a",
+};
+
+export const themes = {
+  poop: poop,
+  hana: hana,
+  darling: darling,
+  laser: laser,
+};
+export const themeNames = ["poop", "hana", "darling", "laser"];
