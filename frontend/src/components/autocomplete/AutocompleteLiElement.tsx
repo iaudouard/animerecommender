@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import "../styles/AutocompleteLiElement.css";
+import "../../styles/components/autocomplete/AutocompleteLiElement.css";
 
 interface Props {
   title: string;
