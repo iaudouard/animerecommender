@@ -25,16 +25,15 @@ import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 interface Props {}
 
 export default function Account({}: Props): ReactElement {
-  const Theme = useContext(ThemeContext)["theme"];
-  const user = useContext(UserContext)["user"];
+  const { theme } = useContext(ThemeContext);
+  const { user } = useContext(UserContext);
   const changeTheme = useContext(ThemeContext)["changeTheme"];
 
   const [signUpUsername, setSignUpUsername] = useState<string>("");
   const [signUpEmail, setSignUpEmail] = useState<string>("");
   const [signUpPassword, setSignUpPassword] = useState<string>("");
-  const [signUpPasswordConfirm, setSignUpPasswordConfirm] = useState<string>(
-    ""
-  );
+  const [signUpPasswordConfirm, setSignUpPasswordConfirm] =
+    useState<string>("");
   const [signInEmail, setSignInEmail] = useState<string>("");
   const [signInPassword, setSignInPassword] = useState<string>("");
 
@@ -145,7 +144,7 @@ export default function Account({}: Props): ReactElement {
     >
       <div className="Account">
         {isLoading ? (
-          <Spinner size="2x" color={Theme["secondary"]} />
+          <Spinner size="2x" color={theme["secondary"]} />
         ) : user ? (
           <motion.div
             initial="out"
@@ -155,14 +154,14 @@ export default function Account({}: Props): ReactElement {
             transition={transition}
             className="Account"
           >
-            <p style={{ color: Theme["secondary"] }}>
+            <p style={{ color: theme["secondary"] }}>
               Hi, {userData["username"]}
             </p>
             <div
               className="likedAnimeContainer"
-              style={{ backgroundColor: Theme["primary"] }}
+              style={{ backgroundColor: theme["primary"] }}
             >
-              <p style={{ color: Theme["secondary"] }}>liked anime:</p>
+              <p style={{ color: theme["secondary"] }}>liked anime:</p>
               <div className="cardsContainer">
                 {userData["likedAnime"].map((anime) => {
                   return (
@@ -175,7 +174,7 @@ export default function Account({}: Props): ReactElement {
                     >
                       <Card
                         poster={anime["image"]}
-                        color={Theme["secondary"]}
+                        color={theme["secondary"]}
                         height={20}
                         deleteable
                         onClick={() =>
@@ -187,7 +186,7 @@ export default function Account({}: Props): ReactElement {
                           )
                         }
                       />
-                      <p style={{ color: Theme["secondary"] }}>
+                      <p style={{ color: theme["secondary"] }}>
                         {anime["title"]}
                       </p>
                     </div>
@@ -196,9 +195,9 @@ export default function Account({}: Props): ReactElement {
               </div>
             </div>
             <SubmitButton
-              primaryColor={Theme["primary"]}
-              secondaryColor={Theme["secondary"]}
-              terceryColor={Theme["tercery"]}
+              primaryColor={theme["primary"]}
+              secondaryColor={theme["secondary"]}
+              terceryColor={theme["tercery"]}
               handleClick={() => handleSignout()}
               label="sign out"
             />
@@ -208,52 +207,52 @@ export default function Account({}: Props): ReactElement {
             <div className="signUp">
               <FormField
                 placeholder="username..."
-                Theme={Theme}
+                Theme={theme}
                 setInput={setSignUpUsername}
               />
               <FormField
                 placeholder="email..."
-                Theme={Theme}
+                Theme={theme}
                 setInput={setSignUpEmail}
               />
               <FormField
                 placeholder="password..."
-                Theme={Theme}
+                Theme={theme}
                 setInput={setSignUpPassword}
                 password={true}
               />
               <FormField
                 placeholder="confirm password..."
-                Theme={Theme}
+                Theme={theme}
                 setInput={setSignUpPasswordConfirm}
                 password={true}
               />
               <SubmitButton
                 handleClick={() => handleSignup()}
-                primaryColor={Theme["primary"]}
-                secondaryColor={Theme["secondary"]}
-                terceryColor={Theme["tercery"]}
+                primaryColor={theme["primary"]}
+                secondaryColor={theme["secondary"]}
+                terceryColor={theme["tercery"]}
                 label="sign up"
               />
             </div>
             <div className="signIn">
               <FormField
                 placeholder="email..."
-                Theme={Theme}
+                Theme={theme}
                 setInput={setSignInEmail}
               />
               <FormField
                 placeholder="password..."
-                Theme={Theme}
+                Theme={theme}
                 setInput={setSignInPassword}
                 password={true}
               />
               <div className="signInButtons">
                 <SubmitButton
                   handleClick={() => handleSignin()}
-                  primaryColor={Theme["primary"]}
-                  secondaryColor={Theme["secondary"]}
-                  terceryColor={Theme["tercery"]}
+                  primaryColor={theme["primary"]}
+                  secondaryColor={theme["secondary"]}
+                  terceryColor={theme["tercery"]}
                   label="sign in"
                 />
                 <div className="socials">

@@ -14,13 +14,11 @@ import "animate.css/animate.min.css";
 interface Props {}
 
 const App = () => {
-  const Theme = useContext(ThemeContext)["theme"];
+  const { theme } = useContext(ThemeContext);
   const [searchInputFocus, setSearchInputFocus] = useState<boolean>(false);
   const [animeSearchInput, setAnimeSearchInput] = useState<string>("");
-  const [
-    numberOfRecommendations,
-    setNumberOfRecommendations,
-  ] = useState<number>(0);
+  const [numberOfRecommendations, setNumberOfRecommendations] =
+    useState<number>(0);
   const [autocompleteVisible, setAutocompleteVisible] = useState(false);
 
   const updateAnimeSearchInput = (
@@ -70,7 +68,7 @@ const App = () => {
       variants={variants}
       transition={transition}
     >
-      <div className="Home" style={{ backgroundColor: Theme["bng"] }}>
+      <div className="Home" style={{ backgroundColor: theme["bng"] }}>
         <div className="formContainer">
           <div className="inputContainer">
             <input
@@ -79,9 +77,9 @@ const App = () => {
               placeholder="enter an anime..."
               style={{
                 borderBottom: `0.4vh solid ${
-                  searchInputFocus ? "white" : Theme["secondary"]
+                  searchInputFocus ? "white" : theme["secondary"]
                 }`,
-                color: Theme["secondary"],
+                color: theme["secondary"],
               }}
               value={animeSearchInput}
               onFocus={() => setSearchInputFocus(true)}
@@ -90,7 +88,7 @@ const App = () => {
 
             <Autocomplete
               animeSearchInputValue={animeSearchInput}
-              color={Theme["secondary"]}
+              color={theme["secondary"]}
               clickHandler={(title) => handleAutocomplete(title)}
               visible={autocompleteVisible}
             />
@@ -98,20 +96,20 @@ const App = () => {
 
           <div
             className="incrementContainer"
-            style={{ color: Theme["secondary"] }}
+            style={{ color: theme["secondary"] }}
           >
             <IncrementButton
-              primaryColor={Theme["primary"]}
-              secondaryColor={Theme["secondary"]}
-              terceryColor={Theme["tercery"]}
+              primaryColor={theme["primary"]}
+              secondaryColor={theme["secondary"]}
+              terceryColor={theme["tercery"]}
               handleClick={() => handleIncrementDown()}
               label="-"
             />
             {numberOfRecommendations}
             <IncrementButton
-              primaryColor={Theme["primary"]}
-              secondaryColor={Theme["secondary"]}
-              terceryColor={Theme["tercery"]}
+              primaryColor={theme["primary"]}
+              secondaryColor={theme["secondary"]}
+              terceryColor={theme["tercery"]}
               handleClick={() => handleIncrementUp()}
               label="+"
             />
@@ -132,9 +130,9 @@ const App = () => {
             style={{ textDecoration: "none" }}
           >
             <SubmitButton
-              primaryColor={Theme["primary"]}
-              secondaryColor={Theme["secondary"]}
-              terceryColor={Theme["tercery"]}
+              primaryColor={theme["primary"]}
+              secondaryColor={theme["secondary"]}
+              terceryColor={theme["tercery"]}
               handleClick={() => handleSubmit()}
               label="submit"
             />

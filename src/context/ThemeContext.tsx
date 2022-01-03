@@ -1,6 +1,8 @@
 import React, {
   createContext,
+  Dispatch,
   ReactElement,
+  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -15,10 +17,17 @@ import {
 } from "../utils/localStorage";
 import { changeUserTheme } from "../firebase/firebase.utils.handledata";
 
-export const ThemeContext = createContext([]);
+interface ThemeContextType {
+  theme: Object;
+  setTheme: Dispatch<SetStateAction<any>>;
+}
+
+const ThemeDefault = { theme: {}, setTheme: () => null };
+
+export const ThemeContext = createContext<ThemeContextType>(ThemeDefault);
 
 export default function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(themes[colorThemeInitCheck()]);
+  const [theme, setTheme] = useState<Object>(themes[colorThemeInitCheck()]);
   const [isLoading, setIsLoading] = useState(true);
   const user = useContext(UserContext)["user"];
 
@@ -38,29 +47,27 @@ export default function ThemeProvider({ children }) {
     }
   }, []);
 
-  const cycleTheme = (t) => {
-    const keys = Object.keys(themes);
-    const values = Object.values(themes);
-    const currIndex = values.indexOf(theme);
-    const newThemeName = keys[currIndex < keys.length - 1 ? currIndex + 1 : 0];
-    const newTheme = themes[newThemeName];
-    setTheme(newTheme);
-    handleLocalStorageThemeChange(newThemeName);
+  // const cycleTheme = (t) => {
+  //   const keys = Object.keys(themes);
+  //   const values = Object.values(themes);
+  //   const currIndex = values.indexOf(theme);
+  //   const newThemeName = keys[currIndex < keys.length - 1 ? currIndex + 1 : 0];
+  //   const newTheme = themes[newThemeName];
+  //   setTheme(newTheme);
+  //   handleLocalStorageThemeChange(newThemeName);
 
-    if (user) {
-      changeUserTheme(user["uid"], newThemeName);
-    }
-  };
+  //   if (user) {
+  //     changeUserTheme(user["uid"], newThemeName);
+  //   }
+  // };
 
-  const changeTheme = (newTheme) => {
-    setTheme(themes[newTheme]);
-    handleLocalStorageThemeChange(newTheme);
-  };
+  // const changeTheme = (newTheme) => {
+  //   setTheme(themes[newTheme]);
+  //   handleLocalStorageThemeChange(newTheme);
+  // };
 
   return (
-    <ThemeContext.Provider
-      value={{ theme: theme, cycleTheme: cycleTheme, changeTheme: changeTheme }}
-    >
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {!isLoading ? (
         children
       ) : (
