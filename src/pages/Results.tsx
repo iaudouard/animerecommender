@@ -15,8 +15,8 @@ import { addLikedAnime } from "../firebase/firebase.utils.handledata";
 interface Props {}
 
 export default function Results({}: Props) {
-  const Theme = useContext(ThemeContext)["theme"];
-  const user = useContext(UserContext)["user"];
+  const { theme } = useContext(ThemeContext);
+  const { user } = useContext(UserContext);
   const location = useLocation();
   const state = location.state;
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -31,7 +31,7 @@ export default function Results({}: Props) {
           title: state.animeTitle,
           image: data["attributes"]["posterImage"],
         };
-        return addLikedAnime(user["uid"], info);
+        return addLikedAnime(user!["uid"], info);
       })
       .catch((err) =>
         store.addNotification(error("error adding anime to the database"))
@@ -77,7 +77,7 @@ export default function Results({}: Props) {
     >
       <div className="Results">
         {isLoading ? (
-          <Spinner size="2x" color={Theme["secondary"]} />
+          <Spinner size="2x" color={theme["secondary"]} />
         ) : recommendations["data"] === false ? (
           <Redirect to="/" />
         ) : (
@@ -88,7 +88,7 @@ export default function Results({}: Props) {
                   title={item["attributes"]["canonicalTitle"]}
                   poster={item["attributes"]["posterImage"]}
                   synopsis={item["attributes"]["synopsis"]}
-                  color={Theme["primary"]}
+                  color={theme["primary"]}
                   key={index}
                 />
               );

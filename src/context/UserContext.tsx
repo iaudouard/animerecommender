@@ -1,14 +1,29 @@
-import React, { ReactElement, useEffect, useState, createContext } from "react";
+import React, {
+  ReactElement,
+  useEffect,
+  useState,
+  createContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import Spinner from "../components/Spinner";
 import { auth } from "../firebase/firebase.config";
 import { colorThemeInitCheck } from "../utils/localStorage";
 import { themes } from "../constants/themes";
+import { User } from "firebase/auth";
 
-export const UserContext = createContext([]);
+interface UserContextType {
+  user: User | null;
+  setUser: Dispatch<SetStateAction<any>>;
+}
+
+const UserDefault = { user: null, setUser: () => null };
+
+export const UserContext = createContext<UserContextType>(UserDefault);
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const initTheme = colorThemeInitCheck();
 
@@ -26,9 +41,7 @@ export default function UserProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider
-      value={{ user: user, changeUserContext: changeUserContext }}
-    >
+    <UserContext.Provider value={{ user, setUser }}>
       {!isLoading ? (
         children
       ) : (
