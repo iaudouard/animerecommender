@@ -50,7 +50,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][/public/homescreen.png]](https://animerecommender.net)
+![Home](/public/homescreen.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
