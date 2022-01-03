@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="./public/logo.png" alt="Logo" width="80" height="60">
+    <img src="./public/logo.png" alt="Logo" width="160" height="120">
   </a>
 
 <h3 align="center">Anime Recommender</h3>
