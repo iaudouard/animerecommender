@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useContext } from "react";
+import { ReactElement, useState, useEffect, useContext } from "react";
 import "../styles/pages/Account.css";
 import { ThemeContext } from "../context/ThemeContext";
 import { motion } from "framer-motion";
@@ -71,8 +71,9 @@ export default function Account({}: Props): ReactElement {
             store.addNotification(success("signed in!"));
           });
       })
-      .catch(() => {
+      .catch((err) => {
         setIsLoading(false);
+        store.addNotification(error(err.message));
       });
   };
 
@@ -91,8 +92,9 @@ export default function Account({}: Props): ReactElement {
             store.addNotification(success("signed in!"));
           });
       })
-      .catch(() => {
+      .catch((err) => {
         setIsLoading(false);
+        store.addNotification(error(err.message));
       });
   };
 
@@ -111,8 +113,9 @@ export default function Account({}: Props): ReactElement {
             store.addNotification(success("signed in!"));
           });
       })
-      .catch(() => {
+      .catch((err) => {
         setIsLoading(false);
+        store.addNotification(error(err.message));
       });
   };
 

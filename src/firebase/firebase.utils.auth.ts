@@ -1,9 +1,8 @@
-import { auth, db } from "./firebase.config";
+import { auth } from "./firebase.config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GithubAuthProvider,
 } from "firebase/auth";
 import { error, success } from "../utils/notifications";
 import { store } from "react-notifications-component";
@@ -51,13 +50,11 @@ export async function signout(window) {
 export async function signInWithSocial(provider) {
   return signInWithPopup(auth, provider)
     .then((res) => {
-      console.log(res);
       return res.user;
     })
     .then((user) => {
       const uid = user.uid;
       return readData(uid).then((res) => {
-        console.log(user);
         const name = user.displayName;
         const email = user.email;
         const theme = checkLocalStorage("colorTheme");
