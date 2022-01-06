@@ -60,6 +60,7 @@
 - [Typescript](https://www.typescriptlang.org/)
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
 - [Firebase](https://firebase.google.com/)
+- [RapidAPI](https://rapidapi.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -80,15 +81,18 @@ To get a local copy up and running follow these simple example steps.
 
 1. Setup a Firebase project at [https://firebase.google.com/](https://firebase.google.com/)
 
-2. Clone the repo
+2. Head to our [API](https://rapidapi.com/uruguay-nomas-uruguay-nomas-default/api/anime-recommender/) to get an api key
+
+3. Clone the repo
    ```sh
    git clone https://github.com/fusunnn/animerecommender
    ```
-3. Install the packages
+4. Install the packages
    ```sh
    yarn install
    ```
-4. Enter your Firebase project data in `.env` - a boilerplate for this is available in the `.env.example` --> to use it modify the file's name to `.env` and add in your own keys
+5. Enter your Firebase project data in `.env` - a boilerplate for this is available in the `.env.example` --> to use it modify the file's name to `.env` and add in your own keys
+
    ```env
    REACT_APP_API_KEY=
    REACT_APP_AUTH_DOMAIN=
@@ -97,6 +101,13 @@ To get a local copy up and running follow these simple example steps.
    REACT_APP_MESSAGING_SENDER_ID=
    REACT_APP_APP_ID=
    REACT_APP_MEASUREMENT_ID=
+
+   REACT_APP_RAPID_API_KEY=
+   ```
+
+6. Run the project
+   ```
+   yarn run start
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
