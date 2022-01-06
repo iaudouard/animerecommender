@@ -22,12 +22,14 @@ import { UserContext } from "../context/UserContext";
 import Card from "../components/Card";
 import { githubProvider, googleProvider } from "../firebase/firebase.config";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
+import { themes } from "../constants/themes";
 interface Props {}
 
 export default function Account({}: Props): ReactElement {
-  const { theme } = useContext(ThemeContext);
+  const { themeName, setThemeName } = useContext(ThemeContext);
+  const theme = themes[themeName];
+
   const { user } = useContext(UserContext);
-  const changeTheme = useContext(ThemeContext)["changeTheme"];
 
   const [signUpUsername, setSignUpUsername] = useState<string>("");
   const [signUpEmail, setSignUpEmail] = useState<string>("");
@@ -62,7 +64,7 @@ export default function Account({}: Props): ReactElement {
         readData(uid)
           .then((res) => {
             setUserData(res);
-            changeTheme(res["theme"]);
+            setThemeName(res["theme"]);
           })
           .then(() => {
             setIsLoading(false);
@@ -82,7 +84,7 @@ export default function Account({}: Props): ReactElement {
         readData(uid)
           .then((res) => {
             setUserData(res);
-            changeTheme(res["theme"]);
+            setThemeName(res["theme"]);
           })
           .then(() => {
             setIsLoading(false);
@@ -102,7 +104,7 @@ export default function Account({}: Props): ReactElement {
         readData(uid)
           .then((res) => {
             setUserData(res);
-            changeTheme(res["theme"]);
+            setThemeName(res["theme"]);
           })
           .then(() => {
             setIsLoading(false);
