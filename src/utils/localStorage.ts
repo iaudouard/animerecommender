@@ -2,8 +2,8 @@ export function checkLocalStorage(name) {
   return localStorage.getItem(name);
 }
 
-export function setLocalStorage(name, value) {
-  localStorage.setItem(name, value);
+export function setLocalStorage(name, value): void {
+  return localStorage.setItem(name, value);
 }
 
 export function colorThemeInitCheck() {
@@ -15,6 +15,6 @@ export function colorThemeInitCheck() {
   }
 }
 
-export function handleLocalStorageThemeChange(newThemeName) {
+export function handleLocalStorageThemeChange(newThemeName): void {
   setLocalStorage("colorTheme", newThemeName);
 }
