@@ -1,4 +1,4 @@
-import { auth } from "./firebase.config";
+import { analytics, auth } from "./firebase.config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,6 +8,7 @@ import { error, success } from "../utils/notifications";
 import { store } from "react-notifications-component";
 import { createNewUserDoc, readData } from "./firebase.utils.handledata";
 import { checkLocalStorage } from "../utils/localStorage";
+import { setUserId } from "firebase/analytics";
 
 export async function signup(
   email: string,
@@ -34,7 +35,7 @@ export async function signup(
 export async function signin(email, password) {
   return signInWithEmailAndPassword(auth, email, password)
     .then((res) => {
-      return res;
+      return res.user;
     })
     .catch(() => {
       store.addNotification(error("error signing up, please try again..."));
@@ -54,6 +55,7 @@ export async function signInWithSocial(provider) {
     })
     .then((user) => {
       const uid = user.uid;
+      setUserId(analytics, uid);
       return readData(uid).then((res) => {
         const name = user.displayName;
         const email = user.email;

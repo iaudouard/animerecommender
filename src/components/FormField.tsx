@@ -1,8 +1,9 @@
 import React, { ReactElement } from "react";
 import "../styles/components/FormField.css";
+import Theme from "../types/Theme";
 
 interface Props {
-  Theme: Object;
+  theme: Theme;
   setInput: (text) => void;
   placeholder: string;
   password?: boolean;
@@ -16,7 +17,7 @@ const handleFormInputChange = (
 };
 
 export default function FormField({
-  Theme,
+  theme,
   setInput,
   placeholder,
   password,
@@ -25,10 +26,10 @@ export default function FormField({
     <input
       className="formField"
       placeholder={placeholder}
-      type={password ? "password" : ""}
+      type={password ? "password" : "text"}
       style={{
-        backgroundColor: Theme["primary"],
-        color: Theme["secondary"],
+        backgroundColor: theme.primary,
+        color: theme.secondary,
       }}
       onChange={(ev) => handleFormInputChange(ev, setInput)}
     ></input>

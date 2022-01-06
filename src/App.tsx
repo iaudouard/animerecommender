@@ -15,17 +15,16 @@ import { themes } from "./constants/themes";
 interface Props {}
 
 export default function App({}: Props) {
-  const { themeName } = useContext(ThemeContext);
-  const theme = themes[themeName];
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div
       className="App"
       style={{
-        backgroundColor: theme["bng"],
+        backgroundColor: theme.bng,
       }}
     >
-      <Meta themeColor={theme["bng"]} />
+      <Meta themeColor={theme.bng} />
       <AnimatePresence>
         <div>
           <ReactNotification />

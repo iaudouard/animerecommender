@@ -14,10 +14,7 @@ import { changeUserTheme } from "../firebase/firebase.utils.handledata";
 interface Props {}
 
 export default function Navbar({}: Props): ReactElement {
-  const { themeName, setThemeName } = useContext(ThemeContext);
-  const theme = themes[themeName];
-
-  const { user } = useContext(UserContext);
+  const { themeName, setThemeName, theme } = useContext(ThemeContext);
 
   const [homeIconHover, setHomeIconHover] = useState(false);
   const [userIconHover, setUserIconHover] = useState(false);
@@ -31,13 +28,10 @@ export default function Navbar({}: Props): ReactElement {
 
   return (
     <motion.div initial="out" exit="out" animate="in">
-      <div
-        className="navbarContainer"
-        style={{ backgroundColor: theme["bng"] }}
-      >
-        <Link to="/" style={{ textDecoration: "none", display: "block" }}>
+      <div className="navbarContainer" style={{ backgroundColor: theme.bng }}>
+        <Link to="/" style={{ textDecoration: "none" }}>
           <AiFillHome
-            color={homeIconHover ? "white" : theme["secondary"]}
+            color={homeIconHover ? "white" : theme.secondary}
             className="icon"
             size={24}
             onMouseEnter={() => setHomeIconHover(true)}
@@ -49,7 +43,7 @@ export default function Navbar({}: Props): ReactElement {
           style={{ textDecoration: "none", display: "block" }}
         >
           <FaUserAlt
-            color={userIconHover ? "white" : theme["secondary"]}
+            color={userIconHover ? "white" : theme.secondary}
             className="icon"
             size={21}
             onMouseEnter={() => setUserIconHover(true)}
@@ -58,8 +52,8 @@ export default function Navbar({}: Props): ReactElement {
         </Link>
 
         <ThemeButton
-          Icon={theme["Icon"]}
-          Color={theme["primary"]}
+          Icon={theme.Icon}
+          Color={theme.primary}
           clickHandler={() => cycleTheme()}
         />
       </div>
