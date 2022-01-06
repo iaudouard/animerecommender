@@ -1,21 +1,15 @@
-import React, {
-  ReactElement,
-  useEffect,
-  useState,
-  createContext,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { useEffect, useState, createContext } from "react";
+
 import Spinner from "../components/Spinner";
-import { auth } from "../firebase/firebase.config";
+
+import { auth, analytics } from "../firebase/firebase.config";
+import { setUserId } from "firebase/analytics";
+
 import { colorThemeInitCheck } from "../utils/localStorage";
 import { themes } from "../constants/themes";
 import { User } from "firebase/auth";
 
-interface UserContextType {
-  user: User | null;
-  setUser: Dispatch<SetStateAction<any>>;
-}
+import UserContextType from "../types/UserContext";
 
 const UserDefault = { user: null, setUser: () => null };
 
@@ -31,14 +25,13 @@ export default function UserProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setIsLoading(false);
+      if (user) {
+        setUserId(analytics, user.uid);
+      }
     });
 
     return unsubscribe;
   }, []);
-
-  const changeUserContext = (newUser) => {
-    setUser(newUser);
-  };
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

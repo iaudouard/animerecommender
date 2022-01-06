@@ -1,6 +1,9 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { fetchAutocomplete } from "../../utils/api";
+import { ReactElement, useEffect, useState } from "react";
+
 import "../../styles/components/autocomplete/Autocomplete.css";
+
+import { fetchAutocomplete } from "../../utils/api";
+
 import AutocompleteLiElement from "./AutocompleteLiElement";
 
 interface Props {
@@ -21,7 +24,7 @@ export default function Autocomplete({
   useEffect(() => {
     async function fetcher() {
       const data = await fetchAutocomplete(animeSearchInputValue);
-      setAutocompleteValues(data["data"]);
+      setAutocompleteValues(data.data);
     }
     fetcher();
   }, [animeSearchInputValue]);
@@ -30,13 +33,12 @@ export default function Autocomplete({
       className="Autocomplete"
       style={{ display: visible ? "flex" : "none" }}
     >
-      {autocompleteValues.map((item, index) => {
+      {autocompleteValues.map((item, index: number) => {
         return (
           <AutocompleteLiElement
             key={index}
             color={color}
             title={item["attributes"]["canonicalTitle"]}
-            posterPath={item["attributes"]["canonicalTitle"]}
             clickHandler={(title) => clickHandler(title)}
           />
         );

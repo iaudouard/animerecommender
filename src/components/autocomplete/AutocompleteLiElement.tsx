@@ -1,16 +1,15 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import "../../styles/components/autocomplete/AutocompleteLiElement.css";
 
 interface Props {
   title: string;
-  posterPath: string;
   color: string;
   clickHandler: (title) => void;
 }
 
 export default function AutocompleteLiElement({
   title,
-  posterPath,
+
   color,
   clickHandler,
 }: Props): ReactElement {
