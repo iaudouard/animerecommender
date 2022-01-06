@@ -142,7 +142,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 fusunnn - [@audouard_ivan](https://twitter.com/audouard_ivan) - i.audouard22@ejm.org
 
-erni12345 -
+erni12345 - [LinkedIn](https://www.linkedin.com/in/ernesto-de-menibus-0b8783219?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bt3Uv68e4RU%2BcSWmCVnEXgw%3D%3D) - ernestodemenibus@gmail.com
 
 Project Link: [https://github.com/fusunnn/animerecommender](https://github.com/fusunnn/animerecommender)
 
