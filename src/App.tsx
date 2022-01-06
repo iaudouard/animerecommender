@@ -10,20 +10,22 @@ import "react-notifications-component/dist/theme.css";
 import "./styles/pages/App.css";
 import { ThemeContext } from "./context/ThemeContext";
 import Meta from "./components/Meta";
+import { themes } from "./constants/themes";
 
 interface Props {}
 
 export default function App({}: Props) {
-  const Theme = useContext(ThemeContext)["theme"];
+  const { themeName } = useContext(ThemeContext);
+  const theme = themes[themeName];
 
   return (
     <div
       className="App"
       style={{
-        backgroundColor: Theme["bng"],
+        backgroundColor: theme["bng"],
       }}
     >
-      <Meta themeColor={Theme["bng"]} />
+      <Meta themeColor={theme["bng"]} />
       <AnimatePresence>
         <div>
           <ReactNotification />

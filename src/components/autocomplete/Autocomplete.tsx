@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import fetchAutocomplete from "../../utils/api";
+import { fetchAutocomplete } from "../../utils/api";
 import "../../styles/components/autocomplete/Autocomplete.css";
 import AutocompleteLiElement from "./AutocompleteLiElement";
 
@@ -20,8 +20,7 @@ export default function Autocomplete({
 
   useEffect(() => {
     async function fetcher() {
-      const url: string = `https://kitsu.io/api/edge/anime?filter[text]=${animeSearchInputValue}`;
-      const data = await fetchAutocomplete(url);
+      const data = await fetchAutocomplete(animeSearchInputValue);
       setAutocompleteValues(data["data"]);
     }
     fetcher();
