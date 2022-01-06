@@ -1,22 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { ReactElement, useContext, useState } from "react";
+
 import "../styles/pages/Home.css";
+import "animate.css/animate.min.css";
+
 import IncrementButton from "../components/buttons/IncrementButton";
 import SubmitButton from "../components/buttons/SubmitButton";
 import Autocomplete from "../components/autocomplete/Autocomplete";
+
 import { Link } from "react-router-dom";
+
 import { ThemeContext } from "../context/ThemeContext";
+
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
+
 import { store } from "react-notifications-component";
 import { error } from "../utils/notifications";
-import "animate.css/animate.min.css";
-import { themes } from "../constants/themes";
 
-interface Props {}
-
-const App = () => {
-  const { themeName } = useContext(ThemeContext);
-  const theme = themes[themeName];
+export default function App(): ReactElement {
+  const { theme } = useContext(ThemeContext);
 
   const [searchInputFocus, setSearchInputFocus] = useState<boolean>(false);
   const [animeSearchInput, setAnimeSearchInput] = useState<string>("");
@@ -71,7 +73,7 @@ const App = () => {
       variants={variants}
       transition={transition}
     >
-      <div className="Home" style={{ backgroundColor: theme["bng"] }}>
+      <div className="Home" style={{ backgroundColor: theme.bng }}>
         <div className="formContainer">
           <div className="inputContainer">
             <input
@@ -80,9 +82,9 @@ const App = () => {
               placeholder="enter an anime..."
               style={{
                 borderBottom: `0.4vh solid ${
-                  searchInputFocus ? "white" : theme["secondary"]
+                  searchInputFocus ? "white" : theme.secondary
                 }`,
-                color: theme["secondary"],
+                color: theme.secondary,
               }}
               value={animeSearchInput}
               onFocus={() => setSearchInputFocus(true)}
@@ -91,7 +93,7 @@ const App = () => {
 
             <Autocomplete
               animeSearchInputValue={animeSearchInput}
-              color={theme["secondary"]}
+              color={theme.secondary}
               clickHandler={(title) => handleAutocomplete(title)}
               visible={autocompleteVisible}
             />
@@ -99,20 +101,20 @@ const App = () => {
 
           <div
             className="incrementContainer"
-            style={{ color: theme["secondary"] }}
+            style={{ color: theme.secondary }}
           >
             <IncrementButton
-              primaryColor={theme["primary"]}
-              secondaryColor={theme["secondary"]}
-              terceryColor={theme["tercery"]}
+              primaryColor={theme.primary}
+              secondaryColor={theme.secondary}
+              terceryColor={theme.tercery}
               handleClick={() => handleIncrementDown()}
               label="-"
             />
             {numberOfRecommendations}
             <IncrementButton
-              primaryColor={theme["primary"]}
-              secondaryColor={theme["secondary"]}
-              terceryColor={theme["tercery"]}
+              primaryColor={theme.primary}
+              secondaryColor={theme.secondary}
+              terceryColor={theme.tercery}
               handleClick={() => handleIncrementUp()}
               label="+"
             />
@@ -133,9 +135,9 @@ const App = () => {
             style={{ textDecoration: "none" }}
           >
             <SubmitButton
-              primaryColor={theme["primary"]}
-              secondaryColor={theme["secondary"]}
-              terceryColor={theme["tercery"]}
+              primaryColor={theme.primary}
+              secondaryColor={theme.secondary}
+              terceryColor={theme.tercery}
               handleClick={() => handleSubmit()}
               label="submit"
             />
@@ -144,6 +146,4 @@ const App = () => {
       </div>
     </motion.div>
   );
-};
-
-export default App;
+}

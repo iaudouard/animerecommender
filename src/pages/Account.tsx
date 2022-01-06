@@ -23,9 +23,11 @@ import Card from "../components/Card";
 import { githubProvider, googleProvider } from "../firebase/firebase.config";
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
 import { themes } from "../constants/themes";
-interface Props {}
 
-export default function Account({}: Props): ReactElement {
+import Anime from "../types/Anime";
+import UserData from "../types/UserData";
+
+export default function Account({}): ReactElement {
   const { themeName, setThemeName } = useContext(ThemeContext);
   const theme = themes[themeName];
 
@@ -40,12 +42,12 @@ export default function Account({}: Props): ReactElement {
   const [signInPassword, setSignInPassword] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(user ? true : false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       if (user) {
-        const uid = user["uid"];
+        const uid = user.uid;
         await readData(uid)
           .then((res) => {
             setUserData(res);
@@ -59,12 +61,12 @@ export default function Account({}: Props): ReactElement {
   const handleSignin = () => {
     setIsLoading(true);
     signin(signInEmail, signInPassword)
-      .then((res) => {
-        const uid = res["user"]["uid"];
+      .then((user) => {
+        const uid = user!.uid;
         readData(uid)
           .then((res) => {
             setUserData(res);
-            setThemeName(res["theme"]);
+            setThemeName(res.theme);
           })
           .then(() => {
             setIsLoading(false);
@@ -80,12 +82,12 @@ export default function Account({}: Props): ReactElement {
   const handleGithubSignin = () => {
     setIsLoading(true);
     signInWithSocial(githubProvider)
-      .then((res) => {
-        const uid = res["uid"];
+      .then((user) => {
+        const uid = user!.uid;
         readData(uid)
           .then((res) => {
             setUserData(res);
-            setThemeName(res["theme"]);
+            setThemeName(res.theme);
           })
           .then(() => {
             setIsLoading(false);
@@ -101,12 +103,12 @@ export default function Account({}: Props): ReactElement {
   const handleGoogleSignin = () => {
     setIsLoading(true);
     signInWithSocial(googleProvider)
-      .then((res) => {
-        const uid = res["uid"];
+      .then((user) => {
+        const uid = user!.uid;
         readData(uid)
           .then((res) => {
             setUserData(res);
-            setThemeName(res["theme"]);
+            setThemeName(res.theme);
           })
           .then(() => {
             setIsLoading(false);
@@ -149,7 +151,7 @@ export default function Account({}: Props): ReactElement {
     >
       <div className="Account">
         {isLoading ? (
-          <Spinner size="2x" color={theme["secondary"]} />
+          <Spinner size="2x" color={theme.secondary} />
         ) : user ? (
           <motion.div
             initial="out"
@@ -159,16 +161,14 @@ export default function Account({}: Props): ReactElement {
             transition={transition}
             className="Account"
           >
-            <p style={{ color: theme["secondary"] }}>
-              Hi, {userData["username"]}
-            </p>
+            <p style={{ color: theme.secondary }}>Hi, {userData!.username}</p>
             <div
               className="likedAnimeContainer"
-              style={{ backgroundColor: theme["primary"] }}
+              style={{ backgroundColor: theme.primary }}
             >
-              <p style={{ color: theme["secondary"] }}>liked anime:</p>
+              <p style={{ color: theme.secondary }}>liked anime:</p>
               <div className="cardsContainer">
-                {userData["likedAnime"].map((anime) => {
+                {userData!.likedAnime.map((anime: Anime) => {
                   return (
                     <div
                       style={{
@@ -178,31 +178,29 @@ export default function Account({}: Props): ReactElement {
                       }}
                     >
                       <Card
-                        poster={anime["image"]}
-                        color={theme["secondary"]}
+                        poster={anime.image}
+                        color={theme.secondary}
                         height={20}
                         deleteable
                         onClick={() =>
-                          deleteLikedAnime(user.uid, anime["title"]).then(
+                          deleteLikedAnime(user.uid, anime.title).then(
                             (res) => {
                               const newLiked = { likedAnime: res };
-                              setUserData({ ...userData, ...newLiked });
+                              setUserData({ ...userData!, ...newLiked });
                             }
                           )
                         }
                       />
-                      <p style={{ color: theme["secondary"] }}>
-                        {anime["title"]}
-                      </p>
+                      <p style={{ color: theme.secondary }}>{anime.title}</p>
                     </div>
                   );
                 })}
               </div>
             </div>
             <SubmitButton
-              primaryColor={theme["primary"]}
-              secondaryColor={theme["secondary"]}
-              terceryColor={theme["tercery"]}
+              primaryColor={theme.primary}
+              secondaryColor={theme.secondary}
+              terceryColor={theme.tercery}
               handleClick={() => handleSignout()}
               label="sign out"
             />
@@ -212,52 +210,52 @@ export default function Account({}: Props): ReactElement {
             <div className="signUp">
               <FormField
                 placeholder="username..."
-                Theme={theme}
+                theme={theme}
                 setInput={setSignUpUsername}
               />
               <FormField
                 placeholder="email..."
-                Theme={theme}
+                theme={theme}
                 setInput={setSignUpEmail}
               />
               <FormField
                 placeholder="password..."
-                Theme={theme}
+                theme={theme}
                 setInput={setSignUpPassword}
                 password={true}
               />
               <FormField
                 placeholder="confirm password..."
-                Theme={theme}
+                theme={theme}
                 setInput={setSignUpPasswordConfirm}
                 password={true}
               />
               <SubmitButton
                 handleClick={() => handleSignup()}
-                primaryColor={theme["primary"]}
-                secondaryColor={theme["secondary"]}
-                terceryColor={theme["tercery"]}
+                primaryColor={theme.primary}
+                secondaryColor={theme.secondary}
+                terceryColor={theme.tercery}
                 label="sign up"
               />
             </div>
             <div className="signIn">
               <FormField
                 placeholder="email..."
-                Theme={theme}
+                theme={theme}
                 setInput={setSignInEmail}
               />
               <FormField
                 placeholder="password..."
-                Theme={theme}
+                theme={theme}
                 setInput={setSignInPassword}
                 password={true}
               />
               <div className="signInButtons">
                 <SubmitButton
                   handleClick={() => handleSignin()}
-                  primaryColor={theme["primary"]}
-                  secondaryColor={theme["secondary"]}
-                  terceryColor={theme["tercery"]}
+                  primaryColor={theme.primary}
+                  secondaryColor={theme.secondary}
+                  terceryColor={theme.tercery}
                   label="sign in"
                 />
                 <div className="socials">

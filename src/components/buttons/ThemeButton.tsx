@@ -1,8 +1,9 @@
+import { Icon } from "@fortawesome/fontawesome-svg-core";
 import React, { ReactElement } from "react";
 import "../../styles/components/buttons/ThemeButton.css";
 
 interface Props {
-  Icon: () => React.ReactElement;
+  Icon: () => ReactElement;
   Color: string;
   clickHandler: () => void;
 }
