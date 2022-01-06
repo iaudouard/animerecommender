@@ -10,11 +10,14 @@ import { variants, transition } from "../constants/transitions";
 import { store } from "react-notifications-component";
 import { error } from "../utils/notifications";
 import "animate.css/animate.min.css";
+import { themes } from "../constants/themes";
 
 interface Props {}
 
 const App = () => {
-  const { theme } = useContext(ThemeContext);
+  const { themeName } = useContext(ThemeContext);
+  const theme = themes[themeName];
+
   const [searchInputFocus, setSearchInputFocus] = useState<boolean>(false);
   const [animeSearchInput, setAnimeSearchInput] = useState<string>("");
   const [numberOfRecommendations, setNumberOfRecommendations] =

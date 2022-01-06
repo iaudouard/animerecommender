@@ -11,11 +11,14 @@ import { error } from "../utils/notifications";
 import { store } from "react-notifications-component";
 import Spinner from "../components/Spinner";
 import { addLikedAnime } from "../firebase/firebase.utils.handledata";
+import { themes } from "../constants/themes";
 
 interface Props {}
 
 export default function Results({}: Props) {
-  const { theme } = useContext(ThemeContext);
+  const { themeName } = useContext(ThemeContext);
+  const theme = themes[themeName];
+
   const { user } = useContext(UserContext);
   const location = useLocation();
   const state = location.state;
