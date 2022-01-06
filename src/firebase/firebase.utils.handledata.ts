@@ -1,7 +1,9 @@
-import { error, success } from "../utils/notifications";
+import { error } from "../utils/notifications";
 import { store } from "react-notifications-component";
+
 import { db } from "./firebase.config";
 import { collection, getDoc, setDoc, doc } from "firebase/firestore";
+
 import containsObjTitle from "../utils/containsObjTitle";
 
 export const colRef = collection(db, "users");

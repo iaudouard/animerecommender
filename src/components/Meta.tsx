@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { meta } from "../constants/meta";
 import MetaTags from "react-meta-tags";
 

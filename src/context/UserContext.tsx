@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  createContext,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { useEffect, useState, createContext } from "react";
 
 import Spinner from "../components/Spinner";
 

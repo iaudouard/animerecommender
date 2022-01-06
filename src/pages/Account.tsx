@@ -1,27 +1,35 @@
 import { ReactElement, useState, useEffect, useContext } from "react";
+
 import "../styles/pages/Account.css";
+
 import { ThemeContext } from "../context/ThemeContext";
+import { UserContext } from "../context/UserContext";
+
 import { motion } from "framer-motion";
 import { variants, transition } from "../constants/transitions";
+
 import {
   signin,
   signup,
   signout,
   signInWithSocial,
 } from "../firebase/firebase.utils.auth";
-import SubmitButton from "../components/buttons/SubmitButton";
-import { store } from "react-notifications-component";
-import { error, success } from "../utils/notifications";
-import Spinner from "../components/Spinner";
-import FormField from "../components/FormField";
 import {
   deleteLikedAnime,
   readData,
 } from "../firebase/firebase.utils.handledata";
-import { UserContext } from "../context/UserContext";
-import Card from "../components/Card";
 import { githubProvider, googleProvider } from "../firebase/firebase.config";
+
+import SubmitButton from "../components/buttons/SubmitButton";
+import Spinner from "../components/Spinner";
+import FormField from "../components/FormField";
+import Card from "../components/Card";
+
+import { store } from "react-notifications-component";
+import { error, success } from "../utils/notifications";
+
 import { AiFillGithub, AiOutlineGoogle } from "react-icons/ai";
+
 import { themes } from "../constants/themes";
 
 import Anime from "../types/Anime";

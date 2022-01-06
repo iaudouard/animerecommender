@@ -1,14 +1,17 @@
 import { analytics, auth } from "./firebase.config";
+import { createNewUserDoc, readData } from "./firebase.utils.handledata";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
+import { setUserId } from "firebase/analytics";
+
 import { error, success } from "../utils/notifications";
 import { store } from "react-notifications-component";
-import { createNewUserDoc, readData } from "./firebase.utils.handledata";
+
 import { checkLocalStorage } from "../utils/localStorage";
-import { setUserId } from "firebase/analytics";
 
 export async function signup(
   email: string,
