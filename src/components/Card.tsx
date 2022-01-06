@@ -1,6 +1,8 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import "../styles/components/Card.css";
+
 import rgbDictionaryToString from "../utils/rgbConverter";
+
 import { GoTrashcan } from "react-icons/go";
 
 interface Props {

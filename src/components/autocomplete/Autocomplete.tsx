@@ -1,6 +1,9 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { fetchAutocomplete } from "../../utils/api";
+import { ReactElement, useEffect, useState } from "react";
+
 import "../../styles/components/autocomplete/Autocomplete.css";
+
+import { fetchAutocomplete } from "../../utils/api";
+
 import AutocompleteLiElement from "./AutocompleteLiElement";
 
 interface Props {

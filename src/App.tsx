@@ -1,16 +1,21 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import { useContext } from "react";
+
+import "react-notifications-component/dist/theme.css";
+import "./styles/pages/App.css";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Results from "./pages/Results";
 import Account from "./pages/Account";
-import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
-import ReactNotification from "react-notifications-component";
-import "react-notifications-component/dist/theme.css";
-import "./styles/pages/App.css";
-import { ThemeContext } from "./context/ThemeContext";
 import Meta from "./components/Meta";
-import { themes } from "./constants/themes";
+
+import { AnimatePresence } from "framer-motion";
+
+import ReactNotification from "react-notifications-component";
+
+import { ThemeContext } from "./context/ThemeContext";
 
 interface Props {}
 
