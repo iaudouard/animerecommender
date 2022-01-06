@@ -34,6 +34,7 @@ export default function Card({
         backgroundSize: "cover",
         height: height ? height + "rem" : "26rem",
         minWidth: height ? height * (3 / 4) + "rem" : 26 * (3 / 4) + "rem",
+        maxWidth: height ? height * (3 / 4) + "rem" : 26 * (3 / 4) + "rem",
       }}
       onClick={onClick}
     >
