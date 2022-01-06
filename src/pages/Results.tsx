@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocation, Redirect } from "react-router-dom";
 import "../styles/pages/Results.css";
-import fetch from "../utils/api";
+import { fetchInfo, fetchRec } from "../utils/api";
 import Card from "../components/Card";
 import { ThemeContext } from "../context/ThemeContext";
 import { UserContext } from "../context/UserContext";
@@ -26,8 +26,7 @@ export default function Results({}: Props) {
   const [recommendations, setRecommendations] = useState<Array<Object>>([]);
 
   async function addAnimeToFirebase() {
-    const infoUrl = `https://ivanadrd.pythonanywhere.com/get_anime_info?anime_title=${state.animeTitle}`;
-    await fetch(infoUrl)
+    await fetchInfo(state.animeTitle)
       .then((res) => {
         const data = res["data"];
         const info = {
@@ -36,24 +35,24 @@ export default function Results({}: Props) {
         };
         return addLikedAnime(user!["uid"], info);
       })
-      .catch((err) =>
-        store.addNotification(error("error adding anime to the database"))
-      );
+      .catch((err) => store.addNotification(error(err.message)));
   }
 
   useEffect(() => {
     async function getRecs() {
-      const url = `https://ivanadrd.pythonanywhere.com/?anime_title=${state.animeTitle}&number_of_anime=${state.numberOfRecommendations}`;
-
-      await fetch(url)
+      await fetchRec(state.animeTitle, state.numberOfRecommendations)
         .then((res) => {
           setRecommendations(res);
         })
         .then(() => {
           setIsLoading(false);
         })
-        .catch((err) => {
-          store.addNotification(error("anime not found, please try again"));
+        .catch(() => {
+          store.addNotification(
+            error(
+              "there was an error processing your request, please try again later or report an issue"
+            )
+          );
           setIsLoading(false);
         });
       if (user) {
@@ -61,7 +60,7 @@ export default function Results({}: Props) {
       }
     }
     if (state === undefined) {
-      store.addNotification(error("Failed to load request, please try again"));
+      store.addNotification(error("failed to load request, please try again"));
     } else {
       getRecs();
     }

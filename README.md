@@ -10,7 +10,7 @@
 <h3 align="center">Anime Recommender</h3>
 
   <p align="center">
-    This project is a fullstack anime recommendation system, with a backend/api that currently uses our own system to recommend anime based on a single anime given as input. * soon to be implemented with matrix factorization as we have added an account feature on the frontend *
+    This project is a fullstack anime recommendation system, with a backend/api that currently uses our own system to recommend anime based on a single anime given as input.
     <br />
     <br />
     <br />
@@ -57,7 +57,9 @@
 ### Built With
 
 - [React.js](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
+- [Firebase](https://firebase.google.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -82,11 +84,11 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/fusunnn/animerecommender
    ```
-3. Install NPM packages
+3. Install the packages
    ```sh
    yarn install
    ```
-4. Enter your Firebase project data in `.env`
+4. Enter your Firebase project data in `.env` - a boilerplate for this is available in the `.env.example` --> to use it modify the file's name to `.env` and add in your own keys
    ```env
    REACT_APP_API_KEY=
    REACT_APP_AUTH_DOMAIN=
@@ -103,9 +105,10 @@ To get a local copy up and running follow these simple example steps.
 
 ## Roadmap
 
-- Basic recommendation - Enter one anime and get as many as you asked for back
+- Recommender API - go to our API @ [RapidAPI](https://rapidapi.com/uruguay-nomas-uruguay-nomas-default/api/anime-recommender)
+- Website - Head to our website [AnimeRecommender](https://animerecommender.net/) to check out the website live,
 - Account system - Every time you ask for a recommendation, the anime you inputed for reference will be saved as a liked anime
-- Themeing System - Make use of our set of 4 themes that are saved to both your browser and your account if you have one. _all themes were pulled from _ [Monkeytype](https://github.com/Miodec/monkeytype)
+- Themeing System - Make use of our set of 4 themes that are saved to both your browser and your account (if you have one) - all themes were pulled from [Monkeytype](https://github.com/Miodec/monkeytype)
 
 See the [open issues](https://github.com/fusunnn/animerecommender/issues) for a full list of proposed features (and known issues).
 
