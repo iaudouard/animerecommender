@@ -1,36 +1,38 @@
-import React, {
-  createContext,
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+
 import { UserContext } from "./UserContext";
-import { readData } from "../firebase/firebase.utils.handledata";
+
+import {
+  readData,
+  changeUserTheme,
+} from "../firebase/firebase.utils.handledata";
+
 import { themes } from "../constants/themes";
+
 import Spinner from "../components/Spinner";
+
 import {
   colorThemeInitCheck,
   handleLocalStorageThemeChange,
 } from "../utils/localStorage";
-import { changeUserTheme } from "../firebase/firebase.utils.handledata";
 
-interface ThemeContextType {
-  themeName: string;
-  setThemeName: Dispatch<SetStateAction<any>>;
-}
+import ThemeContextType from "../types/ThemeContext";
+import Theme from "../types/Theme";
 
-const ThemeDefault = { themeName: "", setThemeName: () => null };
+const ThemeDefault = {
+  themeName: "",
+  setThemeName: () => null,
+  theme: themes[colorThemeInitCheck()],
+};
 
 export const ThemeContext = createContext<ThemeContextType>(ThemeDefault);
 
 export default function ThemeProvider({ children }) {
   const [themeName, setThemeName] = useState<string>(colorThemeInitCheck());
-  const theme = themes[themeName];
+  const [theme, setTheme] = useState<Theme>(themes[themeName]);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const user = useContext(UserContext)["user"];
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user) {
@@ -50,13 +52,14 @@ export default function ThemeProvider({ children }) {
 
   useEffect(() => {
     handleLocalStorageThemeChange(themeName);
+    setTheme(themes[themeName]);
     if (user) {
       changeUserTheme(user["uid"], themeName);
     }
   }, [themeName]);
 
   return (
-    <ThemeContext.Provider value={{ themeName, setThemeName }}>
+    <ThemeContext.Provider value={{ themeName, setThemeName, theme }}>
       {!isLoading ? (
         children
       ) : (

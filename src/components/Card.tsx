@@ -1,6 +1,8 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import "../styles/components/Card.css";
+
 import rgbDictionaryToString from "../utils/rgbConverter";
+
 import { GoTrashcan } from "react-icons/go";
 
 interface Props {
@@ -34,6 +36,7 @@ export default function Card({
         backgroundSize: "cover",
         height: height ? height + "rem" : "26rem",
         minWidth: height ? height * (3 / 4) + "rem" : 26 * (3 / 4) + "rem",
+        maxWidth: height ? height * (3 / 4) + "rem" : 26 * (3 / 4) + "rem",
       }}
       onClick={onClick}
     >
