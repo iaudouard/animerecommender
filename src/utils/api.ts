@@ -6,7 +6,7 @@ export async function fetchRec(animeTitle: string, numberOfAnime: string) {
     url: "https://anime-recommender.p.rapidapi.com/",
     params: { anime_title: animeTitle, number_of_anime: numberOfAnime },
     headers: {
-      "x-rapidapi-host": process.env.REACT_APP_RAPID_HOST!,
+      "x-rapidapi-host": "anime-recommender.p.rapidapi.com",
       "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY!,
     },
   };
@@ -33,7 +33,7 @@ export async function fetchInfo(animeTitle: string) {
     url: "https://anime-recommender.p.rapidapi.com/get_anime_info",
     params: { anime_title: animeTitle },
     headers: {
-      "x-rapidapi-host": process.env.REACT_APP_RAPID_HOST!,
+      "x-rapidapi-host": "anime-recommender.p.rapidapi.com",
       "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY!,
     },
   };
