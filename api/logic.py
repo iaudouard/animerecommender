@@ -1,6 +1,7 @@
 import json
 import math
-
+from datetime import datetime
+from csv import writer
 
 def getTitles():
 	
@@ -193,6 +194,14 @@ def ranking(recomendation_list, amount_to_recommend, choice, ):
 
 import time
 
+# function to write the user's input into csv file to check what people are inputting on website
+def write_input(anime, number):
+    time = datetime.now()
+    dt_string = time.strftime("%d/%m/%Y %H:%M:%S")
+    with open('/home/ivanadrd/api/data/inputs.csv', 'a', newline='') as f:
+        writer_object = writer(f)
+        writer_object.writerow([anime, number, dt_string])
+        f.close()
 
 
 def run(animes, choice, amnt):
