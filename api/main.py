@@ -1,8 +1,8 @@
+#!/usr/bin/python3.8
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from logic import *
 import requests
-
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -15,6 +15,7 @@ def index():
     number_of_anime =  request.args.get('number_of_anime')
 
     anime_title = requests.get(f"https://kitsu.io/api/edge/anime?filter[text]={anime_title}").json()["data"][0]["attributes"]["canonicalTitle"]
+    write_input(anime_title, number_of_anime)
     if anime_title in animes:
         return jsonify({'data' : (run(animes, anime_title, int(number_of_anime)))})
     else:
