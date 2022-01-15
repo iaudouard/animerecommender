@@ -34,7 +34,7 @@ export default function Navbar({}): ReactElement {
           <AiFillHome
             color={homeIconHover ? "white" : theme.secondary}
             className="icon"
-            size={24}
+            size="1.5rem"
             onMouseEnter={() => setHomeIconHover(true)}
             onMouseLeave={() => setHomeIconHover(false)}
           />
@@ -46,7 +46,7 @@ export default function Navbar({}): ReactElement {
           <FaUserAlt
             color={userIconHover ? "white" : theme.secondary}
             className="icon"
-            size={21}
+            size="1.3rem"
             onMouseEnter={() => setUserIconHover(true)}
             onMouseLeave={() => setUserIconHover(false)}
           />

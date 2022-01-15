@@ -3,7 +3,7 @@ import { FaPoop } from "react-icons/fa";
 
 export const darling = {
   Icon: function () {
-    return <GiBullHorns color="#a30000" />;
+    return <GiBullHorns color="#a30000" size="1.3rem" />;
   },
   bng: "#fec8cd",
   primary: "#ffaeb6",
@@ -13,7 +13,7 @@ export const darling = {
 
 export const poop = {
   Icon: function () {
-    return <FaPoop color="#7ebab5" />;
+    return <FaPoop color="#7ebab5" size="1.2rem" />;
   },
   bng: "#442F29",
   primary: "#61433a",
@@ -23,7 +23,7 @@ export const poop = {
 
 export const hana = {
   Icon: function () {
-    return <GiTwirlyFlower color="#eaa09c" />;
+    return <GiTwirlyFlower color="#eaa09c" size="1.3rem" />;
   },
   bng: "#173F35",
   primary: "#408E7B",
@@ -33,7 +33,7 @@ export const hana = {
 
 export const laser = {
   Icon: function () {
-    return <GiRayGun color="#009eaf" />;
+    return <GiRayGun color="#009eaf" size="1.3rem" />;
   },
   bng: "#221b44",
   primary: "#b82356",
