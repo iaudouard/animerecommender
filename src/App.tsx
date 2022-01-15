@@ -31,17 +31,15 @@ export default function App({}: Props) {
     >
       <Meta themeColor={theme.bng} />
       <AnimatePresence>
-        <div>
-          <ReactNotification />
-          <Router>
-            <Navbar />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/results" exact component={Results} />
-              <Route path="/account" exact component={Account} />
-            </Switch>
-          </Router>
-        </div>
+        <ReactNotification />
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/results" exact component={Results} />
+            <Route path="/account" exact component={Account} />
+          </Switch>
+        </Router>
       </AnimatePresence>
     </div>
   );
