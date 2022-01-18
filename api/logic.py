@@ -12,7 +12,7 @@ def getTitles():
 		[list]: [list of titles] --> Used for auto complete
 	"""
 	
-	with open("./data/AnimeDataShort.json", 'r') as fout:
+	with open("./data/anime_db.json", 'r') as fout:
 		tits = json.load(fout)
 	titles = [x for x in tits]
 	return titles
@@ -27,7 +27,7 @@ def openAnimes():
 	Returns:
 		[Dict]: [Animes Dict]
 	"""
-	with open("./data/AnimeDataShort.json", 'r') as fout:
+	with open("./data/anime_db.json", 'r') as fout:
 		animes = json.load(fout)
 	return dict(animes)
 
@@ -89,38 +89,47 @@ def get_degree_of_sim(v1, v2):
 
 def inter(animes, choice, check, amnt):
 
-    """
-    needs = ["Isekai", 'Bounty Hunter', 'Cooking', 'Cross Dressing', "Human Enhancement", "Super Deformed",
-            'Ninja', 'Space Opera', "Anthropomorphism", 'Slow When It Comes To Love', 'Reverse Harem', 'Music',
-            'Sports', 'Delinquent', 'time travel', 'vampire', romance]
+	"""
+	needs = ["Isekai", 'Bounty Hunter', 'Cooking', 'Cross Dressing', "Human Enhancement", "Super Deformed",
+			'Ninja', 'Space Opera', "Anthropomorphism", 'Slow When It Comes To Love', 'Reverse Harem', 'Music',
+			'Sports', 'Delinquent', 'time travel', 'vampire', romance]
 
 
-    Function that finds matching anime, they need to pass the minimum amount of similarity
+	Function that finds matching anime, they need to pass the minimum amount of similarity
 
-    Returns:
-        list: list of animes that pass the minimum amount of similarity check
-    """
+	Returns:
+		list: list of animes that pass the minimum amount of similarity check
+	"""
 
 
-    choice_anime_vector = choice['vector']
-    name = choice['attributes']["canonicalTitle"]
-    anime_type = choice["attributes"]["subtype"]
-    final_recommendations = []
-    simi = []
+	choice_anime_vector = choice['tag_vec']
+	choice_anime_vector_gen = choice['gen_vec']
 
-    for x in animes:
-        anime_vec = animes[x]['vector']
-        if 1 in anime_vec:
-            degree_of_similarity = get_degree_of_sim(choice_anime_vector, anime_vec)
-            if degree_of_similarity >= check and stop_doubles(name,x) and anime_type == animes[x]["attributes"]["subtype"]:
-                animes[x]["simi"] = degree_of_similarity
-                final_recommendations.append(animes[x])
+	try:
+		name = choice['title']["english"]
+		if name == None:
+			name = choice["title"]["userPreferred"]
+	except:
+		name = choice["title"]["userPreferred"]
+
+	
+
+	anime_type = choice["format"]
+	final_recommendations = []
+	simi = []
+
+	for x in animes:
+		anime_vec = animes[x]['tag_vec']
+		anime_gen_vec = animes[x]["gen_vec"]
+
+		if anime_vec != [0]*len(anime_vec) and anime_gen_vec != [0]*len(anime_gen_vec):
+			degree_of_similarity = get_degree_of_sim(choice_anime_vector, anime_vec)
+			degree_of_sim_gen = get_degree_of_sim(choice_anime_vector_gen, anime_gen_vec)
+			if degree_of_similarity >= check and stop_doubles(name,x) and anime_type == animes[x]["format"]:
+				animes[x]["simi"] = degree_of_similarity + degree_of_sim_gen
+				final_recommendations.append(animes[x])
 		
-
-			
-
-
-    return final_recommendations
+	return final_recommendations
 
 
 
@@ -149,59 +158,61 @@ def stop_doubles_in_ranking(animes, new_name):
 	return True
 
 def ranking(recomendation_list, amount_to_recommend, choice, ):
-    """
-    to use : averageRating, userCount, favoritesCount, popularityRank, ratingRank
-    Function that sorts and ranks the proposed recommendations
-    Uses a weighed coeficient formula -->( similiratiy(0-1)) * (rating(0-100) * 7/10) + (Amount of ppl that gave it a rating(0-alot)*3/10)
+	"""
+	to use : averageRating, userCount, favoritesCount, popularityRank, ratingRank
+	Function that sorts and ranks the proposed recommendations
+	Uses a weighed coeficient formula -->( similiratiy(0-1)) * (rating(0-100) * 7/10) + (Amount of ppl that gave it a rating(0-alot)*3/10)
 
-    Args:
-        recomendation_list (List of recommendations proposed)
-        amount_to_recommend (Int): the selected amount of recommendations
+	Args:
+		recomendation_list (List of recommendations proposed)
+		amount_to_recommend (Int): the selected amount of recommendations
 
-    Returns:
-        list: ranked recommendations
-    """
-    anime_rec_ranking = []
-    anime_rec_inter = []
-    anime_rec_names = []
-    date_og = choice["attributes"]["startDate"]
-    if len(recomendation_list) < amount_to_recommend: #check to see if the amount proposed is less than the amount asked
-        return []
+	Returns:
+		list: ranked recommendations
+	"""
+	anime_rec_ranking = []
+	anime_rec_inter = []
+	anime_rec_names = []
+	date_og = choice["seasonYear"]
+	if len(recomendation_list) < amount_to_recommend: #check to see if the amount proposed is less than the amount asked
+		return []
 
-    for anime in recomendation_list: #different attributes
-        check = [anime["attributes"]["averageRating"], anime["attributes"]["userCount"],
-                anime["attributes"]["favoritesCount"], anime["attributes"]["popularityRank"],
-                anime["attributes"]["ratingRank"],anime["attributes"]["startDate"]]
-        name = anime["attributes"]["canonicalTitle"]
-
-
-        if "" not in check and " " not in check and None not in check and stop_doubles_in_ranking(anime_rec_names,name ): #check if empty variables
-            rating = weighted_rating(float(check[1]), 80000, 60, float(check[0]))
-            anime["key"] = anime["simi"]  + ((4-(math.log10(check[4]))/(math.log10(200)))/10) + (0.2 - (0.01)* get_date_gap(check[5], date_og))
-            anime_rec_inter.append(anime)
-            anime_rec_names.append(name) 
-            print(anime["key"], anime["simi"], ((4-(math.log10(check[4]))/(math.log10(200)))/6),  (0.2 - (0.01)* get_date_gap(check[5], date_og)) , name)
-	
-    anime_rec_ranking = sorted(anime_rec_inter, key = lambda k: k["key"], reverse=True) 
+	for anime in recomendation_list: #different attributes
+		score = anime["averageScore"]
+		date = anime["seasonYear"]
+		try:
+			name = anime['title']["english"]
+		except:
+			name = anime["title"]["userPreferred"]
+			if name == None:
+				name = anime["title"]["romanji"]
 
 
-    if len(anime_rec_ranking) < amount_to_recommend:
-        return []
+		if score != None and date != None and name != None : #check if empty variables
+			anime["key"] = anime["simi"]  + score/200 + (0.2 - (0.01)* abs(date_og - date))
+			anime_rec_inter.append(anime)
+			anime_rec_names.append(name) 
+			#print(anime["simi"], score/200, (0.2 - (0.01)* abs(date_og - date)), name)
 
-    return anime_rec_ranking[0:amount_to_recommend]
+	anime_rec_ranking = sorted(anime_rec_inter, key = lambda k: k["key"], reverse=True) 
 
 
+	if len(anime_rec_ranking) < amount_to_recommend:
+		return []
 
-import time
+	return anime_rec_ranking[0:amount_to_recommend]
+
+
 
 # function to write the user's input into csv file to check what people are inputting on website
+import time
 def write_input(anime, number):
-    time = datetime.now()
-    dt_string = time.strftime("%d/%m/%Y %H:%M:%S")
-    with open('/home/ivanadrd/api/data/inputs.csv', 'a', newline='') as f:
-        writer_object = writer(f)
-        writer_object.writerow([anime, number, dt_string])
-        f.close()
+	time = datetime.now()
+	dt_string = time.strftime("%d/%m/%Y %H:%M:%S")
+	with open('/home/ivanadrd/api/data/inputs.csv', 'a', newline='') as f:
+		writer_object = writer(f)
+		writer_object.writerow([anime, number, dt_string])
+		f.close()
 
 
 def run(animes, choice, amnt):
@@ -209,10 +220,9 @@ def run(animes, choice, amnt):
 	choice = search(animes, choice)
 
 	amount = int(amnt) #int(input("How many would u want: "))
-	start = time.time()
 	check = 0.3
 	trys = 0
-	how = len([x for x in choice['vector'] if x == 1])
+	how = len([x for x in choice['tag_vec'] if x == 1])
 	partial_recs = []
 	found = False
 	while not found:
@@ -234,5 +244,4 @@ def run(animes, choice, amnt):
 			return conc
 
 	return [animes[list(animes.keys())[x]] for x in range(amnt)]
-
 
