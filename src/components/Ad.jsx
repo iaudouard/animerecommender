@@ -11,7 +11,6 @@ export default function Ad() {
       data-ad-client="ca-pub-4443895989897658"
       data-ad-slot="5796669899"
       data-ad-format="auto"
-      data-adtest="on"
       data-full-width-responsive="true"
     ></ins>
   );
