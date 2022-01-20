@@ -17,6 +17,8 @@ import { variants, transition } from "../constants/transitions";
 import { store } from "react-notifications-component";
 import { error } from "../utils/notifications";
 
+import Ad from "../components/Ad";
+
 export default function App(): ReactElement {
   const { theme } = useContext(ThemeContext);
 
@@ -144,6 +146,7 @@ export default function App(): ReactElement {
           </Link>
         </div>
       </div>
+      <Ad />
     </motion.div>
   );
 }
