@@ -6,7 +6,7 @@ import { useLocation, Redirect } from "react-router-dom";
 import { fetchInfo, fetchRec } from "../utils/api";
 
 import Card from "../components/Card";
-import Spinner from "../components/Spinner";
+import Splash from "./Splash";
 
 import { ThemeContext } from "../context/ThemeContext";
 import { UserContext } from "../context/UserContext";
@@ -73,6 +73,9 @@ export default function Results({}): ReactElement {
   if (state === undefined) {
     return <Redirect to="/" />;
   }
+  if (isLoading) {
+    return <Splash />;
+  }
   return (
     <motion.div
       initial="out"
@@ -82,23 +85,19 @@ export default function Results({}): ReactElement {
       transition={transition}
     >
       <div className="Results">
-        {isLoading ? (
-          <Spinner size="2x" color={theme.secondary} />
-        ) : (
-          <div className="resultsContainer">
-            {recommendations["data"].map((item: any, index: number) => {
-              return (
-                <Card
-                  title={item.attributes.canonicalTitle}
-                  poster={item.attributes.posterImage}
-                  synopsis={item.attributes.synopsis}
-                  color={theme.primary}
-                  key={index}
-                />
-              );
-            })}
-          </div>
-        )}
+        <div className="resultsContainer">
+          {recommendations["data"].map((item: any, index: number) => {
+            return (
+              <Card
+                title={item.attributes.canonicalTitle}
+                poster={item.attributes.posterImage}
+                synopsis={item.attributes.synopsis}
+                color={theme.primary}
+                key={index}
+              />
+            );
+          })}
+        </div>
       </div>
     </motion.div>
   );
