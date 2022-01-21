@@ -1,20 +1,23 @@
-.navbarContainer {
+.navbar-container {
   width: 100vw;
-  height: 10vh;
+  height: 8rem;
   display: flex;
   align-items: center;
   background-color: white;
 }
+
 .icon {
   cursor: pointer;
-  transition: color 0.8s;
-  margin-left: 3vw;
+  transition: color 0.3s;
 }
+
+.navbar-link {
+  text-decoration: none;
+  margin-left: 3rem;
+}
+
 @media screen and (max-height: 768px) {
-  .navbarContainer {
+  .navbar-container {
     height: 8rem;
-  }
-  .icon {
-    margin-left: 2rem;
   }
 }
