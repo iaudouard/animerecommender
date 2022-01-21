@@ -17,8 +17,6 @@ import { variants, transition } from "../constants/transitions";
 import { store } from "react-notifications-component";
 import { error } from "../utils/notifications";
 
-import Ad from "../components/Ad";
-
 export default function App(): ReactElement {
   const { theme } = useContext(ThemeContext);
 
@@ -74,79 +72,75 @@ export default function App(): ReactElement {
       exit="out"
       variants={variants}
       transition={transition}
+      className="Home"
+      style={{ backgroundColor: theme.bng }}
     >
-      <div className="Home" style={{ backgroundColor: theme.bng }}>
-        <div className="formContainer">
-          <div className="inputContainer">
-            <input
-              className="animeSearchInput"
-              onChange={(ev) => updateAnimeSearchInput(ev)}
-              placeholder="enter an anime..."
-              style={{
-                borderBottom: `0.4vh solid ${
-                  searchInputFocus ? "white" : theme.secondary
-                }`,
-                color: theme.secondary,
-              }}
-              value={animeSearchInput}
-              onFocus={() => setSearchInputFocus(true)}
-              onBlur={() => setSearchInputFocus(false)}
-            ></input>
+      <form className="formContainer">
+        <div className="inputContainer">
+          <input
+            className="animeSearchInput"
+            onChange={(ev) => updateAnimeSearchInput(ev)}
+            placeholder="enter an anime..."
+            style={{
+              borderBottom: `0.4vh solid ${
+                searchInputFocus ? "white" : theme.secondary
+              }`,
+              color: theme.secondary,
+            }}
+            value={animeSearchInput}
+            onFocus={() => setSearchInputFocus(true)}
+            onBlur={() => setSearchInputFocus(false)}
+          ></input>
 
-            <Autocomplete
-              animeSearchInputValue={animeSearchInput}
-              color={theme.secondary}
-              clickHandler={(title) => handleAutocomplete(title)}
-              visible={autocompleteVisible}
-            />
-          </div>
-
-          <div
-            className="incrementContainer"
-            style={{ color: theme.secondary }}
-          >
-            <IncrementButton
-              primaryColor={theme.primary}
-              secondaryColor={theme.secondary}
-              terceryColor={theme.tercery}
-              handleClick={() => handleIncrementDown()}
-              label="-"
-            />
-            {numberOfRecommendations}
-            <IncrementButton
-              primaryColor={theme.primary}
-              secondaryColor={theme.secondary}
-              terceryColor={theme.tercery}
-              handleClick={() => handleIncrementUp()}
-              label="+"
-            />
-          </div>
-
-          <Link
-            to={
-              animeSearchInput !== "" && numberOfRecommendations !== 0
-                ? {
-                    pathname: "/results",
-                    state: {
-                      animeTitle: animeSearchInput,
-                      numberOfRecommendations: numberOfRecommendations,
-                    },
-                  }
-                : { pathname: "/" }
-            }
-            style={{ textDecoration: "none" }}
-          >
-            <SubmitButton
-              primaryColor={theme.primary}
-              secondaryColor={theme.secondary}
-              terceryColor={theme.tercery}
-              handleClick={() => handleSubmit()}
-              label="submit"
-            />
-          </Link>
+          <Autocomplete
+            animeSearchInputValue={animeSearchInput}
+            color={theme.secondary}
+            clickHandler={(title) => handleAutocomplete(title)}
+            visible={autocompleteVisible}
+          />
         </div>
-      </div>
-      <Ad />
+
+        <div className="incrementContainer" style={{ color: theme.secondary }}>
+          <IncrementButton
+            primaryColor={theme.primary}
+            secondaryColor={theme.secondary}
+            terceryColor={theme.tercery}
+            handleClick={() => handleIncrementDown()}
+            label="-"
+          />
+          {numberOfRecommendations}
+          <IncrementButton
+            primaryColor={theme.primary}
+            secondaryColor={theme.secondary}
+            terceryColor={theme.tercery}
+            handleClick={() => handleIncrementUp()}
+            label="+"
+          />
+        </div>
+
+        <Link
+          to={
+            animeSearchInput !== "" && numberOfRecommendations !== 0
+              ? {
+                  pathname: "/results",
+                  state: {
+                    animeTitle: animeSearchInput,
+                    numberOfRecommendations: numberOfRecommendations,
+                  },
+                }
+              : { pathname: "/" }
+          }
+          style={{ textDecoration: "none" }}
+        >
+          <SubmitButton
+            primaryColor={theme.primary}
+            secondaryColor={theme.secondary}
+            terceryColor={theme.tercery}
+            handleClick={() => handleSubmit()}
+            label="submit"
+          />
+        </Link>
+      </form>
     </motion.div>
   );
 }

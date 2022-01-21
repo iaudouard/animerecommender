@@ -1,0 +1,24 @@
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1rem;
+  height: 50%;
+}
+
+.signin-buttons-container {
+  display: flex;
+}
+.socials-signin-container {
+  display: flex;
+  margin-left: 0.3rem;
+}
+.social-signin-button {
+  border-radius: 0.4rem;
+  outline: none;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  margin: 0 0.3rem;
+}
