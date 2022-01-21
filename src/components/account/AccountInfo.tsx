@@ -37,6 +37,13 @@ export default function AccountInfo({
     signout(window);
   };
 
+  function deleteCard(anime) {
+    deleteLikedAnime(user!.uid, anime.title).then((res) => {
+      const newLiked = { likedAnime: res };
+      setUserData({ ...userData!, ...newLiked });
+    });
+  }
+
   return (
     <motion.div
       initial="out"
@@ -55,24 +62,13 @@ export default function AccountInfo({
         <div className="anime-cards-container">
           {userData!.likedAnime.map((anime: Anime) => {
             return (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+              <div className="card-wrapper">
                 <Card
                   poster={anime.image}
                   color={theme.secondary}
                   height={20}
                   deleteable
-                  onClick={() =>
-                    deleteLikedAnime(user!.uid, anime.title).then((res) => {
-                      const newLiked = { likedAnime: res };
-                      setUserData({ ...userData!, ...newLiked });
-                    })
-                  }
+                  onClick={() => deleteCard(anime)}
                 />
                 <p style={{ color: theme.secondary }}>{anime.title}</p>
               </div>
