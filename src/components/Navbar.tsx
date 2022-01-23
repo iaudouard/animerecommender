@@ -29,8 +29,8 @@ export default function Navbar({}): ReactElement {
 
   return (
     <motion.div initial="out" exit="out" animate="in">
-      <div className="navbarContainer" style={{ backgroundColor: theme.bng }}>
-        <Link to="/" style={{ textDecoration: "none" }}>
+      <div className="navbar-container" style={{ backgroundColor: theme.bng }}>
+        <Link to="/" className="navbar-link">
           <AiFillHome
             color={homeIconHover ? "white" : theme.secondary}
             className="icon"
@@ -39,10 +39,7 @@ export default function Navbar({}): ReactElement {
             onMouseLeave={() => setHomeIconHover(false)}
           />
         </Link>
-        <Link
-          to="/account"
-          style={{ textDecoration: "none", display: "block" }}
-        >
+        <Link to="/account" className="navbar-link">
           <FaUserAlt
             color={userIconHover ? "white" : theme.secondary}
             className="icon"

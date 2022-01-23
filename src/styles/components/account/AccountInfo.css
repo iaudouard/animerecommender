@@ -22,3 +22,9 @@
   height: 50vh;
   align-items: center;
 }
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

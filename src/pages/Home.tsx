@@ -72,13 +72,13 @@ export default function App(): ReactElement {
       exit="out"
       variants={variants}
       transition={transition}
-      className="Home"
+      className="home-page-container"
       style={{ backgroundColor: theme.bng }}
     >
-      <form className="formContainer">
-        <div className="inputContainer">
+      <form className="form-container">
+        <div className="search-bar-container">
           <input
-            className="animeSearchInput"
+            className="search-bar"
             onChange={(ev) => updateAnimeSearchInput(ev)}
             placeholder="enter an anime..."
             style={{
