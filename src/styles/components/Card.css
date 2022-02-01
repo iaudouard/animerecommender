@@ -1,10 +1,10 @@
-@media screen and (min-height: 768px) {
+@media screen and (min-height: 479px) {
   .cardContainer {
     border-radius: 1.3rem;
     margin: 0 1.3rem;
   }
 }
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 479px) {
   .cardContainer {
     border-radius: 1.3rem;
     margin: 1rem 1.3rem;
