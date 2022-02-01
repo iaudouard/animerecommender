@@ -3,12 +3,8 @@ import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 export async function fetchRec(animeTitle: string, numberOfAnime: string) {
   const options: AxiosRequestConfig = {
     method: "GET",
-    url: "https://anime-recommender.p.rapidapi.com/",
+    url: "https://ivanadrd.pythonanywhere.com/",
     params: { anime_title: animeTitle, number_of_anime: numberOfAnime },
-    headers: {
-      "x-rapidapi-host": "anime-recommender.p.rapidapi.com",
-      "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY!,
-    },
   };
 
   const data = await axios.request(options).then((response: AxiosResponse) => {
@@ -30,12 +26,9 @@ export async function fetchAutocomplete(text: string) {
 export async function fetchInfo(animeTitle: string) {
   const options: AxiosRequestConfig = {
     method: "GET",
-    url: "https://anime-recommender.p.rapidapi.com/get_anime_info",
+    url: "https://ivanadrd.pythonanywhere.com/get_anime_info",
     params: { anime_title: animeTitle },
-    headers: {
-      "x-rapidapi-host": "anime-recommender.p.rapidapi.com",
-      "x-rapidapi-key": process.env.REACT_APP_RAPID_API_KEY!,
-    },
+    headers: {},
   };
 
   const data = await axios.request(options).then((response: AxiosResponse) => {
