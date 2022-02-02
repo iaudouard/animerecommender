@@ -38,7 +38,7 @@ export default function Autocomplete({
           <AutocompleteLiElement
             key={index}
             color={color}
-            title={item["attributes"]["canonicalTitle"]}
+            title={item}
             clickHandler={(title) => clickHandler(title)}
           />
         );

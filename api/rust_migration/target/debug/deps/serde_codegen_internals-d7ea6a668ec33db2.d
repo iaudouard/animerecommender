@@ -1,0 +1,10 @@
+C:\Users\ernes\Documents\CODING\rust_testing\json_reading\target\debug\deps\serde_codegen_internals-d7ea6a668ec33db2.rmeta: C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\lib.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ast.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\attr.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ctxt.rs
+
+C:\Users\ernes\Documents\CODING\rust_testing\json_reading\target\debug\deps\libserde_codegen_internals-d7ea6a668ec33db2.rlib: C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\lib.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ast.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\attr.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ctxt.rs
+
+C:\Users\ernes\Documents\CODING\rust_testing\json_reading\target\debug\deps\serde_codegen_internals-d7ea6a668ec33db2.d: C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\lib.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ast.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\attr.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ctxt.rs
+
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\lib.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ast.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\attr.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_codegen_internals-0.11.3\src\ctxt.rs:
