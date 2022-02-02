@@ -89,9 +89,9 @@ export default function Results({}): ReactElement {
           {recommendations["data"].map((item: any, index: number) => {
             return (
               <Card
-                title={item.attributes.canonicalTitle}
-                poster={item.attributes.posterImage}
-                synopsis={item.attributes.synopsis}
+                title={item.title.romaji}
+                poster={item.coverImage.large}
+                synopsis={item.description}
                 color={theme.primary}
                 key={index}
               />
