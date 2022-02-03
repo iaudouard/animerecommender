@@ -89,7 +89,7 @@ export default function Results({}): ReactElement {
           {recommendations["data"].map((item: any, index: number) => {
             return (
               <Card
-                title={item.title.romaji}
+                title={item.title.userPreferred}
                 poster={item.coverImage.large}
                 synopsis={item.description}
                 color={theme.primary}
