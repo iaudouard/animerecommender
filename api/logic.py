@@ -130,7 +130,7 @@ def inter(animes, choice, check, amnt):
 			degree_of_similarity = get_degree_of_sim(choice_anime_vector, anime_vec)
 			degree_of_sim_gen = get_degree_of_sim(choice_anime_vector_gen, anime_gen_vec)
 			if degree_of_similarity >= check and stop_doubles(name,x) and anime_type == animes[x]["format"]:
-				animes[x]["simi"] = degree_of_similarity + degree_of_sim_gen
+				animes[x]["simi"] = degree_of_similarity + degree_of_sim_gen/2
 				final_recommendations.append(animes[x])
 		
 	return final_recommendations
@@ -149,13 +149,22 @@ def get_date_gap(d1, d2):
 
 
 
-def stop_doubles_in_ranking(latest, new_name):
+def stop_doubles_in_ranking(new_name, og):
 
-	new_name = new_name.split(" ")
-	stripped_name = latest.split(" ")
-	if new_name[0] in stripped_name:    
+	if og in new_name:
 		return False
-	if len(new_name) >= 2 and new_name[1] in stripped_name:
+	
+	bad = ["Season 2", "season 2", "season", "Season", "sequel", "other", "part", "Part", "Other"]
+	new_name = new_name.split(" ")
+
+	if new_name[0] in og:
+		return False
+	
+	for x in bad:
+		if x in new_name:
+			return False
+	
+	if new_name[-1].isnumeric():
 		return False
 
 	return True
@@ -177,26 +186,32 @@ def ranking(recomendation_list, amount_to_recommend, choice, ):
 	anime_rec_inter = []
 	anime_rec_names = []
 	date_og = choice["seasonYear"]
-	latest = ""
+	
+	name_og = choice['title']["english"]
+	if name_og is None:
+		name_og = choice["title"]["userPreferred"]
+		if name_og == None:
+			name_og = choice["title"]["romanji"]
 	if len(recomendation_list) < amount_to_recommend: #check to see if the amount proposed is less than the amount asked
 		return []
 
 	for anime in recomendation_list: #different attributes
 		score = anime["averageScore"]
 		date = anime["seasonYear"]
-		try:
-			name = anime['title']["english"]
-		except:
+		
+		name = anime['title']["english"]
+		if name is None:
 			name = anime["title"]["userPreferred"]
 			if name == None:
 				name = anime["title"]["romanji"]
+		
+	
 
 
-		if score != None and name != None and stop_doubles_in_ranking(latest, name): #check if empty variables
+		if score != None and name != None and stop_doubles_in_ranking(name, name_og): #check if empty variables
 			anime["key"] = anime["simi"]  + score/200 #+ (0.2 - (0.01) * abs(date_og - date))
-			anime_rec_inter.append(anime)
+			anime_rec_inter.append(anime) 
 			anime_rec_names.append(name) 
-			latest = name
 			#print(anime["simi"], score/200, (0.2 - (0.01)* abs(date_og - date)), name)
 
 	anime_rec_ranking = sorted(anime_rec_inter, key = lambda k: k["key"], reverse=True) 
@@ -250,8 +265,6 @@ def run(animes, choice, amnt):
 	return [animes[list(animes.keys())[x]] for x in range(amnt)]
 
 
-animes = openAnimes()
-print(run(animes, "Shingeki no Kyojin", 5))
 
 """make mini dict with name, score for each anime, ligher to process the data"""
 
