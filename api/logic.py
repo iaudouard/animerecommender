@@ -1,4 +1,5 @@
 import json
+from logging import lastResort
 import math
 from datetime import datetime
 from csv import writer
@@ -148,15 +149,14 @@ def get_date_gap(d1, d2):
 
 
 
-def stop_doubles_in_ranking(animes, new_name):
+def stop_doubles_in_ranking(latest, new_name):
 
 	new_name = new_name.split(" ")
-	for x in animes:
-		stripped_name = x.split(" ")
-		if new_name[0] in stripped_name:    
-			return False
-		if len(new_name) >= 2 and new_name[1] in stripped_name:
-			return False
+	stripped_name = latest.split(" ")
+	if new_name[0] in stripped_name:    
+		return False
+	if len(new_name) >= 2 and new_name[1] in stripped_name:
+		return False
 
 	return True
 
@@ -177,6 +177,7 @@ def ranking(recomendation_list, amount_to_recommend, choice, ):
 	anime_rec_inter = []
 	anime_rec_names = []
 	date_og = choice["seasonYear"]
+	latest = ""
 	if len(recomendation_list) < amount_to_recommend: #check to see if the amount proposed is less than the amount asked
 		return []
 
@@ -191,10 +192,11 @@ def ranking(recomendation_list, amount_to_recommend, choice, ):
 				name = anime["title"]["romanji"]
 
 
-		if score != None and name != None : #check if empty variables
+		if score != None and name != None and stop_doubles_in_ranking(latest, name): #check if empty variables
 			anime["key"] = anime["simi"]  + score/200 #+ (0.2 - (0.01) * abs(date_og - date))
 			anime_rec_inter.append(anime)
 			anime_rec_names.append(name) 
+			latest = name
 			#print(anime["simi"], score/200, (0.2 - (0.01)* abs(date_og - date)), name)
 
 	anime_rec_ranking = sorted(anime_rec_inter, key = lambda k: k["key"], reverse=True) 
@@ -248,6 +250,8 @@ def run(animes, choice, amnt):
 	return [animes[list(animes.keys())[x]] for x in range(amnt)]
 
 
+animes = openAnimes()
+print(run(animes, "Shingeki no Kyojin", 5))
 
 """make mini dict with name, score for each anime, ligher to process the data"""
 

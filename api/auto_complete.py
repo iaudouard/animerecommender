@@ -61,7 +61,7 @@ print("tree made")
 def auto_comp(search, amnt):
 
     search = search.replace(" ", "")
-    word_search = slower_auto.search(word=search, max_cost=10, size=amnt)
+    word_search = slower_auto.search(word=search, max_cost=8, size=amnt)
 
     results = []
 
@@ -71,4 +71,12 @@ def auto_comp(search, amnt):
 
     return results
 
+
+
+
+while True:
+
+    search = input("Search :")
+
+    print(auto_comp(search, 5))
     
