@@ -35,7 +35,7 @@ export default function Results({}): ReactElement {
         const data = res.data;
         const info = {
           title: state.animeTitle,
-          image: data.attributes.posterImage,
+          image: data.coverImage.large,
         };
         return addLikedAnime(user!.uid, info);
       })
