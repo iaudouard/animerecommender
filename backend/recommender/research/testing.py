@@ -24,5 +24,3 @@ def time_it(function):
 def speed_test(anime: str, method) -> str:
     method(anime)
     return "done"
-
-
