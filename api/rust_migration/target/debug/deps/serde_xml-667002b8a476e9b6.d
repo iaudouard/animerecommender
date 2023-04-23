@@ -1,0 +1,12 @@
+C:\Users\ernes\Documents\CODING\rust_testing\json_reading\target\debug\deps\serde_xml-667002b8a476e9b6.rmeta: C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\lib.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\mod.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\lexer.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\value.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\error.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\value.rs
+
+C:\Users\ernes\Documents\CODING\rust_testing\json_reading\target\debug\deps\libserde_xml-667002b8a476e9b6.rlib: C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\lib.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\mod.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\lexer.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\value.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\error.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\value.rs
+
+C:\Users\ernes\Documents\CODING\rust_testing\json_reading\target\debug\deps\serde_xml-667002b8a476e9b6.d: C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\lib.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\mod.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\lexer.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\value.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\error.rs C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\value.rs
+
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\lib.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\mod.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\lexer.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\de\value.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\error.rs:
+C:\Users\ernes\.cargo\registry\src\github.com-1ecc6299db9ec823\serde_xml-0.9.1\src\value.rs:
