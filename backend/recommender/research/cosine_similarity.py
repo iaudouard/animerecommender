@@ -1,11 +1,12 @@
 import numpy as np
 import json
 import utils
-import scipy
+from scipy.spatial import distance
 import threading
 
 
 
+@utils.time_it
 def read_data() -> np.array:
     with open("../../data/json/data_as_list.json", 'r') as fout:
         data = json.load(fout)
@@ -23,8 +24,6 @@ def main(choice : int):
     data = read_data()
     choiceArray = utils.get_anime_from_id(choice, data)
     ranking = rank(choiceArray, data)
-    for i in range(10):
-        print(ranking[i][0], ranking[i][-1])
 
 def remove_no_match_genre(choiceArray:np.array, data:np.array) -> np.array:
     
@@ -41,6 +40,7 @@ def remove_no_match_genre(choiceArray:np.array, data:np.array) -> np.array:
             count += 1
     return result
 
+@utils.time_it
 def rank(choiceArray:np.array, data:np.array):
     
     #remove all anime with no matching genre with and AND operation
@@ -55,18 +55,26 @@ def dot_prod(a, b):
         c += a[i] * b[i]
     return c
 
+@utils.time_it
 def cosine_similarity_scipy(choiceArray:np.array, data:np.array):
-    pass
-
-def cosine_similarity_numpy(choiceArray:np.array, data:np.array):
-    
     for anime in data:
-        dot = dot_prod(anime[5], choiceArray[5])
+        cosine_simi = 1 - distance.cosine(anime[5], choiceArray[5])
+        anime[8] = cosine_simi;
+    #sort the values
+    data = np.sort(data, order = "score")
+    return data[::-1]
+
+@utils.time_it
+def cosine_similarity_numpy(choiceArray:np.array, data:np.array):
+    #seems to be faster
+    for anime in data:
+        dot = np.dot(anime[5], choiceArray[5])
         norm = np.linalg.norm(choiceArray[5]) * np.linalg.norm(anime[5])
         cosine_simi = dot / norm
         anime[8] = cosine_simi;
     #sort the values
     data = np.sort(data, order = "score")
     return data[::-1]
+
 
 main(1)
