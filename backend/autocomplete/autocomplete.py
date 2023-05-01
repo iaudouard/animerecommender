@@ -13,4 +13,9 @@ class AnimeAutocomplete:
 
     def search(self, query: str) -> list[str]:
         results = self.autocomplete.search(query.lower())
-        return [self.autocomplete.words[result[0]].display for result in results]
+        display_results = []
+        for result in results:
+            display_result = self.autocomplete.words[result[0]].display
+            if display_result not in display_results:
+                display_results.append(display_result)
+        return display_results
