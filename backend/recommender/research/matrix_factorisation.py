@@ -1,15 +1,14 @@
 import numpy as np
 import warnings
 
+
+#Works for smaller sized stuff, need to find a way to accelerate
 class MF():
 
     def __init__(self, R, K, alpha, beta, iterations):
         """
-        Perform matrix factorization to predict empty
-        entries in a matrix.
-
         Arguments
-        - R (ndarray)   : user-item rating matrix
+        - R (ndarray)   : user anime rating matrix
         - K (int)       : number of latent dimensions
         - alpha (float) : learning rate
         - beta (float)  : regularization parameter

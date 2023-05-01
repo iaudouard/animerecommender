@@ -8,7 +8,7 @@ import threading
 
 @utils.time_it
 def read_data() -> np.array:
-    result = np.load("../../data/data_cleaned.npy")
+    result = np.load("../../data/data_cleaned_only_origin_anime.npy")
     return result
 
 
