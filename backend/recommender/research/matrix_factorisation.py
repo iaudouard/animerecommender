@@ -1,6 +1,5 @@
 import numpy as np
 import warnings
-warnings.filterwarnings("error")
 
 class MF():
 
@@ -86,9 +85,6 @@ class MF():
             self.Q[j, :] += self.alpha * (e * self.P[i, :] - self.beta * self.Q[j,:])
             
 
-            
-            
-            
 
     def get_rating(self, i, j):
         """
@@ -102,39 +98,3 @@ class MF():
         Computer the full matrix using the resultant biases, P and Q
         """
         return self.b + self.b_u[:,np.newaxis] + self.b_i[np.newaxis:,] + self.P.dot(self.Q.T)
-
-import pandas as pd
-
-users = pd.read_csv("../../data/csv/reviews/users.csv");
-animes = pd.read_csv("../../data/csv/reviews/animes.csv");
-ratings = pd.read_csv("../../data/csv/reviews/parsed_reviews.csv");
-
-users.dtype = "float32"
-animes.dtype = "float32"
-ratings.dtype = "float32"
-
-user_amount = users.size
-anime_amount = animes.size
-matrix = np.zeros((1000, 500))
-matrix.dtype = "float64"
-#make mapping array
-mapping_uid = {users["uid"][x] : x for x in range(user_amount)}
-mapping_anime_uid = {animes["anime_uid"][x] : x for x in range(anime_amount)}
-
-# samples = []
-# for index, x in ratings.iterrows():
-#     samples.append((mapping_uid[x["uid"]], mapping_anime_uid[x["anime_uid"]], x["score"]))
-
-
-for index, x in ratings.iterrows():
-    if(mapping_uid[x["uid"]] < 1000 and mapping_anime_uid[x["anime_uid"]] < 500):
-        matrix[mapping_uid[x["uid"]], mapping_anime_uid[x["anime_uid"]]] = x["score"]
-
-np.nan_to_num(matrix)
-
-#matrix = np.array([[1, 2, 3, 4],[0, 2, 3, 4],[5, 4, 2, 1],[0, 4, 0, 1],[4, 3, 1, 4]])
-
-mf = MF(matrix, K = 2, alpha = 0.1, beta = 0.01, iterations = 200)
-mf.train()
-print(mf.full_matrix())
-
