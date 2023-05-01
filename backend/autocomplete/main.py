@@ -1,7 +1,7 @@
 from autocomplete import AnimeAutocomplete
 from goblet import Goblet, goblet_entrypoint, jsonify
 
-app = Goblet(function_name="autocomplete")
+app = Goblet(function_name="autocomplete", backend="cloudrun")
 goblet_entrypoint(app)
 
 

@@ -7,4 +7,5 @@ RUN pip install -r requirements.txt
 
 ADD . .
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+# Run the web service on container startup.
+CMD exec functions-framework --target=goblet_entrypoint

@@ -1,0 +1,6 @@
+{
+  "function_name": "autocomplete",
+  "custom_files": {
+    "include": ["data/anime_titles.json"]
+  }
+}
