@@ -31,6 +31,11 @@ query ($id: Int, $page: Int, $perPage: Int) {
                 edges{
                     relationType(version : 2)
                 }
+                nodes{
+                    startDate{
+                        year
+                    }
+                }
             }
         }
     }
@@ -68,7 +73,7 @@ def getNewPage(data_array : list, page_nb : int) -> bool:
     response = requests.post(url, json={'query': query_page, 'variables': variables}).json()["data"]
     has_next_page = response["Page"]["pageInfo"]["hasNextPage"]
     for x in response["Page"]["media"]:
-        if has_prequel(x["relations"]["edges"]): #if has a prequel then it is not a season 1 or whatever
+        if has_prequel(x["relations"]["edges"], x["relations"]["nodes"], x["seasonYear"]): #if has a prequel then it is not a season 1 or whatever
             skipped += 1    
             if(skipped % 100 == 0): print("I skipped ", skipped, " anime")
             continue
@@ -117,10 +122,15 @@ def format_switch(format):
     else:
         return 0
         
-def has_prequel(connections):
-    for c in connections:
-        if c["relationType"] in ["PREQUEL", "PARENT"]:
-            return True
+def has_prequel(connections, edges, year):
+
+    for c in range(len(connections)):
+        if connections[c]["relationType"] in ["PREQUEL", "PARENT"]:
+            if year == None:
+                return True
+            if edges[c]["startDate"]["year"] != None and edges[c]["startDate"]["year"] < year:
+                return True
+            
     return False
 
 data_total = []

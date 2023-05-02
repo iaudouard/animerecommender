@@ -15,9 +15,10 @@ def read_data() -> np.array:
 def main(choice : int):
     data = read_data()
     choiceArray = utils.get_anime_from_id(choice, data)
+    print(choiceArray)
     ranking = cosine_similarity_numpy(choiceArray, data)
     for i in range(20):
-        print(ranking[i]["id"])
+        print(ranking[i]["id"], ranking[i]["score"], ranking[i]["averageScore"], ranking[i]["meanScore"])
     
     
 
@@ -27,6 +28,46 @@ def rank(choiceArray:np.array, data:np.array):
     ranking = cosine_similarity_numpy(choiceArray, data)
     return ranking
 
+
+def calculate_year_similarity(x, my):
+    # Define the range of the function
+    min_year = 1950
+    max_year = 2023
+    
+    # Calculate the distance between x and my
+    distance = abs(x - my)
+    
+    # Calculate the maximum possible distance in the range
+    max_distance = max_year - min_year
+    
+    # Calculate the similarity score as a linear function of the distance
+    similarity_score = 0.05 * (1 - distance / max_distance)
+    
+    # Ensure that the similarity score is always between 0 and 0.1
+    similarity_score = max(similarity_score, 0)
+    similarity_score = min(similarity_score, 0.1)
+    
+    return similarity_score
+
+
+def calculate_total_score(similarity_score, avg_score, year, mean_score, user_avg_year):
+    # Set weights for each feature
+    similarity_weight = 0.8
+    avg_score_weight = 0.1
+    mean_score_weight = 0.05
+    
+    # Normalize each feature to the range [0, 1]
+    similarity_score_norm = similarity_score
+    avg_score_norm = (avg_score - 10.0) / 90.0
+    mean_score_norm = (mean_score - 10.0) / 90.0
+    
+    year = calculate_year_similarity(year, user_avg_year)
+
+    # Calculate total score as weighted sum of normalized features
+    total_score = (similarity_weight * similarity_score_norm) + (avg_score_weight * avg_score_norm) + \
+                    + (mean_score_weight * mean_score_norm) + year
+    
+    return total_score
 
 @utils.time_it
 def cosine_similarity_scipy(choiceArray:np.array, data:np.array):
@@ -57,7 +98,7 @@ def cosine_similarity_numpy(choiceArray:np.array, data:np.array):
             continue
         
         score = cosine_simi_tag + (0.2 * cosine_simi_g)
-
+        score = calculate_total_score(score, anime["averageScore"], anime["year"], anime["meanScore"], choiceArray["year"])
         anime["score"] = score;
     #sort the values
     data = np.sort(data, order = ["score", "averageScore"])
