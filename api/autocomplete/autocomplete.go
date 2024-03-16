@@ -2,6 +2,7 @@ package main
 
 import (
   "strings"
+  "sort"
 
   "github.com/ka-weihe/fast-levenshtein"
 )
@@ -35,6 +36,12 @@ func (es EntrySlice) MaxDis() (int, int) {
   }
 
   return max, idx
+}
+
+func (es EntrySlice) Sort() {
+  sort.Slice(es, func(i, j int ) bool {
+    return es[i].Distance < es[j].Distance
+  })
 }
 
 const (
@@ -80,7 +87,8 @@ func getAutocomplete(input string) EntrySlice {
       }
     }
   }
-
+  // TODO should probably make it sorted as we go along but for now this works
+  entries.Sort()
   return entries
 }
 
